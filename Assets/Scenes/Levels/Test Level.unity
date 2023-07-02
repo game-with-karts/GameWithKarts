@@ -730,7 +730,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 512693655}
-  rayLength: 0.8
+  rayLength: 0.4
   springCoefficient: 30000
   dampingCoefficient: 100000
   targetDisplacement: 1
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1820169320}
   cameraTarget: {fileID: 1201960745}
-  smoothingAmount: 10
+  smoothingAmount: 100
   backCamera: {fileID: 908715223}
 --- !u!54 &512693655
 Rigidbody:
@@ -1865,7 +1865,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 512693655}
-  rayLength: 0.8
+  rayLength: 0.4
   springCoefficient: 30000
   dampingCoefficient: 100000
   targetDisplacement: 1
@@ -1918,7 +1918,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 512693655}
-  rayLength: 0.8
+  rayLength: 0.4
   springCoefficient: 30000
   dampingCoefficient: 100000
   targetDisplacement: 1
@@ -1985,7 +1985,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 512693655}
-  rayLength: 0.8
+  rayLength: 0.4
   springCoefficient: 30000
   dampingCoefficient: 100000
   targetDisplacement: 1

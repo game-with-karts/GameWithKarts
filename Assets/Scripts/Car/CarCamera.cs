@@ -22,7 +22,8 @@ public class CarCamera : CarComponent
     {
         Vector3 targetEuler = transform.eulerAngles;
         if (!car.Movement.IsAntigrav) targetEuler.z = 0;
-        Quaternion targetRotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.Euler(targetEuler), smoothingAmount * Time.deltaTime);
+        float blend = Mathf.Pow(.5f, smoothingAmount * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.Euler(targetEuler), blend);
         cameraTransform.SetPositionAndRotation(cameraTarget.position, targetRotation);
     }
 }
