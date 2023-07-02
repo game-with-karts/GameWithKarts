@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31231e8a0c442845b6fe4f248e75a8a, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: 
+  numberOfLaps: 3
+  raceMode: 0
+  playerSpawning: 1
+  spawnBots: 1
+  mirrorMode: 0
+  useItems: 1
+  survivalMode: 0
+  trackFeatures: 1
+  itemSettings:
+    settings:
+    - id: 0
+      weight: 0
+      power: 0

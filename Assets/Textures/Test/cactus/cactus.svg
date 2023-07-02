@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 33.866666 33.866666"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="cactus.svg"
+   inkscape:export-filename="cactus.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="4.1776837"
+     inkscape:cx="64.389748"
+     inkscape:cy="56.969368"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#Strips1_1"
+       id="pattern9008"
+       patternTransform="scale(1.9746805)" />
+    <pattern
+       inkscape:collect="always"
+       patternUnits="userSpaceOnUse"
+       width="2"
+       height="1"
+       patternTransform="translate(0,0) scale(10,10)"
+       id="Strips1_1"
+       inkscape:stockid="Stripes 1:1">
+      <rect
+         style="fill:black;stroke:none"
+         x="0"
+         y="-0.5"
+         width="1"
+         height="2"
+         id="rect8028" />
+    </pattern>
+    <linearGradient
+       id="linearGradient7041"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#98fb3d;stop-opacity:1;"
+         offset="0"
+         id="stop7039" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter9010"
+       x="-0.036819876"
+       y="-0.036819876"
+       width="1.0736398"
+       height="1.0736398">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.51956936"
+         id="feGaussianBlur9012" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#3a591e;fill-rule:evenodd;stroke-width:1.77324;stroke-linecap:square;stroke-linejoin:round;fill-opacity:1"
+       id="rect234"
+       width="33.866665"
+       height="33.866665"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:url(#pattern9008);fill-opacity:1;fill-rule:evenodd;stroke-width:1.77324;stroke-linecap:square;stroke-linejoin:round;filter:url(#filter9010);opacity:0.26829268"
+       id="rect7037"
+       width="33.866665"
+       height="33.866665"
+       x="0"
+       y="0" />
+  </g>
+</svg>
