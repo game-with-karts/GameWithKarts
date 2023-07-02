@@ -17,5 +17,5 @@ MonoBehaviour:
   maxReverseSpeed: 10
   reverseAcceleration: 5
   brakeForce: 19
-  turnAngle: 3
+  turnAngle: 0.05
   idleDeceleration: 0.25

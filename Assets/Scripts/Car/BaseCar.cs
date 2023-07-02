@@ -24,5 +24,6 @@ public class BaseCar : MonoBehaviour
     void Awake()
     {
         rb.centerOfMass = new Vector3(0, -0.4f, 0);
+        Application.targetFrameRate = 30;
     }
 }

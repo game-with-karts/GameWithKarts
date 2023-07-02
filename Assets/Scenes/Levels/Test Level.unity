@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028465, g: 0.22571567, b: 0.30692378, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -387,14 +387,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144702414}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.36775154, y: -0.44657847, z: 0.208243, w: -0.7886453}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_Father: {fileID: 548803713}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 50, y: -300.958, z: 0}
 --- !u!114 &144702417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,13 +765,13 @@ GameObject:
   m_Component:
   - component: {fileID: 512693658}
   - component: {fileID: 512693659}
+  - component: {fileID: 512693660}
   - component: {fileID: 512693651}
   - component: {fileID: 512693656}
   - component: {fileID: 512693655}
   - component: {fileID: 512693654}
   - component: {fileID: 512693653}
   - component: {fileID: 512693652}
-  - component: {fileID: 512693660}
   - component: {fileID: 512693661}
   - component: {fileID: 512693662}
   m_Layer: 0
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1820169320}
   cameraTarget: {fileID: 1201960745}
-  smoothingAmount: 100
+  smoothingAmount: 120
   backCamera: {fileID: 908715223}
 --- !u!54 &512693655
 Rigidbody:
@@ -911,7 +911,7 @@ Transform:
   - {fileID: 1820169320}
   - {fileID: 103925916}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &512693659
 BoxCollider:
@@ -1133,6 +1133,7 @@ Transform:
   m_Children:
   - {fileID: 504416298}
   - {fileID: 612853118}
+  - {fileID: 144702416}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1703,7 +1704,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1379692142
 MonoBehaviour:
@@ -2113,7 +2114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7279572228579872341}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
