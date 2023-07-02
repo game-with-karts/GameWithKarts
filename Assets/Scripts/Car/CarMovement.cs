@@ -110,7 +110,7 @@ public class CarMovement : CarComponent
             wheel.steerAngle = stats.turnAngle * (car.Input.AxisHori + car.Drifting.DriftDirection * 1.1f);
         } */
         //transform.RotateAround(transform.position, transform.up, turnAngle * Time.fixedDeltaTime);
-        car.RB.angularVelocity = Vector3.up * turnAngle * Time.deltaTime;
+        car.RB.angularVelocity = Vector3.up * turnAngle;
         //align the normals to the normal vector
         Vector3 normal = localUp;
 
