@@ -74,3 +74,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /builds/*
+
+/[Aa]ssets/Models/*
+/[Aa]ssets/Music/*
+/[Aa]ssets/SFX/*
