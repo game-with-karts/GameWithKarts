@@ -74,5 +74,10 @@ public class CarAppearance : CarComponent
         caAmount = Mathf.Clamp01(1 - relTime);
         caTime = 0;
     }
+
+    public override void Init()
+    {
+        return;
+    }
     
 }

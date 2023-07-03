@@ -26,4 +26,9 @@ public class CarCamera : CarComponent
         Quaternion targetRotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.Euler(targetEuler), blend);
         cameraTransform.SetPositionAndRotation(cameraTarget.position, targetRotation);
     }
+
+    public override void Init()
+    {
+        cameraTransform.gameObject.SetActive(!car.isBot);
+    }
 }

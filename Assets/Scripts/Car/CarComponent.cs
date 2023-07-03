@@ -10,4 +10,6 @@ public abstract class CarComponent : MonoBehaviour
     {
         car = GetComponent<BaseCar>();
     }
+
+    public abstract void Init();
 }

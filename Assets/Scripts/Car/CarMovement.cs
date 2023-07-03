@@ -174,4 +174,9 @@ public class CarMovement : CarComponent
     }
 
     public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
+
+    public override void Init()
+    {
+        return;
+    }
 }

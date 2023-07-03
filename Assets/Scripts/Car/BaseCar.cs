@@ -9,21 +9,39 @@ using UnityEngine;
 [RequireComponent(typeof(CarInput))]
 public class BaseCar : MonoBehaviour
 {
-    
     [SerializeField] private CarMovement movement;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CarCamera camera;
     [SerializeField] private CarDrifting drifting;
     [SerializeField] private CarInput input;
+    [SerializeField] private CarPathFollower path;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
     public CarDrifting Drifting => drifting;
     public CarInput Input => input;
+    public CarPathFollower Path => path;
+    public bool isBot;
 
     void Awake()
     {
         rb.centerOfMass = new Vector3(0, -0.4f, 0);
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
     }
+
+    void Start()
+    {
+        Init(); //should not be called here, rather from external spawner class
+    }
+
+    public void Init() {
+        Component[] comps = GetComponents<Component>();
+        foreach (var comp in comps) {
+            if (comp is CarComponent) {
+                (comp as CarComponent).Init();
+            }
+        }
+    }
+
+    
 }

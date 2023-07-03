@@ -45,6 +45,11 @@ public class CarDrifting : CarComponent
     public bool IsDrifting => state == DriftState.Drifting;
 
     private bool hasLeftGround;
+    private Vector3 localVel {
+        get {
+            return transform.InverseTransformDirection(car.RB.velocity);
+        }
+    }
 
     void Update()
     {
@@ -67,7 +72,7 @@ public class CarDrifting : CarComponent
                 break;
 
             case DriftState.Jumping:
-                if (car.Movement.IsGrounded && hasLeftGround)
+                if (car.Movement.IsGrounded && localVel.y < 0f && localVel.z > 3f)
                 {
                     jumpTimer.Stop();
                     OnLand?.Invoke();
@@ -82,14 +87,6 @@ public class CarDrifting : CarComponent
                         driftDirection = Mathf.Sign(car.Input.AxisHori);
                         driftTimer.Start();
                     }
-                }
-                else if (!car.Movement.IsGrounded) {
-                    hasLeftGround = true;
-                }
-                else if (!hasLeftGround && jumpTimer.Time > jumpBoostTime) {
-                    jumpTimer.Stop();
-                    jumpTimer.Reset();
-                    state = DriftState.Idle;
                 }
                 break;
 
@@ -145,4 +142,9 @@ public class CarDrifting : CarComponent
     }
 
     public void AddBoost(float boostAmount) => tank += boostAmount;
+
+    public override void Init()
+    {
+        return;
+    }
 }
