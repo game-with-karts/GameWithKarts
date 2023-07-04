@@ -12,19 +12,19 @@ public class CarInput : CarComponent
     private float jump2;
     private float item;
     public void GetVertical(InputAction.CallbackContext ctx) {
-        if (!car.isBot) vert = ctx.ReadValue<float>();
+        if (!car.IsBot) vert = ctx.ReadValue<float>();
     }
     public void GetHorizontal(InputAction.CallbackContext ctx) {
-        if (!car.isBot)horiz = ctx.ReadValue<float>();
+        if (!car.IsBot)horiz = ctx.ReadValue<float>();
     }
     public void GetJump1(InputAction.CallbackContext ctx) {
-        if (!car.isBot)jump1 = ctx.ReadValue<float>();
+        if (!car.IsBot)jump1 = ctx.ReadValue<float>();
     }
     public void GetJump2(InputAction.CallbackContext ctx) {
-        if (!car.isBot)jump2 = ctx.ReadValue<float>();
+        if (!car.IsBot)jump2 = ctx.ReadValue<float>();
     }
     public void GetItem(InputAction.CallbackContext ctx) {
-        if (!car.isBot)item = ctx.ReadValue<float>();
+        if (!car.IsBot)item = ctx.ReadValue<float>();
     }
     public float AxisVert => vert;
     public float AxisHori => horiz;
@@ -33,7 +33,7 @@ public class CarInput : CarComponent
 
     public override void Init()
     {
-        if (car.isBot) {
+        if (car.IsBot) {
             print("bot");
         }
     }

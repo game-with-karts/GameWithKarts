@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2149cd6c05ec1544db39dd137cd29738, type: 3}
-  m_Name: Empty
+  m_Name: Test Level
   m_EditorClassIdentifier: 
-  trackList: []
+  trackList:
+  - sceneIdx: 1
+    settings: {fileID: 11400000, guid: 913b5b119b2312d469c17c9c2aebafa1, type: 2}

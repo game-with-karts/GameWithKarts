@@ -21,7 +21,8 @@ public class BaseCar : MonoBehaviour
     public CarDrifting Drifting => drifting;
     public CarInput Input => input;
     public CarPathFollower Path => path;
-    public bool isBot;
+    [SerializeField] private bool isBot;
+    public bool IsBot => isBot;
 
     void Awake()
     {
@@ -29,12 +30,9 @@ public class BaseCar : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    void Start()
-    {
-        Init(); //should not be called here, rather from external spawner class
-    }
-
-    public void Init() {
+    public void Init(bool isBot, bool startsOnAntigrav) {
+        this.isBot = isBot;
+        movement.SetAntigrav(startsOnAntigrav);
         Component[] comps = GetComponents<Component>();
         foreach (var comp in comps) {
             if (comp is CarComponent) {

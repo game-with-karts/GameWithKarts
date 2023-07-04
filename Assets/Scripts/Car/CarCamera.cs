@@ -29,6 +29,6 @@ public class CarCamera : CarComponent
 
     public override void Init()
     {
-        cameraTransform.gameObject.SetActive(!car.isBot);
+        cameraTransform.gameObject.SetActive(!car.IsBot);
     }
 }

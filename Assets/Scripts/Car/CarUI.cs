@@ -20,7 +20,7 @@ public class CarUI : CarComponent
 
     public override void Init()
     {
-        canvas.SetActive(!car.isBot);
+        canvas.SetActive(!car.IsBot);
         transform.parent = null;
     }
 }

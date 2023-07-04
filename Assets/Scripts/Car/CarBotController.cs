@@ -30,6 +30,6 @@ public class CarBotController : CarComponent
 
     public override void Init()
     {
-        if (!car.isBot) this.enabled = false;
+        if (!car.IsBot) this.enabled = false;
     }
 }

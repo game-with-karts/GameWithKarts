@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 0}
-  distanceToSwitch: 30
+  distanceToSwitch: 40
 --- !u!114 &4253112666149923732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleThreshold: 3
+  driftThreshold: 5
   turnSmoothing: 20
 --- !u!1 &4253112666214254335
 GameObject:
@@ -605,10 +606,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 4253112666149923747}
-  rayLength: 0.4
+  rayLength: 0.5
   springCoefficient: 30000
   dampingCoefficient: 100000
-  targetDisplacement: 1
+  targetDisplacement: 0.8
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112666557309520
 GameObject:
@@ -1157,10 +1158,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 4253112666149923747}
-  rayLength: 0.4
+  rayLength: 0.5
   springCoefficient: 30000
   dampingCoefficient: 100000
-  targetDisplacement: 1
+  targetDisplacement: 0.8
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112667886288558
 GameObject:
@@ -1210,10 +1211,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 4253112666149923747}
-  rayLength: 0.4
+  rayLength: 0.5
   springCoefficient: 30000
   dampingCoefficient: 100000
-  targetDisplacement: 1
+  targetDisplacement: 0.8
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112667898450596
 GameObject:
@@ -1263,10 +1264,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   rb: {fileID: 4253112666149923747}
-  rayLength: 0.4
+  rayLength: 0.5
   springCoefficient: 30000
   dampingCoefficient: 100000
-  targetDisplacement: 1
+  targetDisplacement: 0.8
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &6773461324863565921
 GameObject:

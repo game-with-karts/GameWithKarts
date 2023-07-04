@@ -14,15 +14,18 @@ public class RaceSettings : ScriptableObject
     public bool trackFeatures;
     public ItemSettings itemSettings;
 
-    public static RaceSettings Default => new RaceSettings
-    {
-        numberOfLaps = 3,
-        raceMode = RaceMode.Regular,
-        playerSpawning = PlayerSpawning.BehindBots,
-        spawnBots = true,
-        mirrorMode = false,
-        useItems = true,
-        survivalMode = false,
-        itemSettings = ItemSettings.Default
-    };
+    public static RaceSettings Default {
+        get {
+            RaceSettings settings = ScriptableObject.CreateInstance<RaceSettings>();
+            settings.numberOfLaps = 3;
+            settings.raceMode = RaceMode.Regular;
+            settings.playerSpawning = PlayerSpawning.BehindBots;
+            settings.spawnBots = true;
+            settings.mirrorMode = false;
+            settings.useItems = true;
+            settings.survivalMode = false;
+            settings.itemSettings = ItemSettings.Default;
+            return settings;
+        }
+    }
 }

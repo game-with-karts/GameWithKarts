@@ -13,7 +13,6 @@ public class CarPathFollower : CarComponent
     public int CurrentPathNumber { get; private set; }
     public int CurrentLap { get; private set; }
 
-
     public void SetPath(VertexPath path) {
         currentPath = path;
         CurrentPathPoint = 0;
@@ -49,13 +48,15 @@ public class CarPathFollower : CarComponent
     }
 
     private void OnTriggerEnter(Collider other) {
+        if (CurrentPathPoint < currentPath.NumPoints / 2) return;
         if (other.gameObject.CompareTag(Constants.StartFinishTag)) {
-            //TODO: do stuff
+            NextLap();
+            currentPath = other.gameObject.GetComponent<StartFinish>().GetPathAtLap(CurrentLap);
         }
     }
 
     public override void Init()
     {
-        currentPath = path.path;
+        // currentPath = path.path;
     }
 }
