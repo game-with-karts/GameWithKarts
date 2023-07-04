@@ -13,13 +13,15 @@ public class PlaylistEditor : MonoBehaviour
     [SerializeField] private Button applyToAllBtn;
     [Space]
     [SerializeField] private Playlist emptyPlaylist;
+    [SerializeField] private RaceSettings defaultSettings;
 
     private Playlist playlist;
+    private RaceSettings settings;
     public static int selectedItem = -1;
 
     private void OnEnable()
     {
-        playlist = emptyPlaylist;
+        playlist = ScriptableObject.CreateInstance<Playlist>();
     }
 
     public void Add() {
@@ -46,7 +48,7 @@ public class PlaylistEditor : MonoBehaviour
     }
 
     public void DefaultTrackSettings() {
-        playlist[selectedItem].settings = RaceSettings.Default;
+        RaceSettings.CloneSettings(defaultSettings, out playlist[selectedItem].settings);
     }
 
     public void ApplyToAll() {

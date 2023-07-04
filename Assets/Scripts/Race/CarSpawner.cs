@@ -15,7 +15,7 @@ public class CarSpawner : MonoBehaviour
                 for (int i = 0; i < numBots + numPlayers; i++)
                 {
                     isBot = playerIndex != i;
-                    SpawnCar(startPositions[i], isBot ? "Player" : "Bot", isBot, startsOnAntigrav);
+                    SpawnCar(startPositions[i], isBot ? "Bot" : "Player", isBot, startsOnAntigrav);
                 }
                 break;
             case PlayerSpawning.BehindBots:

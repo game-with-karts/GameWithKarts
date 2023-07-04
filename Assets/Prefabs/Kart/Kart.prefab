@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 4253112666149923754}
   - component: {fileID: 4253112666149923755}
   - component: {fileID: 4253112666149923732}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Kart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
   reverseThreshold: 5
   downforceAmount: 40
-  boostingSpeed: 35
+  boostingSpeed: 50
   boostingAcceleration: 55
   wheels:
   - {fileID: 4253112667898450597}
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 4253112667455498844}
   cameraTarget: {fileID: 4253112667075496221}
-  smoothingAmount: 120
+  smoothingAmount: 230
   backCamera: {fileID: 4253112666814569187}
 --- !u!114 &4253112666149923745
 MonoBehaviour:
@@ -450,6 +450,7 @@ MonoBehaviour:
   driftMinAmount: 8
   driftMaxTime: 1
   driftMaxAmount: 18
+  jumpVerticalVelocityThreshold: 0.001
 --- !u!114 &4253112666149923744
 MonoBehaviour:
   m_ObjectHideFlags: 0

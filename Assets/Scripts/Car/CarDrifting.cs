@@ -43,6 +43,7 @@ public class CarDrifting : CarComponent
     public float RelativeDriftTimer => driftTimer.Time / driftMaxTime;
     public bool CanDrift => driftBoostCount < 3;
     public bool IsDrifting => state == DriftState.Drifting;
+    [SerializeField] private float jumpVerticalVelocityThreshold;
 
     private bool hasLeftGround;
     private Vector3 localVel {
@@ -66,13 +67,12 @@ public class CarDrifting : CarComponent
 
             case DriftState.Idle:
                 driftDirection = 0;
-                if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) && car.Movement.IsGrounded) 
-                // if (Input.GetKeyDown(KeyCode.LeftArrow) || (Input.GetKeyDown(KeyCode.RightArrow)) && car.Movement.IsGrounded) 
+                if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame) && car.Movement.IsGrounded) 
                     Jump();
                 break;
 
             case DriftState.Jumping:
-                if (car.Movement.IsGrounded && localVel.y < 0f && localVel.z > 3f)
+                if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && localVel.z > 3f)
                 {
                     jumpTimer.Stop();
                     OnLand?.Invoke();
@@ -124,7 +124,6 @@ public class CarDrifting : CarComponent
                 float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
                 OnDriftBoost?.Invoke(boostT);
                 AddBoost(boostAmount);
-                print($"{boostT}\t{boostAmount}\t{tank}");
 
                 driftTimer.Reset();
             }

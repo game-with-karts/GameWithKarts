@@ -12,12 +12,6 @@ public class CarCamera : CarComponent
     [SerializeField] private Camera backCamera;
     public Camera BackCamera => backCamera;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        cameraTransform.parent = null;
-    }
-
     private void LateUpdate()
     {
         Vector3 targetEuler = transform.eulerAngles;
@@ -30,5 +24,6 @@ public class CarCamera : CarComponent
     public override void Init()
     {
         cameraTransform.gameObject.SetActive(!car.IsBot);
+        cameraTransform.parent = null;
     }
 }

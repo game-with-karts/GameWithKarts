@@ -25,9 +25,8 @@ public class CarAppearance : CarComponent
     private readonly Vector3 defaultScale = new(1, 1, 1);
     private readonly Vector3 rotationCorrect = new(0, 360, 0);
     private Quaternion currentRot = Quaternion.Euler(0, 90, 0);
-    protected override void Awake()
+    public override void Init()
     {
-        base.Awake();
         car.Drifting.OnJump += JumpAnimation;
         car.Drifting.OnLand += LandAnimation;
         car.Drifting.OnDriftBoost += DriftEffect;
@@ -75,9 +74,6 @@ public class CarAppearance : CarComponent
         caTime = 0;
     }
 
-    public override void Init()
-    {
-        return;
-    }
+    
     
 }

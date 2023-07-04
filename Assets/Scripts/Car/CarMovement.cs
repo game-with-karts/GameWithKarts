@@ -26,23 +26,18 @@ public class CarMovement : CarComponent
     public bool IsBraking => isBraking;
     public bool IsAntigrav => isAntigrav;
     public void SetStats(CarStats stats) => this.stats = stats;
-    public bool IsGrounded
-    { 
-        get
-        {
+    public bool IsGrounded { 
+        get {
             bool g = false;
-            foreach (var w in wheels)
-            {
+            foreach (var w in wheels) {
                 g |= w.isGrounded;
             }
             return g;
         }
     }
 
-    private Vector3 wheelNormals
-    {
-        get
-        {
+    private Vector3 wheelNormals {
+        get {
             Vector3 n = Vector3.zero;
             foreach (var c in wheels) {
                 n += c.Normal;
@@ -54,10 +49,8 @@ public class CarMovement : CarComponent
     private Vector3 localUp = Vector3.up;
     public Vector3 LocalUp => localUp;
 
-    void Update()
-    {
-        foreach (var wheel in wheels) 
-        {
+    void Update() {
+        foreach (var wheel in wheels) {
             wheel.localUp = localUp;
         }
         // UpdateWheelPosition(frontWheels[0], wheel_fl);
@@ -66,8 +59,7 @@ public class CarMovement : CarComponent
         // UpdateWheelPosition(rearWheels[1], wheel_rr);
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         localUp = (isAntigrav ? wheelNormals : Vector3.up);
         Vector3 vel = car.RB.velocity;
         Vector3 localVel = transform.InverseTransformDirection(car.RB.velocity);
@@ -78,18 +70,14 @@ public class CarMovement : CarComponent
 
         if (surface != SurfaceType.Ice) CorrectVelocityVector();
 
-        if (car.Drifting.isBoosting)
-        {
+        if (car.Drifting.isBoosting) {
             Move(vel, boostingSpeed, boostingAcceleration);
         }
-        else
-        {
-            if (isBraking)
-            {
+        else {
+            if (isBraking) {
                 Brake(vel);
             }
-            else
-            {
+            else {
                 if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
                 else if (car.Input.AxisVert < 0) Reverse(vel);
                 else currSpeed = 0;
@@ -105,24 +93,12 @@ public class CarMovement : CarComponent
         float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
         if (!IsGrounded) turnAmount = stats.maxSpeed;
         float turnAngle = stats.turnAngle * turnAmount * (car.Input.AxisHori + car.Drifting.DriftDirection);
-        /* foreach (var wheel in frontWheels)
-        {
-            wheel.steerAngle = stats.turnAngle * (car.Input.AxisHori + car.Drifting.DriftDirection * 1.1f);
-        } */
-        //transform.RotateAround(transform.position, transform.up, turnAngle * Time.fixedDeltaTime);
         car.RB.angularVelocity = Vector3.up * turnAngle;
         //align the normals to the normal vector
-        Vector3 normal = localUp;
-
-        /*foreach(var wheel in wheels)
-        {
-            normal += wheel.Normal;
-        }
-        normal.Normalize();*/ 
         if (!IsGrounded)
         {
-            float angle = Vector3.Angle(normal, transform.up);
-            Vector3 perpendicular = Vector3.Cross(normal, transform.up);
+            float angle = Vector3.Angle(localUp, transform.up);
+            Vector3 perpendicular = Vector3.Cross(localUp, transform.up);
             transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime); 
         }
         

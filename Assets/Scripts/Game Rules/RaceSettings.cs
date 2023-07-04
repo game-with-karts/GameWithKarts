@@ -14,18 +14,16 @@ public class RaceSettings : ScriptableObject
     public bool trackFeatures;
     public ItemSettings itemSettings;
 
-    public static RaceSettings Default {
-        get {
-            RaceSettings settings = ScriptableObject.CreateInstance<RaceSettings>();
-            settings.numberOfLaps = 3;
-            settings.raceMode = RaceMode.Regular;
-            settings.playerSpawning = PlayerSpawning.BehindBots;
-            settings.spawnBots = true;
-            settings.mirrorMode = false;
-            settings.useItems = true;
-            settings.survivalMode = false;
-            settings.itemSettings = ItemSettings.Default;
-            return settings;
-        }
+    public static void CloneSettings(RaceSettings from, out RaceSettings to) {
+        to = ScriptableObject.CreateInstance<RaceSettings>();
+        to.numberOfLaps = from.numberOfLaps;
+        to.raceMode = from.raceMode;
+        to.playerSpawning = from.playerSpawning;
+        to.spawnBots = from.spawnBots;
+        to.mirrorMode = from.mirrorMode;
+        to.useItems = from.useItems;
+        to.survivalMode = from.survivalMode;
+        to.trackFeatures = from.trackFeatures;
+        to.itemSettings = from.itemSettings;
     }
 }
