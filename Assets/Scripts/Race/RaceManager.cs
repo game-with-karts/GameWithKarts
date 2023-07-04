@@ -10,11 +10,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private bool startOnAntigrav = false;
     
 
-    // --- SPAWNING SETTINGS ---
-    private PlayerSpawning playerSpawning;
-
     private void Awake() {
-        playerSpawning = GameRulesManager.instance.settings.playerSpawning;
-        carSpawner.SpawnRandom(startingPositions, playerSpawning, 1, startOnAntigrav);
+        carSpawner.SpawnRandom(startingPositions, GameRulesManager.instance.settings, 1, startOnAntigrav);
     }
 }

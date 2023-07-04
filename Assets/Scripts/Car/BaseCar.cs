@@ -26,13 +26,15 @@ public class BaseCar : MonoBehaviour
 
     void Awake()
     {
-        rb.centerOfMass = new Vector3(0, -0.4f, 0);
         Application.targetFrameRate = 60;
     }
 
     public void Init(bool isBot, bool startsOnAntigrav) {
+        rb.centerOfMass = new Vector3(0, -0.4f, 0);
+        if (!isBot) path.OnRaceEnd += TurnIntoBot;
         this.isBot = isBot;
         movement.SetAntigrav(startsOnAntigrav);
+        
         Component[] comps = GetComponents<Component>();
         foreach (var comp in comps) {
             if (comp is CarComponent) {
@@ -41,5 +43,9 @@ public class BaseCar : MonoBehaviour
         }
     }
 
-    
+    private void TurnIntoBot() {
+        isBot = true;
+        path.OnRaceEnd -= TurnIntoBot;
+    }
+
 }

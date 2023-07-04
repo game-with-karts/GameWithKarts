@@ -93,7 +93,7 @@ public class CarMovement : CarComponent
         float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
         if (!IsGrounded) turnAmount = stats.maxSpeed;
         float turnAngle = stats.turnAngle * turnAmount * (car.Input.AxisHori + car.Drifting.DriftDirection);
-        car.RB.angularVelocity = Vector3.up * turnAngle;
+        car.RB.angularVelocity = localUp * turnAngle;
         //align the normals to the normal vector
         if (!IsGrounded)
         {

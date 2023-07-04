@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d113070afc7f10418e97f35af6d2ebc, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  maxSpeed: 25
+  maxSpeed: 35
   acceleration: 35
   maxReverseSpeed: 10
   reverseAcceleration: 5

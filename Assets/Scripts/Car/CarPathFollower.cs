@@ -1,5 +1,6 @@
 using PathCreation;
 using UnityEngine;
+using System;
 
 public class CarPathFollower : CarComponent
 {
@@ -12,6 +13,10 @@ public class CarPathFollower : CarComponent
     public int CurrentPathPoint { get; private set; }
     public int CurrentPathNumber { get; private set; }
     public int CurrentLap { get; private set; }
+    public int numLaps;
+
+    public Action OnFinalLap;
+    public Action OnRaceEnd;
 
     public void SetPath(VertexPath path) {
         currentPath = path;
@@ -28,6 +33,8 @@ public class CarPathFollower : CarComponent
         CurrentLap++;
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
+        if (CurrentLap == numLaps) OnFinalLap?.Invoke();
+        else if (CurrentLap > numLaps) OnRaceEnd?.Invoke();
     }
 
     private void Update() {
@@ -55,8 +62,9 @@ public class CarPathFollower : CarComponent
         }
     }
 
-    public override void Init()
-    {
-        // currentPath = path.path;
+    public override void Init() {
+        CurrentLap = 1;
+        CurrentPathNumber = 1;
+        CurrentPathPoint = 0;
     }
 }

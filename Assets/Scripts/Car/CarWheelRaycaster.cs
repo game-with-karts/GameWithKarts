@@ -18,7 +18,7 @@ public class CarWheelRaycaster : MonoBehaviour
 
     [Range(0, 1)]
     [SerializeField] private float targetDisplacement = .5f;
-    private Vector3 normal;
+    private Vector3 normal = Vector3.up;
     private float hitDistance;
     private int hitLayer;
     public Vector3 Normal => normal;

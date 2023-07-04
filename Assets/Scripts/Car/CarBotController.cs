@@ -30,6 +30,7 @@ public class CarBotController : CarComponent
 
     public override void Init()
     {
+        car.Path.OnRaceEnd += delegate () { this.enabled = true; };
         if (!car.IsBot) this.enabled = false;
     }
 }
