@@ -14,9 +14,11 @@ public class CarPathFollower : CarComponent
     public int CurrentPathNumber { get; private set; }
     public int CurrentLap { get; private set; }
     public int numLaps;
+    public int finalPlacement { get; set; }
+    public int currentPlacement { get; set; }
 
     public Action OnFinalLap;
-    public Action OnRaceEnd;
+    public Action<CarPathFollower> OnRaceEnd;
 
     public void SetPath(VertexPath path) {
         currentPath = path;
@@ -34,7 +36,7 @@ public class CarPathFollower : CarComponent
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
         if (CurrentLap == numLaps) OnFinalLap?.Invoke();
-        else if (CurrentLap > numLaps) OnRaceEnd?.Invoke();
+        else if (CurrentLap > numLaps) OnRaceEnd?.Invoke(this);
     }
 
     private void Update() {
@@ -66,5 +68,6 @@ public class CarPathFollower : CarComponent
         CurrentLap = 1;
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
+        finalPlacement = -1;
     }
 }

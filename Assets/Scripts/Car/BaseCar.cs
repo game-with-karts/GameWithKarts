@@ -15,12 +15,14 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private CarDrifting drifting;
     [SerializeField] private CarInput input;
     [SerializeField] private CarPathFollower path;
+    [SerializeField] private CarUI ui;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
     public CarDrifting Drifting => drifting;
     public CarInput Input => input;
     public CarPathFollower Path => path;
+    public CarUI UI => ui;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
 
@@ -34,7 +36,7 @@ public class BaseCar : MonoBehaviour
         if (!isBot) path.OnRaceEnd += TurnIntoBot;
         this.isBot = isBot;
         movement.SetAntigrav(startsOnAntigrav);
-        
+
         Component[] comps = GetComponents<Component>();
         foreach (var comp in comps) {
             if (comp is CarComponent) {
@@ -43,7 +45,7 @@ public class BaseCar : MonoBehaviour
         }
     }
 
-    private void TurnIntoBot() {
+    private void TurnIntoBot(CarPathFollower _) {
         isBot = true;
         path.OnRaceEnd -= TurnIntoBot;
     }

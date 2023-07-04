@@ -1003,6 +1003,7 @@ GameObject:
   - component: {fileID: 1331082605}
   - component: {fileID: 1331082606}
   - component: {fileID: 1331082607}
+  - component: {fileID: 1331082608}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -1047,6 +1048,7 @@ MonoBehaviour:
   - {fileID: 388678517}
   - {fileID: 1879257701}
   carSpawner: {fileID: 1331082607}
+  carPlacement: {fileID: 1331082608}
   startOnAntigrav: 0
 --- !u!114 &1331082607
 MonoBehaviour:
@@ -1062,6 +1064,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carPrefab: {fileID: 4253112666149923750, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
   startFinish: {fileID: 462424307}
+--- !u!114 &1331082608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331082604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ee9e2ea10ca1d41a1853bf46d9c680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1379692138
 GameObject:
   m_ObjectHideFlags: 0
