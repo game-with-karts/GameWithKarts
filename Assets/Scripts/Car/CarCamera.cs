@@ -14,6 +14,8 @@ public class CarCamera : CarComponent
 
     private void LateUpdate()
     {
+        if (PauseMenu.instance.IsPaused) return;
+        
         Vector3 targetEuler = transform.eulerAngles;
         if (!car.Movement.IsAntigrav) targetEuler.z = 0;
         float blend = Mathf.Pow(.5f, smoothingAmount * Time.deltaTime);
