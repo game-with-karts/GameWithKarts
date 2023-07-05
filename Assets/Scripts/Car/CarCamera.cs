@@ -12,10 +12,9 @@ public class CarCamera : CarComponent
     [SerializeField] private Camera backCamera;
     public Camera BackCamera => backCamera;
 
-    private void LateUpdate()
-    {
+    private void LateUpdate() {
         if (PauseMenu.instance.IsPaused) return;
-        
+
         Vector3 targetEuler = transform.eulerAngles;
         if (!car.Movement.IsAntigrav) targetEuler.z = 0;
         float blend = Mathf.Pow(.5f, smoothingAmount * Time.deltaTime);
@@ -23,8 +22,7 @@ public class CarCamera : CarComponent
         cameraTransform.SetPositionAndRotation(cameraTarget.position, targetRotation);
     }
 
-    public override void Init()
-    {
+    public override void Init() {
         cameraTransform.gameObject.SetActive(!car.IsBot);
         cameraTransform.parent = null;
     }
