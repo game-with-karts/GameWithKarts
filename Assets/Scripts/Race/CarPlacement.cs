@@ -1,18 +1,24 @@
 using UnityEngine;
 using System.Linq;
 using System;
+using System.Collections;
 public class CarPlacement : MonoBehaviour
 {
     private CarPathFollower[] cars;
-    void Update() {
-        if (cars is null) return;
-        cars = cars.OrderBy(x => x.DistanceToNextPoint)
+
+    private IEnumerator CalculatePlacements() {
+        if (cars is null) yield return null;
+        while (true) {
+            cars = cars.OrderBy(x => x.DistanceToNextPoint)
                    .OrderByDescending(x => x.CurrentPathPoint)
+                   .OrderByDescending(x => x.CurrentPathTime)
                    .OrderByDescending(x => x.CurrentPathNumber)
                    .OrderByDescending(x => x.CurrentLap)
                    .ToArray();
-        for (int i = 0; i < cars.Length; i++) {
-            cars[i].currentPlacement = i + 1;
+            for (int i = 0; i < cars.Length; i++) {
+                cars[i].currentPlacement = i + 1;
+            }
+            yield return new WaitForSecondsRealtime(.1f);
         }
     }
 
@@ -30,6 +36,7 @@ public class CarPlacement : MonoBehaviour
             carPaths[i].OnRaceEnd += SendFinalPlacement;
         }
         this.cars = carPaths;
+        StartCoroutine(nameof(CalculatePlacements));
     }
 
     private void SendFinalPlacement(CarPathFollower car) {

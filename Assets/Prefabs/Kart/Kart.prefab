@@ -209,7 +209,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -422,6 +422,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c4626d75-512d-43f4-8edd-33439d07fca4
     m_ActionName: Car/Jump2[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6856bdc3-ae88-42d0-8e2d-eeba6765695e
+    m_ActionName: UI/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Car
@@ -505,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 4253112667455498844}
   cameraTarget: {fileID: 4253112667075496221}
-  smoothingAmount: 230
+  smoothingAmount: 120
   backCamera: {fileID: 4253112666814569187}
 --- !u!114 &4253112666149923745
 MonoBehaviour:
@@ -520,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tankDepletionRate: 10
-  jumpStrength: 400
+  jumpStrength: 450
   jumpBoostTime: 1
   jumpBoostAmount: 20
   driftMinTime: 0.5
@@ -639,6 +643,13 @@ MonoBehaviour:
   angleThreshold: 3
   driftThreshold: 5
   turnSmoothing: 20
+  rayLength: 10
+  checkLayers:
+    serializedVersion: 2
+    m_Bits: 265
+  narrowness: 4
+  forwardRayOriginOffset: 0.9
+  rightRayOriginOffset: 0.9
 --- !u!1 &4253112666214254335
 GameObject:
   m_ObjectHideFlags: 0

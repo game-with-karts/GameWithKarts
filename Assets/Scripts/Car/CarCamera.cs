@@ -12,7 +12,7 @@ public class CarCamera : CarComponent
     [SerializeField] private Camera backCamera;
     public Camera BackCamera => backCamera;
 
-    private void LateUpdate() {
+    private void Update() {
         if (PauseMenu.instance.IsPaused) return;
 
         Vector3 targetEuler = transform.eulerAngles;

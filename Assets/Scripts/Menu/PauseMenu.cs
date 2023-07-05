@@ -26,5 +26,10 @@ public class PauseMenu : MonoBehaviour
         if (ctx.canceled && !raceFinished) isPaused = !isPaused;
     }
 
+    public void ResetRace() {
+        raceFinished = false;
+        isPaused = false;
+    }
+
     public void RaceEnd() => raceFinished = true;
 }

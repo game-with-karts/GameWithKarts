@@ -52,16 +52,14 @@ public class CarDrifting : CarComponent
         }
     }
 
-    void Update()
-    {
+    void Update() {
         jumpTimer.Tick(Time.deltaTime);
         driftTimer.Tick(Time.deltaTime);
         tank -= tankDepletionRate * Time.deltaTime;
         if (tank < 0 || (car.Input.AxisVert < 0 && car.Movement.IsGrounded))
             tank = 0;
         
-        switch(state)
-        {
+        switch(state) {
             default:
                 break;
 
@@ -72,15 +70,13 @@ public class CarDrifting : CarComponent
                 break;
 
             case DriftState.Jumping:
-                if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && localVel.z > 3f)
-                {
+                if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && localVel.z > 3f) {
                     jumpTimer.Stop();
                     OnLand?.Invoke();
                     if (jumpTimer.Time >= jumpBoostTime) AddBoost(jumpBoostAmount);
                     jumpTimer.Reset();
                     state = DriftState.Idle;
-                    if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) && car.Input.AxisHori != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) 
-                    {
+                    if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) && car.Input.AxisHori != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) {
                         state = DriftState.Drifting;
                         driftBoostCount = 0;
                         driftKey = car.Input.AxisJump1 == 1 ? 1 : (car.Input.AxisJump2 == 1 ? -1 : 0);
@@ -98,8 +94,7 @@ public class CarDrifting : CarComponent
         }
     }
 
-    private void Jump()
-    {
+    private void Jump() {
         OnJump?.Invoke();
         state = DriftState.Jumping;
         hasLeftGround = false;
@@ -111,13 +106,10 @@ public class CarDrifting : CarComponent
     }
 
     private bool secondaryPressed = false;
-    private void CheckDriftCondition(float primary, float secondary)
-    {
-        if (primary > 0)
-        {
+    private void CheckDriftCondition(float primary, float secondary) {
+        if (primary > 0) {
             if (driftTimer.Time > driftMaxTime) driftBoostCount = 3;
-            if (secondary > 0 && driftBoostCount < 3 && !secondaryPressed)
-            {
+            if (secondary > 0 && driftBoostCount < 3 && !secondaryPressed) {
                 driftBoostCount++;
                 secondaryPressed = true;
                 float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
@@ -127,13 +119,11 @@ public class CarDrifting : CarComponent
 
                 driftTimer.Reset();
             }
-            else if (secondary == 0 && secondaryPressed)
-            {
+            else if (secondary == 0 && secondaryPressed) {
                 secondaryPressed = false;
             }
         }
-        else
-        {
+        else {
             driftTimer.Stop();
             driftTimer.Reset();
             state = DriftState.Idle;
@@ -142,8 +132,7 @@ public class CarDrifting : CarComponent
 
     public void AddBoost(float boostAmount) => tank += boostAmount;
 
-    public override void Init()
-    {
-        return;
+    public override void Init() {
+        tank = 0;
     }
 }

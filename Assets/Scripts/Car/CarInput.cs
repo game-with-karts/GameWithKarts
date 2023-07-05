@@ -60,4 +60,8 @@ public class CarInput : CarComponent
         this.item = item;
     }
 
+    public void AddToHorizontal(float amount) {
+        horiz = Mathf.Clamp(horiz + amount, -1, 1);
+    }
+
 }

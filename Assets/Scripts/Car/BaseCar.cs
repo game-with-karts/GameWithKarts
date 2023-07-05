@@ -9,6 +9,11 @@ using UnityEngine;
 [RequireComponent(typeof(CarInput))]
 public class BaseCar : MonoBehaviour
 {
+    private Vector3 startingPosition;
+    private Quaternion startingRotation;
+    private bool startingIsBot;
+    private bool startOnAntigrav;
+
     [SerializeField] private CarMovement movement;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CarCamera camera;
@@ -31,16 +36,31 @@ public class BaseCar : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    public void Init(bool isBot, bool startsOnAntigrav) {
-        rb.centerOfMass = new Vector3(0, -0.4f, 0);
-        movement.SetAntigrav(startsOnAntigrav);
-
+    public void ResetCar() {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = startingPosition;
+        transform.rotation = startingRotation;
+        isBot = startingIsBot;
+        movement.SetAntigrav(startOnAntigrav);
         if (!isBot) {
             path.OnRaceEnd += TurnIntoBot;
             path.OnRaceEnd += delegate (CarPathFollower _) { PauseMenu.instance.RaceEnd(); };
         }
-        this.isBot = isBot;
+        InitComponents();
+    }
 
+    public void Init(bool isBot, bool startOnAntigrav) {
+        startingPosition = transform.position;
+        startingRotation = transform.rotation;
+        startingIsBot = isBot;
+        this.startOnAntigrav = startOnAntigrav;
+
+        rb.centerOfMass = new Vector3(0, -0.4f, 0);
+        ResetCar();
+    }
+
+    private void InitComponents() {
         Component[] comps = GetComponents<Component>();
         foreach (var comp in comps) {
             if (comp is CarComponent) {

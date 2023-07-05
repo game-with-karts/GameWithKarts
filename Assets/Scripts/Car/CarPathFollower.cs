@@ -11,11 +11,14 @@ public class CarPathFollower : CarComponent
     private float prevDistanceToNextPoint;
     public float DistanceToNextPoint { get; private set; }
     public int CurrentPathPoint { get; private set; }
+    public float CurrentPathTime { get; private set; }
     public int CurrentPathNumber { get; private set; }
     public int CurrentLap { get; private set; }
     public int numLaps;
     public int finalPlacement { get; set; }
     public int currentPlacement { get; set; }
+
+    private const float maxPathTimeDelta = 0.1f;
 
     public Action OnFinalLap;
     public Action<CarPathFollower> OnRaceEnd;
@@ -35,13 +38,20 @@ public class CarPathFollower : CarComponent
         CurrentLap++;
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
+        CurrentPathTime = 0;
         if (CurrentLap == numLaps) OnFinalLap?.Invoke();
         else if (CurrentLap > numLaps) OnRaceEnd?.Invoke(this);
     }
 
     private void Update() {
         prevDistanceToNextPoint = DistanceToNextPoint;
-        DistanceToNextPoint = (transform.position - GetNextPoint()).magnitude;
+        DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
+
+        float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
+        float pathTimeDelta = pathTime - CurrentPathTime;
+        if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
+            CurrentPathTime = pathTime;
+
         if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
             Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
             for (int i = 0; i < currentPath.NumPoints; i++) {
@@ -58,6 +68,7 @@ public class CarPathFollower : CarComponent
 
     private void OnTriggerEnter(Collider other) {
         if (CurrentPathPoint < currentPath.NumPoints / 2) return;
+        if (CurrentPathTime < .7f) return;
         if (other.gameObject.CompareTag(Constants.StartFinishTag)) {
             NextLap();
             currentPath = other.gameObject.GetComponent<StartFinish>().GetPathAtLap(CurrentLap);
@@ -68,6 +79,7 @@ public class CarPathFollower : CarComponent
         CurrentLap = 1;
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
+        CurrentPathTime = 0;
         finalPlacement = -1;
     }
 }
