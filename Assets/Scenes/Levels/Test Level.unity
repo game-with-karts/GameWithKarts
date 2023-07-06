@@ -348,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e3fe847f660448f489d023e8bc285f64, type: 2}
     - target: {fileID: -5215067909958352322, guid: 596af616bce62274998a6b0f4ae4a479, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -2514646996113137737, guid: 596af616bce62274998a6b0f4ae4a479, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -995,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 405901482748522908, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
       propertyPath: m_Name
       value: PauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 405901482748522908, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 405901482748522911, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
       propertyPath: m_RootOrder

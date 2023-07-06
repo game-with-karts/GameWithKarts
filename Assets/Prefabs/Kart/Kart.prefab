@@ -509,8 +509,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 4253112667455498844}
   cameraTarget: {fileID: 4253112667075496221}
-  smoothingAmount: 120
-  backCamera: {fileID: 4253112666814569187}
+  smoothingAmount: 4
+  frontFacingCamera: {fileID: 4253112666814569187}
+  cameraAnimationDelay: 1
+  cameraAnimationEulerAngles: {x: -10, y: -160, z: 0}
 --- !u!114 &4253112666149923745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,7 +907,7 @@ GameObject:
   - component: {fileID: 4253112666814569186}
   - component: {fileID: 4253112666814569197}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: FrontFacingCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
