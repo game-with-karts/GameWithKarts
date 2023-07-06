@@ -5,6 +5,7 @@ using System.Collections;
 public class CarPlacement : MonoBehaviour
 {
     private CarPathFollower[] cars;
+    public Action<BaseCar, int> OnFinalPlacement;
 
     private IEnumerator CalculatePlacements() {
         if (cars is null) yield return null;
@@ -39,8 +40,10 @@ public class CarPlacement : MonoBehaviour
         StartCoroutine(nameof(CalculatePlacements));
     }
 
-    private void SendFinalPlacement(CarPathFollower car) {
-        car.finalPlacement = Array.IndexOf(cars, car) + 1;
-        car.OnRaceEnd -= SendFinalPlacement;
+    private void SendFinalPlacement(BaseCar car) {
+        int place = Array.IndexOf(cars, car) + 1;
+        car.Path.finalPlacement = place;
+        car.Path.OnRaceEnd -= SendFinalPlacement;
+        OnFinalPlacement?.Invoke(car, place);
     }
 }

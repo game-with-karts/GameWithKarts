@@ -89,7 +89,10 @@ public class CarBotController : CarComponent
             horiz -= .5f;
         }
         
-        horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold) * dir / turnSmoothing) + horiz, -1, 1);
+        if (car.Movement.GetSurface() == SurfaceType.Ice)
+            horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold / 3) * dir) + horiz, -1, 1);
+        else
+            horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold) * dir / turnSmoothing) + horiz, -1, 1);
         if (vert < 0) horiz *= -1;
         car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
     }
@@ -118,7 +121,7 @@ public class CarBotController : CarComponent
 
     public override void Init()
     {
-        car.Path.OnRaceEnd += delegate (CarPathFollower _) { this.enabled = true; };
+        car.Path.OnRaceEnd += delegate (BaseCar _) { this.enabled = true; };
         if (!car.IsBot) this.enabled = false;
     }
 }

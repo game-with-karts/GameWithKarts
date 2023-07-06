@@ -30,6 +30,7 @@ public class BaseCar : MonoBehaviour
     public CarUI UI => ui;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
+    public bool playerControlled => !startingIsBot;
 
     void Awake()
     {
@@ -45,7 +46,7 @@ public class BaseCar : MonoBehaviour
         movement.SetAntigrav(startOnAntigrav);
         if (!isBot) {
             path.OnRaceEnd += TurnIntoBot;
-            path.OnRaceEnd += delegate (CarPathFollower _) { PauseMenu.instance.RaceEnd(); };
+            path.OnRaceEnd += delegate (BaseCar _) { PauseMenu.instance.RaceEnd(); };
         }
         InitComponents();
     }
@@ -69,7 +70,7 @@ public class BaseCar : MonoBehaviour
         }
     }
 
-    private void TurnIntoBot(CarPathFollower _) {
+    private void TurnIntoBot(BaseCar _) {
         isBot = true;
         path.OnRaceEnd -= TurnIntoBot;
     }

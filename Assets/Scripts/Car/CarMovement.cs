@@ -139,7 +139,7 @@ public class CarMovement : CarComponent
         car.RB.velocity = transform.forward * velHoriz + transform.up * velVert;
     }
 
-    SurfaceType GetSurface()
+    public SurfaceType GetSurface()
     {
         SurfaceType s = SurfaceType.Ice;
         foreach(var w in wheels)

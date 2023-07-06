@@ -21,7 +21,7 @@ public class CarPathFollower : CarComponent
     private const float maxPathTimeDelta = 0.1f;
 
     public Action OnFinalLap;
-    public Action<CarPathFollower> OnRaceEnd;
+    public Action<BaseCar> OnRaceEnd;
 
     public void SetPath(VertexPath path) {
         currentPath = path;
@@ -40,7 +40,9 @@ public class CarPathFollower : CarComponent
         CurrentPathPoint = 0;
         CurrentPathTime = 0;
         if (CurrentLap == numLaps) OnFinalLap?.Invoke();
-        else if (CurrentLap > numLaps) OnRaceEnd?.Invoke(this);
+        else if (CurrentLap > numLaps) {
+            OnRaceEnd?.Invoke(car);
+        }
     }
 
     private void Update() {

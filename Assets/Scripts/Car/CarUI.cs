@@ -39,7 +39,7 @@ public class CarUI : CarComponent
         car.Path.OnRaceEnd += RaceEnd;
     }
 
-    private void RaceEnd(CarPathFollower _) {
+    private void RaceEnd(BaseCar _) {
         canvas.SetActive(false);
         car.Path.OnRaceEnd -= RaceEnd;
     }

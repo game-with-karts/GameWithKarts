@@ -9,6 +9,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private CarSpawner carSpawner;
     [SerializeField] private CarPlacement carPlacement;
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private PostRaceScreen postRaceScreen;
     [Header("Per-Track settings")]
     [SerializeField] private bool startOnAntigrav = false;
     
@@ -19,10 +20,13 @@ public class RaceManager : MonoBehaviour
             OnRaceReset += car.ResetCar;
         }
         carPlacement.Init(cars);
+        postRaceScreen.SetScreenVisibility(false);
+        carPlacement.OnFinalPlacement += postRaceScreen.RaceEnded;
     }
 
     public void ResetRace() {
         pauseMenu.ResetRace();
         OnRaceReset?.Invoke();
+        postRaceScreen.RestartRace();
     }
 }

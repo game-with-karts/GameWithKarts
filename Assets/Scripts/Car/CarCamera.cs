@@ -34,7 +34,7 @@ public class CarCamera : CarComponent
         offset = Quaternion.identity;
     }
 
-    private void RaceEnd(CarPathFollower _) {
+    private void RaceEnd(BaseCar _) {
         StartCoroutine(nameof(RaceEndAnimation));
     }
 
