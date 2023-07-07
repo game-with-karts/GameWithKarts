@@ -1,50 +1,54 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class CarSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject carPrefab;
     [SerializeField] private StartFinish startFinish;
-    // TODO: make it so it uses objects representing players instead of the number of them
-    public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, int numPlayers, bool startsOnAntigrav) {
+
+    private RaceSettings settings;
+    private Transform[] startPositions;
+    public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, List<PlayerInfo> players, bool startsOnAntigrav) {
         BaseCar[] cars = new BaseCar[startPositions.Length];
-        int numBots = startPositions.Length - numPlayers;
-        bool isBot;
-        
+        List<PlayerInfo> playersOnly = players.FindAll(x => x.IsPlayer);
+        List<PlayerInfo> botsOnly = players.FindAll(x => !x.IsPlayer);
+        this.settings = settings;
+        this.startPositions = startPositions;
+        int i = 0;
         switch (settings.playerSpawning) {
             case PlayerSpawning.Randomly:
-                int playerIndex = Random.Range(0, startPositions.Length - 1);
-                for (int i = 0; i < numBots + numPlayers; i++)
-                {
-                    isBot = playerIndex != i;
-                    cars[i] = SpawnCar(startPositions[i], isBot ? "Bot" : "Player", isBot, startsOnAntigrav, settings);
-                }
+                PickRandom(players, cars, startsOnAntigrav, ref i);
                 break;
             case PlayerSpawning.BehindBots:
-                for (int i = 0; i < numBots; i++) {
-                    cars[i] = SpawnCar(startPositions[i], "Bot", true, startsOnAntigrav, settings);
-                }
-                for (int i = numBots; i < numBots + numPlayers; i++) {
-                    cars[i] = SpawnCar(startPositions[i], "Player", false, startsOnAntigrav, settings);
-                }
+                PickRandom(botsOnly, cars, startsOnAntigrav, ref i);
+                PickRandom(playersOnly, cars, startsOnAntigrav, ref i);
                 break;
             case PlayerSpawning.AheadBots:
-                for (int i = 0; i < numPlayers; i++) {
-                    cars[i] = SpawnCar(startPositions[i], "Player", false, startsOnAntigrav, settings);
-                }
-                for (int i = numPlayers; i < numBots + numPlayers; i++) {
-                    cars[i] = SpawnCar(startPositions[i], "Bot", true, startsOnAntigrav, settings);
-                }
+                PickRandom(playersOnly, cars, startsOnAntigrav, ref i);
+                PickRandom(botsOnly, cars, startsOnAntigrav, ref i);
                 break;
         }
         return cars;
     }
 
-    private BaseCar SpawnCar(Transform pos, string name, bool isBot, bool startOnAntigrav, RaceSettings settings) {
+    private void PickRandom(List<PlayerInfo> players, BaseCar[] cars, bool startOnntigrav, ref int i) {
+        int range = players.Count - 1;
+        int idx;
+        for (int x = 0; x < players.Count; x++)
+        {
+            idx = Random.Range(0, range);
+            cars[i] = SpawnCar(startPositions[i], players[idx], startOnntigrav);
+            (players[idx], players[range]) = (players[range], players[idx]);
+            range--;
+            i++;
+        }
+    }
+
+    private BaseCar SpawnCar(Transform pos, PlayerInfo player, bool startOnAntigrav) {
         GameObject car = Instantiate(carPrefab, pos.position, pos.rotation);
-        car.name = name;
+        car.name = player.Name;
         BaseCar carObj = car.GetComponent<BaseCar>();
         carObj.Path.SetPath(startFinish.FirstPath);
-        carObj.Init(isBot, startOnAntigrav);
+        carObj.Init(!player.IsPlayer, startOnAntigrav);
         carObj.Path.numLaps = settings.numberOfLaps;
         return carObj;
     }

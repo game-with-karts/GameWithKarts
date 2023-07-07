@@ -18,7 +18,8 @@ public class RaceManager : MonoBehaviour
     private void Awake() {
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
                                       GameRulesManager.instance.currentTrack.settings, 
-                                      1, startOnAntigrav);
+                                      GameRulesManager.instance.players, 
+                                      startOnAntigrav);
         foreach (var car in cars) {
             OnRaceReset += car.ResetCar;
             if (!car.IsBot)
