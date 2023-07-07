@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -7,23 +8,24 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     private bool isPaused;
     public bool IsPaused => isPaused;
+    public Action<bool> OnPause;
     private bool raceFinished;
 
     void Awake() {
-        if (instance is null) instance = this;
-        else Destroy(this);
-
         isPaused = false;
         raceFinished = false;
     }
 
-    void Update() {
+    void LateUpdate() {
         pauseScreen.SetActive(isPaused);
         Time.timeScale = isPaused ? 0 : 1;
     }
 
     public void TogglePause(InputAction.CallbackContext ctx) {
-        if (ctx.canceled && !raceFinished) isPaused = !isPaused;
+        if (ctx.canceled && !raceFinished) {
+            isPaused = !isPaused;
+            OnPause?.Invoke(isPaused);
+        }
     }
 
     public void ResetRace() {
@@ -31,5 +33,5 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
-    public void RaceEnd() => raceFinished = true;
+    public void RaceEnd(BaseCar _) => raceFinished = true;
 }

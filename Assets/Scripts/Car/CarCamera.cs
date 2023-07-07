@@ -19,8 +19,6 @@ public class CarCamera : CarComponent
     private Quaternion offset = Quaternion.identity;
 
     private void Update() {
-        if (PauseMenu.instance.IsPaused) return;
-
         Vector3 targetEuler = transform.eulerAngles;
         if (!car.Movement.IsAntigrav) targetEuler.z = 0;
         Quaternion targetRotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.Euler(targetEuler) * offset, Time.deltaTime * smoothingAmount );

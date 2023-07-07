@@ -46,7 +46,6 @@ public class BaseCar : MonoBehaviour
         movement.SetAntigrav(startOnAntigrav);
         if (!isBot) {
             path.OnRaceEnd += TurnIntoBot;
-            path.OnRaceEnd += delegate (BaseCar _) { PauseMenu.instance.RaceEnd(); };
         }
         InitComponents();
     }

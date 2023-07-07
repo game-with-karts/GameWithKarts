@@ -2574,7 +2574,6 @@ GameObject:
   - component: {fileID: 2800787900626073918}
   - component: {fileID: 2800787900626073905}
   - component: {fileID: 2800787900626073904}
-  - component: {fileID: 2800787900626073919}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2684,32 +2683,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2800787900626073905}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2800787900626073919}
-        m_TargetAssemblyTypeName: MenuScreenSwitcher, Assembly-CSharp
-        m_MethodName: Back
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
---- !u!114 &2800787900626073919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800787900626073906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0a916bd8e852c4f9b9ae45446a8fa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextScreen: {fileID: 0}
+      m_Calls: []
 --- !u!1 &2800787900650779861
 GameObject:
   m_ObjectHideFlags: 0

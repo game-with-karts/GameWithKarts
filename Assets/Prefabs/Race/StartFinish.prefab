@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7384335504680288797}
   m_Layer: 0
-  m_Name: Pos1 (1)
+  m_Name: Pos5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,6 +278,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lapPaths:
   - {fileID: 0}
+  startPositions:
+  - {fileID: 7384335506045087220}
+  - {fileID: 7384335504736854120}
+  - {fileID: 7384335505352023879}
+  - {fileID: 7384335506433086828}
+  - {fileID: 7384335504680288797}
+  - {fileID: 7384335506083103614}
+  - {fileID: 7384335505669986718}
+  - {fileID: 7384335506159069326}
 --- !u!1 &7384335505669986719
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7384335505669986718}
   m_Layer: 0
-  m_Name: Pos3 (1)
+  m_Name: Pos7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,7 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7384335506083103614}
   m_Layer: 0
-  m_Name: Pos2 (1)
+  m_Name: Pos6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,7 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7384335506159069326}
   m_Layer: 0
-  m_Name: Pos4 (1)
+  m_Name: Pos8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
