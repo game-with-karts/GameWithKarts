@@ -1565,6 +1565,51 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1042269510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6883313161558255368, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+  m_PrefabInstance: {fileID: 1344108056119689160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1042269516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042269510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617764b347341f444aed664627cb5525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playlist: {fileID: 11400000, guid: 4d8829b62f987be46ac64c238b0a2f55, type: 2}
+  onSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1344108056119689163}
+        m_TargetAssemblyTypeName: TrackSelectionScreen, Assembly-CSharp
+        m_MethodName: GetSelector
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1344108056119689162}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: LoadLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1095095479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,7 +1865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1191194106
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3582,7 +3627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1979126867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3604,6 +3649,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2109103123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1152895189322447694, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+  m_PrefabInstance: {fileID: 1344108056119689160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2109103129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109103123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c30aff16f33ffa245bf57acec3826b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackIndex: 1
+  settings: {fileID: 11400000, guid: 913b5b119b2312d469c17c9c2aebafa1, type: 2}
+  onSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1344108056119689163}
+        m_TargetAssemblyTypeName: TrackSelectionScreen, Assembly-CSharp
+        m_MethodName: GetSelector
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: SingleTrackSelector, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1344108056119689162}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: LoadLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &758404686940756143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3712,6 +3803,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2209547904648985406, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2109103129}
+    - target: {fileID: 2209547904648985406, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209547904648985406, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SingleTrackSelector, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2243622997706345730, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3796,6 +3899,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2457348489564529322, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1042269516}
+    - target: {fileID: 2457348489564529322, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457348489564529322, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlaylistSelector, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4001112570690661746, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
       propertyPath: trackIndex
       value: 2
@@ -3872,13 +3987,37 @@ PrefabInstance:
       propertyPath: trackIndex
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9060174600969880180, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+    - {fileID: 4001112570690661746, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
 --- !u!224 &1344108056119689161 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2243622997706345730, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
   m_PrefabInstance: {fileID: 1344108056119689160}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1344108056119689162 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8665020251362202664, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+  m_PrefabInstance: {fileID: 1344108056119689160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b509ca16dc93c84f9f3a5858f4e4779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1344108056119689163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3339318249813432654, guid: b4dc12f2a2c3b5f458d968efc6119be7, type: 3}
+  m_PrefabInstance: {fileID: 1344108056119689160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369cbb91ba40ac04c9fbd4cea18d9778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2800787900043717366
 PrefabInstance:
   m_ObjectHideFlags: 0

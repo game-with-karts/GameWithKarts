@@ -2,13 +2,10 @@ using UnityEngine;
 
 public class TrackSelectionScreen : MonoBehaviour
 {
-    private TrackSelector selector;
-    public void GetSelector(TrackSelector selector) {
+    private ILevelSelector selector;
+    public void GetSelector(ILevelSelector selector) {
         this.selector = selector;
+        GameRulesManager.instance.SetPlaylist(selector.GetPlaylist());
         print(GameRulesManager.instance);
-    }
-    
-    public void SetActivePlaylist() {
-        GameRulesManager.instance.SetPlaylist(selector.GetTrackAsPlaylist());
     }
 }

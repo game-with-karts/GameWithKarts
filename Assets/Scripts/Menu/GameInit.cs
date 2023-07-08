@@ -1,10 +1,12 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class GameInit : MonoBehaviour
 {
     void Start() {
-        print(GameRulesManager.instance);
+        if (GameRulesManager.instance is not null) {
+            GameRulesManager.instance.players = null;
+            return;
+        }
         GameObject gameRulesObj = new();
         gameRulesObj.name = "GameRulesManager";
         gameRulesObj.AddComponent<GameRulesManager>();

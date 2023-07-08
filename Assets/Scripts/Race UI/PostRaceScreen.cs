@@ -14,6 +14,9 @@ public class PostRaceScreen : MonoBehaviour
     [SerializeField] private float leaderboardEntryHeight;
     [Header("Final Position")]
     [SerializeField] private TMP_Text finalPlaceDisplay;
+    [Header("Buttons")]
+    [SerializeField] private Button nextRaceBtn;
+    [SerializeField] private Button BackToMenuBtn;
 
     private List<BaseCar> raceLeaderboard = new();
 
@@ -31,6 +34,7 @@ public class PostRaceScreen : MonoBehaviour
         if (!car.playerControlled) return;
         finalPlaceDisplay.text = FormatPlace(place);
         SetScreenVisibility(true);
+        nextRaceBtn.gameObject.SetActive(!GameRulesManager.instance.isPlaylistEmpty);
     }
 
     public void RestartRace() {

@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TrackSelector : MonoBehaviour
+public class SingleTrackSelector : MonoBehaviour, ILevelSelector
 {
     [SerializeField] private int trackIndex;
     [SerializeField] private RaceSettings settings;
-    [SerializeField] private UnityEvent<TrackSelector> OnTrackSelected;
-    public int TrackIndex => trackIndex;
-    public RaceSettings Settings => settings;
-
-    public Playlist GetTrackAsPlaylist() {
+    [SerializeField] private UnityEvent<ILevelSelector> onSelected;
+    public UnityEvent<ILevelSelector> OnSelected { 
+        get => onSelected;
+        set => onSelected = value;
+    }
+    public Playlist GetPlaylist() {
         Track t = new Track {
             sceneIdx = trackIndex,
             settings = this.settings
@@ -20,6 +21,6 @@ public class TrackSelector : MonoBehaviour
     }
 
     public void Select() {
-        OnTrackSelected.Invoke(this);
+        OnSelected.Invoke(this);
     }
 }

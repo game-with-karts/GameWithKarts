@@ -30,6 +30,7 @@ public class GameRulesManager : MonoBehaviour
     }
 
     public void SpawnPlayersForRace() {
+        if (players is not null) return;
         int numPlayers = 1;
         int numBots = currentTrack.settings.spawnBots ? MAX_PLAYERS - numPlayers : 0;
         players = new();

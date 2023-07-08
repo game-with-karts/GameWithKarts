@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Playlst", menuName = "Track Playlist")]
@@ -23,6 +25,12 @@ public class Playlist : ScriptableObject
         Track track = trackList[0];
         trackList.RemoveAt(0);
         return track;
+    }
+
+    public static Playlist CopyFrom(Playlist from) {
+        Playlist to = ScriptableObject.CreateInstance<Playlist>();
+        to.trackList = from.trackList;
+        return to;
     }
 
 }
