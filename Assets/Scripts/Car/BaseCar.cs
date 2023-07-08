@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(Rigidbody))]
@@ -31,6 +32,7 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;
+    private List<CarComponent> components;
 
     void Awake()
     {
@@ -51,27 +53,34 @@ public class BaseCar : MonoBehaviour
     }
 
     public void Init(bool isBot, bool startOnAntigrav) {
+        components = new();
         startingPosition = transform.position;
         startingRotation = transform.rotation;
         startingIsBot = isBot;
         this.startOnAntigrav = startOnAntigrav;
+
+        Component[] comps = GetComponents<Component>();
+        foreach (var comp in comps) {
+            if (comp is CarComponent) {
+                components.Add(comp as CarComponent);
+            }
+        }
 
         rb.centerOfMass = new Vector3(0, -0.4f, 0);
         ResetCar();
     }
 
     private void InitComponents() {
-        Component[] comps = GetComponents<Component>();
-        foreach (var comp in comps) {
-            if (comp is CarComponent) {
-                (comp as CarComponent).Init();
-            }
-        }
+        components.ForEach(x => x.Init());
     }
 
     private void TurnIntoBot(BaseCar _) {
         isBot = true;
         path.OnRaceEnd -= TurnIntoBot;
+    }
+
+    public void StartRace() {
+        
     }
 
 }

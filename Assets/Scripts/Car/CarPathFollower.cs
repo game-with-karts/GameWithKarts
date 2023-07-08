@@ -1,6 +1,7 @@
 using PathCreation;
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class CarPathFollower : CarComponent
 {
@@ -83,5 +84,35 @@ public class CarPathFollower : CarComponent
         CurrentPathPoint = 0;
         CurrentPathTime = 0;
         finalPlacement = -1;
+    }
+
+    public override void StartRace()
+    {
+        StartCoroutine(nameof(UpdatePoint));
+    }
+
+    private IEnumerator UpdatePoint() {
+        while (true) {
+            prevDistanceToNextPoint = DistanceToNextPoint;
+            DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
+
+            if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
+                Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
+                for (int i = 0; i < currentPath.NumPoints; i++) {
+                    if (currentPath.GetPoint(i) == closestPoint) {
+                        CurrentPathPoint = i;
+                        break;
+                    }
+                }
+            }
+            if (DistanceToNextPoint < distanceToSwitch) {
+                CurrentPathPoint++;
+            }
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
+    private void OnDestroy() {
+        StopCoroutine(nameof(UpdatePoint));
     }
 }

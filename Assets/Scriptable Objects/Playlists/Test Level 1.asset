@@ -15,5 +15,5 @@ MonoBehaviour:
   trackList:
   - sceneIdx: 1
     settings: {fileID: 11400000, guid: 913b5b119b2312d469c17c9c2aebafa1, type: 2}
-  - sceneIdx: 1
+  - sceneIdx: 2
     settings: {fileID: 11400000, guid: 7f5cf456a1ff27b438f9b222ccb15db5, type: 2}

@@ -6,6 +6,5 @@ public class TrackSelectionScreen : MonoBehaviour
     public void GetSelector(ILevelSelector selector) {
         this.selector = selector;
         GameRulesManager.instance.SetPlaylist(selector.GetPlaylist());
-        print(GameRulesManager.instance);
     }
 }

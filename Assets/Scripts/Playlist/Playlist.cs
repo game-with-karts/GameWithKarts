@@ -29,7 +29,12 @@ public class Playlist : ScriptableObject
 
     public static Playlist CopyFrom(Playlist from) {
         Playlist to = ScriptableObject.CreateInstance<Playlist>();
-        to.trackList = from.trackList;
+        foreach (var track in from.trackList) {
+            to.trackList.Add(new Track {
+                sceneIdx = track.sceneIdx,
+                settings = track.settings
+            });
+        }
         return to;
     }
 

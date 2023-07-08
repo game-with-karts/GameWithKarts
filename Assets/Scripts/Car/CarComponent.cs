@@ -12,4 +12,5 @@ public abstract class CarComponent : MonoBehaviour
     }
 
     public abstract void Init();
+    public virtual void StartRace() {}
 }
