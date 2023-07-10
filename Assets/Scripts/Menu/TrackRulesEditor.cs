@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ public class TrackRulesEditor : MonoBehaviour
 {
     const byte minLaps = 1;
     const byte maxLaps = 99;
-    [SerializeField] private RaceSettings settings;
     [SerializeField] TMP_Dropdown raceModeInput;
     [SerializeField] TMP_InputField lapsInput;
     [SerializeField] Toggle useItems;
@@ -18,7 +18,7 @@ public class TrackRulesEditor : MonoBehaviour
     [SerializeField] Toggle spawnBots;
     [SerializeField] TMP_Dropdown playerSpawningInput;
 
-    private void NumLapsUpdate(string lapsString) {
+    private void NumLapsUpdate(RaceSettings settings, string lapsString) {
         if (!byte.TryParse(lapsString, out byte num)) return;
 
         if (num >= minLaps && num <= maxLaps) {
@@ -26,8 +26,9 @@ public class TrackRulesEditor : MonoBehaviour
         }
     }
 
-    public void UpdateRaceSettings() {
-        NumLapsUpdate(lapsInput.text);
+    public void UpdateRaceSettings(RaceSettings settings) {
+
+        NumLapsUpdate(settings, lapsInput.text);
         settings.raceMode = (RaceMode)raceModeInput.value;
         settings.playerSpawning = (PlayerSpawning)playerSpawningInput.value;
         settings.useItems = useItems.isOn;
@@ -38,5 +39,63 @@ public class TrackRulesEditor : MonoBehaviour
         playerSpawningInput.enabled = spawnBots.isOn;
     }
 
-    public RaceSettings GetSettings() => settings;
+    public void SetDisplayFrom(RaceSettings settings) {
+        DisableAll();
+        lapsInput.text = settings.numberOfLaps.ToString();
+        raceModeInput.value = (int)settings.raceMode;
+        useItems.isOn = settings.useItems;
+        trackFeatures.isOn = settings.trackFeatures;
+        mirrorMode.isOn = settings.mirrorMode;
+        survivalMode.isOn = settings.survivalMode;
+        spawnBots.isOn = settings.spawnBots;
+        playerSpawningInput.value = (int)settings.playerSpawning;
+        EnableAll();
+    }
+
+    private void DisableAll() {
+        DisableOnValueChanged(raceModeInput);
+        DisableOnValueChanged(lapsInput);
+        DisableOnValueChanged(useItems);
+        DisableOnValueChanged(trackFeatures);
+        DisableOnValueChanged(mirrorMode);
+        DisableOnValueChanged(survivalMode);
+        DisableOnValueChanged(spawnBots);
+        DisableOnValueChanged(playerSpawningInput);
+    }
+
+    private void EnableAll() {
+        EnableOnValueChanged(raceModeInput);
+        EnableOnValueChanged(lapsInput);
+        EnableOnValueChanged(useItems);
+        EnableOnValueChanged(trackFeatures);
+        EnableOnValueChanged(mirrorMode);
+        EnableOnValueChanged(survivalMode);
+        EnableOnValueChanged(spawnBots);
+        EnableOnValueChanged(playerSpawningInput);
+    }
+
+    private void DisableOnValueChanged(Toggle obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
+    }
+
+    private void DisableOnValueChanged(TMP_InputField obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
+    }
+
+    private void DisableOnValueChanged(TMP_Dropdown obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
+    }
+
+    private void EnableOnValueChanged(Toggle obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
+    }
+
+    private void EnableOnValueChanged(TMP_InputField obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
+    }
+
+    private void EnableOnValueChanged(TMP_Dropdown obj) {
+        obj.onValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
+    }
+
 }

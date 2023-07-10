@@ -450,6 +450,7 @@ MonoBehaviour:
   input: {fileID: 4253112666149923744}
   path: {fileID: 4253112666149923755}
   ui: {fileID: 4253112666149923754}
+  botController: {fileID: 4253112666149923732}
   isBot: 0
 --- !u!114 &4253112666149923756
 MonoBehaviour:
@@ -652,6 +653,7 @@ MonoBehaviour:
   narrowness: 4
   forwardRayOriginOffset: 0.9
   rightRayOriginOffset: 0.9
+  maxPathHorizontalDeviation: 5
 --- !u!1 &4253112666214254335
 GameObject:
   m_ObjectHideFlags: 0

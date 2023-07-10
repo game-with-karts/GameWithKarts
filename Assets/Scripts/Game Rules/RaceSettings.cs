@@ -14,8 +14,8 @@ public class RaceSettings : ScriptableObject
     public bool trackFeatures;
     public ItemSettings itemSettings;
 
-    public static void CloneSettings(RaceSettings from, out RaceSettings to) {
-        to = ScriptableObject.CreateInstance<RaceSettings>();
+    public static RaceSettings CloneSettings(RaceSettings from) {
+        RaceSettings to = ScriptableObject.CreateInstance<RaceSettings>();
         to.numberOfLaps = from.numberOfLaps;
         to.raceMode = from.raceMode;
         to.playerSpawning = from.playerSpawning;
@@ -25,5 +25,6 @@ public class RaceSettings : ScriptableObject
         to.survivalMode = from.survivalMode;
         to.trackFeatures = from.trackFeatures;
         to.itemSettings = from.itemSettings;
+        return to;
     }
 }

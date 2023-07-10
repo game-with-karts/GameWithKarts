@@ -1,8 +1,10 @@
 using UnityEngine;
 using System;
+using System.Linq;
 public class RaceManager : MonoBehaviour
 {
     private Action OnRaceReset;
+    private Action OnRaceStart;
     private BaseCar[] cars;
     [Header("Initialisation")]
     [Tooltip("1st place is at index 0, 2nd place at index 1, etc.")]
@@ -22,12 +24,14 @@ public class RaceManager : MonoBehaviour
                                       startOnAntigrav);
         foreach (var car in cars) {
             OnRaceReset += car.ResetCar;
+            OnRaceStart += car.StartRace;
             if (!car.IsBot)
                 car.Path.OnRaceEnd += pauseMenu.RaceEnd;
         }
         carPlacement.Init(cars);
         postRaceScreen.SetScreenVisibility(false);
         carPlacement.OnFinalPlacement += postRaceScreen.RaceEnded;
+        StartRace();
     }
 
     public void ResetRace() {
@@ -35,4 +39,6 @@ public class RaceManager : MonoBehaviour
         OnRaceReset?.Invoke();
         postRaceScreen.RestartRace();
     }
+
+    private void StartRace() => OnRaceStart?.Invoke();
 }

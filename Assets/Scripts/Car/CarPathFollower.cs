@@ -5,8 +5,8 @@ using System.Collections;
 
 public class CarPathFollower : CarComponent
 {
-    [SerializeField] private PathCreator path;
     private VertexPath currentPath;
+    public VertexPath CurrentPath => currentPath;
     [Min(0.001f)]
     [SerializeField] private float distanceToSwitch;
     private float prevDistanceToNextPoint;
@@ -22,6 +22,7 @@ public class CarPathFollower : CarComponent
     private const float maxPathTimeDelta = 0.1f;
 
     public Action OnFinalLap;
+    public Action OnNextLap;
     public Action<BaseCar> OnRaceEnd;
 
     public void SetPath(VertexPath path) {
@@ -30,6 +31,9 @@ public class CarPathFollower : CarComponent
     }
 
     public Vector3 GetNextPoint() {
+    //     Vector3 normal = currentPath.GetNormal(CurrentPathPoint);
+    //     if (isVectorNaN(normal)) normal = Vector3.zero;
+    //     Vector3 offset = car.IsBot ? car.BotController.PathHorizontalDeviation * normal : Vector3.zero;
         if (CurrentPathPoint + 1 >= currentPath.NumPoints) 
             return currentPath.GetPoint(currentPath.NumPoints - 1);
         return currentPath.GetPoint(CurrentPathPoint + 1);
@@ -40,6 +44,7 @@ public class CarPathFollower : CarComponent
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
         CurrentPathTime = 0;
+        OnNextLap?.Invoke();
         if (CurrentLap == numLaps) OnFinalLap?.Invoke();
         else if (CurrentLap > numLaps) {
             OnRaceEnd?.Invoke(car);
@@ -47,26 +52,10 @@ public class CarPathFollower : CarComponent
     }
 
     private void Update() {
-        prevDistanceToNextPoint = DistanceToNextPoint;
-        DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
-
         float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
         float pathTimeDelta = pathTime - CurrentPathTime;
         if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
             CurrentPathTime = pathTime;
-
-        if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
-            Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
-            for (int i = 0; i < currentPath.NumPoints; i++) {
-                if (currentPath.GetPoint(i) == closestPoint) {
-                    CurrentPathPoint = i;
-                    break;
-                }
-            }
-        }
-        if (DistanceToNextPoint < distanceToSwitch) {
-            CurrentPathPoint++;
-        }
     }
 
     private void OnTriggerEnter(Collider other) {

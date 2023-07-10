@@ -14,6 +14,10 @@ public class CarSpawner : MonoBehaviour
         this.settings = settings;
         this.startPositions = startPositions;
         int i = 0;
+        if (!settings.spawnBots) {
+            PickRandom(playersOnly, cars, startsOnAntigrav, ref i);
+            return cars;
+        }
         switch (settings.playerSpawning) {
             case PlayerSpawning.Randomly:
                 PickRandom(players, cars, startsOnAntigrav, ref i);

@@ -22,6 +22,7 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private CarInput input;
     [SerializeField] private CarPathFollower path;
     [SerializeField] private CarUI ui;
+    [SerializeField] private CarBotController botController;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
@@ -29,6 +30,7 @@ public class BaseCar : MonoBehaviour
     public CarInput Input => input;
     public CarPathFollower Path => path;
     public CarUI UI => ui;
+    public CarBotController BotController => botController;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;
@@ -80,7 +82,7 @@ public class BaseCar : MonoBehaviour
     }
 
     public void StartRace() {
-        
+        components.ForEach(x => x.StartRace());
     }
 
 }

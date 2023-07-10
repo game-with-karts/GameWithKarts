@@ -10,12 +10,8 @@ public class Playlist : ScriptableObject
     public int Length => trackList.Count;
 
     public Track this[int idx] {
-        get {
-            return trackList[idx];
-        }
-        set {
-            trackList[idx] = value;
-        }
+        get => trackList[idx];
+        set => trackList[idx] = value;
     }
 
     public void AddTrack(Track track) => trackList.Add(track);
