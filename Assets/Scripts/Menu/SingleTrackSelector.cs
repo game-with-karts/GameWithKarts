@@ -10,7 +10,7 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
         get => onSelected;
         set => onSelected = value;
     }
-    public Playlist GetPlaylist() {
+    private Playlist GetTrackAsPlaylist() {
         Track t = new Track {
             sceneIdx = trackIndex,
             settings = this.settings
@@ -21,6 +21,7 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
     }
 
     public void Select() {
+        GameRulesManager.instance.SetPlaylist(GetTrackAsPlaylist());
         OnSelected.Invoke(this);
     }
 }

@@ -9,9 +9,8 @@ public class PlaylistSelector : MonoBehaviour, ILevelSelector
         get => onSelected; 
         set => onSelected = value; 
     }
-
-    public Playlist GetPlaylist() => Playlist.CopyFrom(playlist);
     public void Select() {
+        GameRulesManager.instance.SetPlaylist(Playlist.CopyFrom(playlist));
         OnSelected.Invoke(this);
     }
 }

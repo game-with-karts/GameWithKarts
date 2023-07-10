@@ -10,14 +10,9 @@ public class PlaylistEditorSelector : MonoBehaviour, ILevelSelector
         set => onSelected = value;
     }
 
-    public Playlist GetPlaylist()
-    {
-        return editor.Playlist;
-    }
-
     public void Select()
     {
-        GameRulesManager.instance.SetPlaylist(GetPlaylist());
+        GameRulesManager.instance.SetPlaylist(editor.Playlist);
         onSelected.Invoke(this);
     }
 }
