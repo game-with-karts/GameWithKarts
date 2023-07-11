@@ -479,7 +479,12 @@ MonoBehaviour:
   wheel_rr: {fileID: 3779862068103227167}
   wheel_rl: {fileID: 8388250780419648556}
   gravity: 25
+  iceGrip: 0.1
   isAntigrav: 0
+  normalRayLength: 100
+  normalRayLayers:
+    serializedVersion: 2
+    m_Bits: 448
 --- !u!54 &4253112666149923747
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -628,8 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335c6a73fc2040c47a8799e76f5e20a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 0}
-  distanceToSwitch: 40
+  distanceToSwitch: 45
   numLaps: 0
 --- !u!114 &4253112666149923732
 MonoBehaviour:
@@ -647,13 +651,14 @@ MonoBehaviour:
   driftThreshold: 5
   turnSmoothing: 20
   rayLength: 10
+  iceRayLength: 20
   checkLayers:
     serializedVersion: 2
     m_Bits: 265
   narrowness: 4
   forwardRayOriginOffset: 0.9
   rightRayOriginOffset: 0.9
-  maxPathHorizontalDeviation: 5
+  maxPathHorizontalDeviation: 10
 --- !u!1 &4253112666214254335
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,46 +4,44 @@ using System;
 using System.Collections;
 public class CarPlacement : MonoBehaviour
 {
-    private CarPathFollower[] cars;
-    public Action<BaseCar, int> OnFinalPlacement;
+    private BaseCar[] cars;
+    public Action<int> OnFinalPlacement;
 
     private IEnumerator CalculatePlacements() {
         if (cars is null) yield return null;
         while (true) {
-            cars = cars.OrderBy(x => x.DistanceToNextPoint)
-                   .OrderByDescending(x => x.CurrentPathPoint)
-                   .OrderByDescending(x => x.CurrentPathTime)
-                   .OrderByDescending(x => x.CurrentPathNumber)
-                   .OrderByDescending(x => x.CurrentLap)
+            cars = cars.OrderBy(x => x.Path.DistanceToNextPoint)
+                   .OrderByDescending(x => x.Path.CurrentPathPoint)
+                   .OrderByDescending(x => x.Path.CurrentPathTime)
+                   .OrderByDescending(x => x.Path.CurrentPathNumber)
+                   .OrderByDescending(x => x.Path.CurrentLap)
+                   .OrderBy(x => x.Path.finalPlacement)
+                   .OrderByDescending(x => x.Path.finalPlacement != -1)
+                   .OrderByDescending(x => !x.isEleminated)
                    .ToArray();
             for (int i = 0; i < cars.Length; i++) {
-                cars[i].currentPlacement = i + 1;
+                cars[i].Path.currentPlacement = i + 1;
             }
             yield return new WaitForSecondsRealtime(.1f);
         }
     }
 
     public void Init(BaseCar[] cars) {
-        int numCars = 0;
-        for (int i = 0; i < cars.Length; i++) {
-            if (cars[i] is null) break;
-            numCars++;
+        BaseCar[] newCars = new BaseCar[cars.Length];
+        for (int i = 0; i < newCars.Length; i++) {
+            newCars[i] = cars[i];
+            newCars[i].UI.SetNumberOfCars(newCars.Length);
+            newCars[i].Path.OnRaceEnd += SendFinalPlacement;
         }
-        CarPathFollower[] carPaths = new CarPathFollower[numCars];
-        for (int i = 0; i < numCars; i++) {
-            if (cars[i] is null) break;
-            cars[i].UI.SetNumberOfCars(numCars);
-            carPaths[i] = cars[i].Path;
-            carPaths[i].OnRaceEnd += SendFinalPlacement;
-        }
-        this.cars = carPaths;
+        this.cars = newCars;
         StartCoroutine(nameof(CalculatePlacements));
     }
 
     private void SendFinalPlacement(BaseCar car) {
         int place = Array.IndexOf(cars, car) + 1;
+        print(place);
         car.Path.finalPlacement = place;
         car.Path.OnRaceEnd -= SendFinalPlacement;
-        OnFinalPlacement?.Invoke(car, place);
+        if(car.playerControlled) OnFinalPlacement?.Invoke(place);
     }
 }

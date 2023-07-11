@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using System;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(Rigidbody))]
@@ -34,14 +34,16 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;
+    public bool isEleminated { get; private set; }
+    public Action<BaseCar> OnEliminated;
     private List<CarComponent> components;
 
-    void Awake()
-    {
+    void Awake() {
         Application.targetFrameRate = 60;
     }
 
     public void ResetCar() {
+        isEleminated = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.position = startingPosition;
@@ -83,6 +85,11 @@ public class BaseCar : MonoBehaviour
 
     public void StartRace() {
         components.ForEach(x => x.StartRace());
+    }
+
+    public void Eliminate() {
+        isEleminated = true;
+        OnEliminated?.Invoke(this);
     }
 
 }

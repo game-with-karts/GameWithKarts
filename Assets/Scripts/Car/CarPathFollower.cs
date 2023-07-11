@@ -75,8 +75,7 @@ public class CarPathFollower : CarComponent
         finalPlacement = -1;
     }
 
-    public override void StartRace()
-    {
+    public override void StartRace() {
         StartCoroutine(nameof(UpdatePoint));
     }
 
@@ -89,7 +88,7 @@ public class CarPathFollower : CarComponent
                 Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
                 for (int i = 0; i < currentPath.NumPoints; i++) {
                     if (currentPath.GetPoint(i) == closestPoint) {
-                        CurrentPathPoint = i;
+                        CurrentPathPoint = Mathf.Clamp(i + 1, 0, CurrentPath.NumPoints - 1);
                         break;
                     }
                 }

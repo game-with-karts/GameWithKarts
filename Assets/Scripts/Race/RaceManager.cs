@@ -24,13 +24,17 @@ public class RaceManager : MonoBehaviour
                                       startOnAntigrav);
         foreach (var car in cars) {
             OnRaceReset += car.ResetCar;
+            OnRaceReset += () => { car.Path.SetPath(startFinish.GetPathAtLap(1)); };
             OnRaceStart += car.StartRace;
-            if (!car.IsBot)
+            car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
+            if (!car.IsBot) {
                 car.Path.OnRaceEnd += pauseMenu.RaceEnd;
+            }
+                
         }
         carPlacement.Init(cars);
         postRaceScreen.SetScreenVisibility(false);
-        carPlacement.OnFinalPlacement += postRaceScreen.RaceEnded;
+        carPlacement.OnFinalPlacement += postRaceScreen.SetFinalPlace;
         StartRace();
     }
 

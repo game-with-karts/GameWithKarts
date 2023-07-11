@@ -28,13 +28,17 @@ public class PostRaceScreen : MonoBehaviour
         screen.SetActive(visible);
     }
 
-    public void RaceEnded(BaseCar car, int place) {
+    public void RaceEnded(BaseCar car) {
         raceLeaderboard.Add(car);
         Display();
+        car.Path.OnRaceEnd -= RaceEnded;
         if (!car.playerControlled) return;
-        finalPlaceDisplay.text = FormatPlace(place);
         SetScreenVisibility(true);
         nextRaceBtn.gameObject.SetActive(!GameRulesManager.instance.isPlaylistEmpty);
+    }
+
+    public void SetFinalPlace(int place) {
+        finalPlaceDisplay.text = FormatPlace(place);
     }
 
     public void RestartRace() {
