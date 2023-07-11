@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
-using System;
-using System.Collections.Generic;
 
 public class TrackRulesEditor : MonoBehaviour
 {

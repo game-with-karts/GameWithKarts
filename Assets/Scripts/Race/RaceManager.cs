@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Linq;
 public class RaceManager : MonoBehaviour
 {
     private Action OnRaceReset;
