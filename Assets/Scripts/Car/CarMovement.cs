@@ -21,6 +21,7 @@ public class CarMovement : CarComponent
     [SerializeField] private bool isAntigrav;
     [SerializeField] private float normalRayLength;
     [SerializeField] private LayerMask normalRayLayers;
+    private bool controlable;
 
     private float currSpeed = 0;
     private Vector3 normal = Vector3.up;
@@ -60,7 +61,8 @@ public class CarMovement : CarComponent
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers)) {
             normal = hit.normal;
         }
@@ -71,23 +73,13 @@ public class CarMovement : CarComponent
         isBraking = Vector3.Dot(vel.normalized, transform.forward * car.Input.AxisVert) < 0;
 
         SurfaceType surface = GetSurface();
-        if(!car.IsBot) print(surface);
+        if (!car.IsBot) print(surface);
 
-        CorrectVelocityVector(surface == SurfaceType.Ice ? iceGrip : 1);
-
-        if (car.Drifting.isBoosting) {
-            Move(vel, boostingSpeed, boostingAcceleration);
+        if (controlable) {
+            CorrectVelocityVector(surface == SurfaceType.Ice ? iceGrip : 1);
+            PerformMovement(vel);
         }
-        else {
-            if (isBraking) {
-                Brake(vel);
-            }
-            else {
-                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
-                else if (car.Input.AxisVert < 0) Reverse(vel);
-                else currSpeed = 0;
-            }
-        }
+        else car.RB.velocity = Vector3.zero;
 
         car.RB.velocity += currSpeed * transform.forward;
 
@@ -104,14 +96,30 @@ public class CarMovement : CarComponent
         {
             float angle = Vector3.Angle(localUp, transform.up);
             Vector3 perpendicular = Vector3.Cross(localUp, transform.up);
-            transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime); 
+            transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
         }
-        
+
         // downforce
         car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
 
         // gravity
         car.RB.AddForce(-gravity * car.RB.mass * localUp);
+    }
+
+    private void PerformMovement(Vector3 vel) {
+        if (car.Drifting.isBoosting) {
+            Move(vel, boostingSpeed, boostingAcceleration);
+        }
+        else {
+            if (isBraking) {
+                Brake(vel);
+            }
+            else {
+                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
+                else if (car.Input.AxisVert < 0) Reverse(vel);
+                else currSpeed = 0;
+            }
+        }
     }
 
     private void Reverse(Vector3 vel) {
@@ -151,9 +159,16 @@ public class CarMovement : CarComponent
         return s;
     }
 
-    public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
+    public void SetAntigrav(bool antigrav) {
+        this.isAntigrav = antigrav;}
 
     public override void Init() {
-        return;
+        controlable = false;
+        currSpeed = 0;
+        car.RB.velocity = Vector3.zero;
+    }
+
+    public override void StartRace() {
+        controlable = true;
     }
 }

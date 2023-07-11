@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 1959092575468684874}
   - component: {fileID: 1959092575468684875}
   m_Layer: 5
-  m_Name: QuickRaceTrack
+  m_Name: SingleRaceTrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

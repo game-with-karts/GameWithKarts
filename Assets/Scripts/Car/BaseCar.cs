@@ -44,8 +44,6 @@ public class BaseCar : MonoBehaviour
 
     public void ResetCar() {
         isEleminated = false;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
         transform.position = startingPosition;
         transform.rotation = startingRotation;
         isBot = startingIsBot;

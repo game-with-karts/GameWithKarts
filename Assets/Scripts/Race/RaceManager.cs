@@ -13,6 +13,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private CarPlacement carPlacement;
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private PostRaceScreen postRaceScreen;
+    [SerializeField] private CountdownScreen countdownScreen;
     [Header("Per-Track settings")]
     [SerializeField] private bool startOnAntigrav = false;
     
@@ -35,13 +36,16 @@ public class RaceManager : MonoBehaviour
         carPlacement.Init(cars);
         postRaceScreen.SetScreenVisibility(false);
         carPlacement.OnFinalPlacement += postRaceScreen.SetFinalPlace;
-        StartRace();
+        countdownScreen.OnCountdownOver += StartRace;
+        countdownScreen.StartCountdown();
     }
 
     public void ResetRace() {
+        countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
         OnRaceReset?.Invoke();
         postRaceScreen.RestartRace();
+        countdownScreen.StartCountdown();
     }
 
     private void StartRace() => OnRaceStart?.Invoke();

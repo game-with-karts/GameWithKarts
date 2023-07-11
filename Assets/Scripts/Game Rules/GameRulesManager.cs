@@ -24,6 +24,8 @@ public class GameRulesManager : MonoBehaviour
         this.playlist = playlist;
     }
 
+    public Playlist GetPlaylist() => playlist;
+
     public Track GetNextTrack() {
         currentTrack = playlist.GetNextTrack();
         return currentTrack;

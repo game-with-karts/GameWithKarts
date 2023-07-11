@@ -1045,6 +1045,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+--- !u!114 &1172177843909168951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 719491043916075689, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+  m_PrefabInstance: {fileID: 1172177843909168950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4a9021eaf25544b94ccb096a2ce80e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1444154546110920693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1190,6 +1201,10 @@ PrefabInstance:
       propertyPath: postRaceScreen
       value: 
       objectReference: {fileID: 1769075892}
+    - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
+      propertyPath: countdownScreen
+      value: 
+      objectReference: {fileID: 1172177843909168951}
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: startingPositions.Array.data[0]
       value: 
