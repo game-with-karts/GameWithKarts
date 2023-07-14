@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameInit : MonoBehaviour
 {
+    [SerializeField] private LevelLoader loader;
     void Start() {
         if (GameRulesManager.instance is not null) {
             GameRulesManager.instance.players = null;
@@ -10,5 +11,6 @@ public class GameInit : MonoBehaviour
         GameObject gameRulesObj = new();
         gameRulesObj.name = "GameRulesManager";
         gameRulesObj.AddComponent<GameRulesManager>();
+        loader.LoadLevel();
     }
 }

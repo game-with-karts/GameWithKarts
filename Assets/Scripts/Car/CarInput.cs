@@ -10,6 +10,7 @@ public class CarInput : CarComponent
     private float jump2;
     private float jump2Prev;
     private float item;
+    private float backCamera;
     public void GetVertical(InputAction.CallbackContext ctx) {
         if (!car.IsBot) vert = ctx.ReadValue<float>();
     }
@@ -31,12 +32,17 @@ public class CarInput : CarComponent
     public void GetItem(InputAction.CallbackContext ctx) {
         if (!car.IsBot)item = ctx.ReadValue<float>();
     }
+
+    public void GetBackCamera(InputAction.CallbackContext ctx) {
+        if (!car.IsBot)backCamera = ctx.ReadValue<float>();
+    }
     public float AxisVert => vert;
     public float AxisHori => horiz;
     public float AxisJump1 => jump1;
     public float AxisJump2 => jump2;
     public bool AxisJump1ThisFrame { get; private set; }
     public bool AxisJump2ThisFrame { get; private set; }
+    public float BackCamera => backCamera;
 
     public override void Init() {
         

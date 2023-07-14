@@ -14,12 +14,12 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private TMP_InputField targetFrameRateInp;
     [SerializeField] private Toggle enablePostProcessingChk;
     [Header("Input Settings (soon)")]
-    private readonly string TargetFrameRateKey = "TARGET_FRAMERATE";
-    private readonly string EnablePostProcessingKey = "ENABLE_PP";
-    private readonly string MasterVolumeKey = "MASTER_VOLUME";
-    private readonly string MusicVolumeKey = "MUSIC_VOLUME";
-    private readonly string SFXVolumeKey = "SFX_VOLUME";
-    private readonly string BindingOverridesKey = "BINDINGS";
+    public static readonly string TargetFrameRateKey = "TARGET_FRAMERATE";
+    public static readonly string EnablePostProcessingKey = "ENABLE_PP";
+    public static readonly string MasterVolumeKey = "MASTER_VOLUME";
+    public static readonly string MusicVolumeKey = "MUSIC_VOLUME";
+    public static readonly string SFXVolumeKey = "SFX_VOLUME";
+    public static readonly string BindingOverridesKey = "BINDINGS";
 
     private int targetFrameRate;
     private bool enablePostProcessing;

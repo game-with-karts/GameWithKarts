@@ -12,8 +12,7 @@ public class PauseMenu : MonoBehaviour
     private bool raceFinished;
 
     void Awake() {
-        isPaused = false;
-        raceFinished = false;
+        Init();
     }
 
     void LateUpdate() {
@@ -25,13 +24,22 @@ public class PauseMenu : MonoBehaviour
         if (ctx.canceled && !raceFinished) {
             isPaused = !isPaused;
             OnPause?.Invoke(isPaused);
+            Cursor.visible = isPaused;
         }
     }
 
     public void ResetRace() {
-        raceFinished = false;
-        isPaused = false;
+        Init();
     }
 
-    public void RaceEnd(BaseCar _) => raceFinished = true;
+    private void Init() {
+        raceFinished = false;
+        isPaused = false;
+        Cursor.visible = false;
+    }
+
+    public void RaceEnd(BaseCar _) {
+        raceFinished = true;
+        Cursor.visible = true;
+    }
 }

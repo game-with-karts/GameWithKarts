@@ -44,6 +44,7 @@ public class CarAppearance : CarComponent
 
         float targetFOV = car.Drifting.isBoosting ? boostFOV : defaultFOV;
         car.Camera.FrontFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
+        car.Camera.BackFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
         ca.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount;
         lens.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount * -.6f;
         caTime += Time.deltaTime;

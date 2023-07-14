@@ -487,6 +487,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1578772057}
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
+      propertyPath: globalVolume
+      value: 
+      objectReference: {fileID: 2055514588}
+    - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: postRaceScreen
       value: 
       objectReference: {fileID: 1013911424}
@@ -833,6 +837,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1444154546706420363, guid: 3e2a4987d116a82469ad43c6f6186319, type: 3}
   m_PrefabInstance: {fileID: 2055514586}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2055514588 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1444154546706420362, guid: 3e2a4987d116a82469ad43c6f6186319, type: 3}
+  m_PrefabInstance: {fileID: 2055514586}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2077927773
 GameObject:
   m_ObjectHideFlags: 0

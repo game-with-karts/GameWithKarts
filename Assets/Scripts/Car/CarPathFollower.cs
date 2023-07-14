@@ -39,6 +39,10 @@ public class CarPathFollower : CarComponent
         return currentPath.GetPoint(CurrentPathPoint + 1);
     }
 
+    public Quaternion GetRotationOnPath() {
+        return currentPath.GetRotationAtDistance(CurrentPathTime);
+    }
+
     public void NextLap() {
         CurrentLap++;
         CurrentPathNumber = 1;
@@ -86,7 +90,7 @@ public class CarPathFollower : CarComponent
 
             if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
                 Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
-                for (int i = 0; i < currentPath.NumPoints; i++) {
+                for (int i = 0; i < currentPath.NumPoints && DistanceToNextPoint < distanceToSwitch; i++) {
                     if (currentPath.GetPoint(i) == closestPoint) {
                         CurrentPathPoint = Mathf.Clamp(i + 1, 0, CurrentPath.NumPoints - 1);
                         break;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class CarMovement : CarComponent
@@ -29,6 +30,9 @@ public class CarMovement : CarComponent
     public bool IsReversing => isReversing;
     public bool IsBraking => isBraking;
     public bool IsAntigrav => isAntigrav;
+    public bool IsAffectedByGravity { get; set; }
+    public Vector3 startingPosition { get; set; }
+    public Quaternion startingRotation { get; set; }
     public void SetStats(CarStats stats) => this.stats = stats;
     public bool IsGrounded { 
         get {
@@ -61,7 +65,8 @@ public class CarMovement : CarComponent
 
     void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers)) {
+        if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers))
+        {
             normal = hit.normal;
         }
         localUp = (isAntigrav ? normal : Vector3.up);
@@ -73,35 +78,39 @@ public class CarMovement : CarComponent
         SurfaceType surface = GetSurface();
         if (!car.IsBot) print(surface);
 
-        if (controlable) {
-            CorrectVelocityVector(surface == SurfaceType.Ice ? iceGrip : 1);
+        CorrectVelocityVector(surface == SurfaceType.Ice ? iceGrip : 1);
+        if (controlable)
+        {
             PerformMovement(vel);
+            Turn(localVel);
         }
-        else car.RB.velocity = Vector3.zero;
 
         car.RB.velocity += currSpeed * transform.forward;
 
         float groundResistance = 1;
         if (surface == SurfaceType.Ground) groundResistance = 5;
         car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * groundResistance * Time.fixedDeltaTime;
-
-        float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
-        if (!IsGrounded) turnAmount = stats.maxSpeed;
-        float turnAngle = stats.turnAngle * turnAmount * (car.Input.AxisHori + car.Drifting.DriftDirection);
-        car.RB.angularVelocity = localUp * turnAngle;
-        //align the normals to the normal vector
-        if (!IsGrounded)
-        {
-            float angle = Vector3.Angle(localUp, transform.up);
-            Vector3 perpendicular = Vector3.Cross(localUp, transform.up);
-            transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
-        }
+        
 
         // downforce
         car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
 
         // gravity
-        car.RB.AddForce(-gravity * car.RB.mass * localUp);
+        if (IsAffectedByGravity) car.RB.AddForce(-gravity * car.RB.mass * localUp);
+    }
+
+    private void Turn(Vector3 localVel) {
+        float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
+        if (!IsGrounded) turnAmount = stats.maxSpeed;
+        float turnAngle = stats.turnAngle * turnAmount * (car.Input.AxisHori + car.Drifting.DriftDirection);
+        car.RB.angularVelocity = localUp * turnAngle;
+
+        //align the normals to the normal vector
+        if (!IsGrounded) {
+            float angle = Vector3.Angle(localUp, transform.up);
+            Vector3 perpendicular = Vector3.Cross(localUp, transform.up);
+            transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
+        }
     }
 
     private void PerformMovement(Vector3 vel) {
@@ -158,15 +167,28 @@ public class CarMovement : CarComponent
     }
 
     public void SetAntigrav(bool antigrav) {
-        this.isAntigrav = antigrav;}
+        this.isAntigrav = antigrav;
+    }
+
+    public void SetControllableState(bool state) => controlable = state;
 
     public override void Init() {
         controlable = false;
+        IsAffectedByGravity = true;
         currSpeed = 0;
-        car.RB.velocity = Vector3.zero;
+        StartCoroutine(StopAllMotion(startingPosition, startingRotation));
     }
 
     public override void StartRace() {
         controlable = true;
+    }
+
+    public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot) {
+        for (int i = 0; i < 2; i++) {
+            car.RB.velocity = Vector3.zero;
+            car.RB.angularVelocity = Vector3.zero;
+            transform.SetPositionAndRotation(pos, rot);
+            yield return new WaitForFixedUpdate();
+        }
     }
 }

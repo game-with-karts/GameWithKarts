@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Global Volume
   - Start Finish
+  - Respawn Trigger
   layers:
   - Default
   - TransparentFX

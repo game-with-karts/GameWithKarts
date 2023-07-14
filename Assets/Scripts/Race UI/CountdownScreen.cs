@@ -14,7 +14,7 @@ public class CountdownScreen : MonoBehaviour
     public Action OnCountdownOver;
 
     public void StartCountdown() {
-        StartCoroutine(Countdown());
+        StartCoroutine(nameof(Countdown));
     }
 
     private IEnumerator Countdown() {
@@ -35,7 +35,7 @@ public class CountdownScreen : MonoBehaviour
     }
 
     public void ResetCountdown() {
-        StopCoroutine(Countdown());
+        StopCoroutine(nameof(Countdown));
         image.enabled = false;
         image.sprite = countdownImages[0];
     }

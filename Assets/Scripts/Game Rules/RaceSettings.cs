@@ -26,4 +26,16 @@ public class RaceSettings : ScriptableObject
         to.itemSettings = from.itemSettings;
         return to;
     }
+
+    public void CopyTo(RaceSettings to) {
+        to.numberOfLaps = numberOfLaps;
+        to.raceMode = raceMode;
+        to.playerSpawning = playerSpawning;
+        to.spawnBots = spawnBots;
+        to.mirrorMode = mirrorMode;
+        to.useItems = useItems;
+        to.survivalMode = survivalMode;
+        to.trackFeatures = trackFeatures;
+        to.itemSettings = itemSettings;
+    }
 }

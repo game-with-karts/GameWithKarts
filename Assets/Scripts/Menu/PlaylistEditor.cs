@@ -113,7 +113,7 @@ public class PlaylistEditor : MonoBehaviour
     }
 
     public void DefaultTrackSettings() {
-        playlist[selectedItem].settings = RaceSettings.CloneSettings(defaultSettings);
+        defaultSettings.CopyTo(playlist[selectedItem].settings);
         UpdateUIState();
     }
 
@@ -122,7 +122,7 @@ public class PlaylistEditor : MonoBehaviour
         RaceSettings settings = playlist[selectedItem].settings;
         for (int i = 0; i < playlist.Length; i++) {
             if (i == selectedItem) continue;
-            playlist[i].settings = settings;
+            settings.CopyTo(playlist[i].settings);
         }
         UpdateUIState();
     }
@@ -140,7 +140,7 @@ public class PlaylistEditor : MonoBehaviour
             trackEditor.SetDisplayFrom(playlist[selectedItem].settings);
         }
         trackEditor.gameObject.SetActive(selectedItem >= 0);
-        
+        trackSelectDrp.interactable = selectedItem >= 0;
 
         if (entries.Count == 0) return;
         for (int i = 0; i < entries.Count; i++) {

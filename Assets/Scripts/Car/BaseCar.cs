@@ -43,8 +43,6 @@ public class BaseCar : MonoBehaviour
 
     public void ResetCar() {
         isEleminated = false;
-        transform.position = startingPosition;
-        transform.rotation = startingRotation;
         isBot = startingIsBot;
         movement.SetAntigrav(startOnAntigrav);
         if (!isBot) {
@@ -55,8 +53,8 @@ public class BaseCar : MonoBehaviour
 
     public void Init(bool isBot, bool startOnAntigrav) {
         components = new();
-        startingPosition = transform.position;
-        startingRotation = transform.rotation;
+        movement.startingPosition = transform.position;
+        movement.startingRotation = transform.rotation;
         startingIsBot = isBot;
         this.startOnAntigrav = startOnAntigrav;
 

@@ -169,7 +169,7 @@ RectTransform:
   - {fileID: 8672220155811155996}
   - {fileID: 8672220155772041633}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -371,11 +371,11 @@ RectTransform:
   m_Father: {fileID: 8672220154920801724}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 25}
-  m_SizeDelta: {x: 250, y: 30}
-  m_Pivot: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 80}
+  m_SizeDelta: {x: 250, y: 50}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8672220155772041645
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -517,8 +517,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: -100, y: 450}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: -300, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8672220155991759557
 GameObject:
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start Race
+  m_text: START RACE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -619,7 +619,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -795,6 +795,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 8672220155811155996}
     m_Modifications:
     - target: {fileID: 3873701841196754845, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
@@ -969,6 +970,10 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 3873701842384397458, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3873701842600741511, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -983,15 +988,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843222853631, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0004991393
+      value: 0.00019535159
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843227728764, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_Size
-      value: 0.9999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843227728764, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843227728765, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1026,6 +1031,9 @@ PrefabInstance:
       value: SingleRaceRuleEditor, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
 --- !u!114 &98781354387208359 stripped
 MonoBehaviour:
