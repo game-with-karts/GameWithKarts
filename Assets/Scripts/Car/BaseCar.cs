@@ -37,9 +37,7 @@ public class BaseCar : MonoBehaviour
     public Action<BaseCar> OnEliminated;
     private List<CarComponent> components;
 
-    void Awake() {
-        Application.targetFrameRate = 60;
-    }
+    void Awake() {}
 
     public void ResetCar() {
         isEleminated = false;

@@ -24,6 +24,7 @@ public class CarBotController : CarComponent
     [SerializeField] private float forwardRayOriginOffset;
     [SerializeField] private float rightRayOriginOffset;
     [SerializeField] private float maxPathHorizontalDeviation;
+    [SerializeField] private float wallThreshold = .2f;
     private Vector3 ForwardRayOriginOffset => transform.forward * forwardRayOriginOffset + transform.up * .25f;
     private Vector3 BackwardRayOriginOffset => transform.forward * -forwardRayOriginOffset + transform.up * .25f;
     private Vector3 RightRayOriginOffset => ForwardRayOriginOffset + rightRayOriginOffset * transform.right;
@@ -85,7 +86,7 @@ public class CarBotController : CarComponent
             car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
             return;
         }
-        if (forwardHit) {
+        if (forwardHit && !IsWall(info.normal)) {
             horiz = transform.InverseTransformDirection(info.normal).x > 0 ? 1 : -1;
             if (info.distance < rayLength / 2) vert = 0;
             if (info.distance < rayLength / 3) isStuck = true;
@@ -132,6 +133,9 @@ public class CarBotController : CarComponent
         Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + ForwardRayOriginOffset + LeftRayDirection * rayLength);
     }
 
+    private bool IsWall(Vector3 normal) {
+        return Vector3.Dot(normal, transform.up) < wallThreshold;
+    }
     public override void Init() {
         car.Path.OnRaceEnd += (BaseCar _) => { this.enabled = true; };
         if (!car.IsBot) this.enabled = false;

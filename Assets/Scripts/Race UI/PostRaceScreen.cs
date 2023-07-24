@@ -33,7 +33,7 @@ public class PostRaceScreen : MonoBehaviour
         car.Path.OnRaceEnd -= RaceEnded;
         if (!car.playerControlled) return;
         SetScreenVisibility(true);
-        nextRaceBtn.gameObject.SetActive(!GameRulesManager.instance.isPlaylistEmpty);
+        nextRaceBtn.gameObject.SetActive(!GameRulesManager.isPlaylistEmpty);
     }
 
     public void SetFinalPlace(int place) {

@@ -12,7 +12,7 @@ public class PlaylistEditorSelector : MonoBehaviour, ILevelSelector
 
     public void Select()
     {
-        GameRulesManager.instance.SetPlaylist(editor.Playlist);
+        GameRulesManager.playlist = editor.Playlist;
         onSelected.Invoke(this);
     }
 }

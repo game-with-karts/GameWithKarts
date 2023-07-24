@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using TMPro;
 
 public class Rebind : MonoBehaviour
@@ -11,6 +12,8 @@ public class Rebind : MonoBehaviour
     [Space]
     [SerializeField] private Button btn;
     [SerializeField] private TMP_Text keyDisplay;
+    [Space]
+    public UnityEvent OnControlRebound;
     private InputAction action;
     void Awake() {
         foreach (var a in inputActions.actionMaps[0].actions) {
@@ -44,5 +47,6 @@ public class Rebind : MonoBehaviour
         btn.enabled = true;
         op.Dispose();
         action.Enable();
+        OnControlRebound.Invoke();
     }
 }

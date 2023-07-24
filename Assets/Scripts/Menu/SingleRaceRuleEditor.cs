@@ -6,7 +6,7 @@ public class SingleRaceRuleEditor : MonoBehaviour
     private Playlist playlist;
 
     void OnEnable() {
-        playlist = GameRulesManager.instance.GetPlaylist();
+        playlist = GameRulesManager.playlist;
         editor.SetDisplayFrom(playlist[0].settings);
     }
 

@@ -22,8 +22,8 @@ public class RaceManager : MonoBehaviour
     private void Awake() {
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
-                                      GameRulesManager.instance.currentTrack.settings, 
-                                      GameRulesManager.instance.players, 
+                                      GameRulesManager.currentTrack.settings, 
+                                      GameRulesManager.players, 
                                       startOnAntigrav);
         foreach (var car in cars) {
             OnRaceReset += car.ResetCar;

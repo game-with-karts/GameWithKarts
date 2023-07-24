@@ -21,7 +21,7 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
     }
 
     public void Select() {
-        GameRulesManager.instance.SetPlaylist(GetTrackAsPlaylist());
+        GameRulesManager.playlist = GetTrackAsPlaylist();
         OnSelected.Invoke(this);
     }
 }

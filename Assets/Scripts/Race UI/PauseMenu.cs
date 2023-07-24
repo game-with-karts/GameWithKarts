@@ -42,4 +42,10 @@ public class PauseMenu : MonoBehaviour
         raceFinished = true;
         Cursor.visible = true;
     }
+
+    private void OnDestroy()
+    {
+        Cursor.visible = true;
+        Time.timeScale = 1;
+    }
 }

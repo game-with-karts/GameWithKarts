@@ -1,36 +1,20 @@
-using UnityEngine;
 using System.Collections.Generic;
 
-public class GameRulesManager : MonoBehaviour
+public static class GameRulesManager
 {
     const int MAX_PLAYERS = 8;
-    public static GameRulesManager instance = null;
-    private Playlist playlist;
-    public Track currentTrack { get; private set; }
-    private string playerName;
-    public List<PlayerInfo> players;
-    public bool isPlaylistEmpty => playlist.Length == 0;
-    void OnEnable() {
-        if (instance is null) instance = this;
-        else Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
-        playlist = ScriptableObject.CreateInstance<Playlist>();
-        currentTrack = null;
-        playerName = "Test player";
-    }
+    public static Playlist playlist = null;
+    public static Track currentTrack = null;
+    private static string playerName = "Test player";
+    public static List<PlayerInfo> players;
+    public static bool isPlaylistEmpty => playlist.Length == 0;
 
-    public void SetPlaylist(Playlist playlist) {
-        this.playlist = playlist;
-    }
-
-    public Playlist GetPlaylist() => playlist;
-
-    public Track GetNextTrack() {
+    public static Track GetNextTrack() {
         currentTrack = playlist.GetNextTrack();
         return currentTrack;
     }
 
-    public void SpawnPlayersForRace() {
+    public static void SpawnPlayersForRace() {
         if (players is not null) return;
         int numPlayers = 1;
         int numBots = currentTrack.settings.spawnBots ? MAX_PLAYERS - numPlayers : 0;
@@ -43,6 +27,5 @@ public class GameRulesManager : MonoBehaviour
         }
     }
 
-    public void SetPlayerName(string name) => playerName = name;
-
+    public static void SetPlayerName(string name) => playerName = name;
 }

@@ -156,6 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loader: {fileID: 296465555}
+  masterGroup: {fileID: 24300002, guid: 0ef75398ebdba2f4ba0b74385bfb66b6, type: 2}
+  musicGroup: {fileID: -1775434354785942793, guid: 0ef75398ebdba2f4ba0b74385bfb66b6, type: 2}
+  sfxGroup: {fileID: -7242372512411786117, guid: 0ef75398ebdba2f4ba0b74385bfb66b6, type: 2}
 --- !u!114 &296465555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,11 +274,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296465553}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 531.4467, y: 381.25766, z: 7.0180664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 296465558}
