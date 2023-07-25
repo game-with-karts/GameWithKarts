@@ -17,6 +17,8 @@ public class LevelTransition : MonoBehaviour
     private const string progressName = "_Progress";
 
     public void StartTransition() {
+        gameObject.SetActive(true);
+        SoundManager.StopMusic();
         startTime = Time.time;
         mat = image.material;
         mat.SetFloat(progressName, 0);

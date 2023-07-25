@@ -8,9 +8,10 @@ public class GameInit : MonoBehaviour
     [SerializeField] private AudioMixerGroup musicGroup;
     [SerializeField] private AudioMixerGroup sfxGroup;
     void Start() {
-        SettingsMenu.SetVolume(masterGroup, "MasterVolume", PlayerPrefs.GetFloat(SettingsMenu.MasterVolumeKey));
-        SettingsMenu.SetVolume(musicGroup, "MusicVolume", PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey));
-        SettingsMenu.SetVolume(sfxGroup, "SFXVolume", PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey));
+        SettingsMenu.SetVolume(masterGroup, "MasterVolume", PlayerPrefs.GetFloat(SettingsMenu.MasterVolumeKey, .7f));
+        SettingsMenu.SetVolume(musicGroup, "MusicVolume", PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, 1));
+        SettingsMenu.SetVolume(sfxGroup, "SFXVolume", PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, 1));
+
         loader.LoadLevel();
     }
 }

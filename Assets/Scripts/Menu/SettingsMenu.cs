@@ -43,9 +43,9 @@ public class SettingsMenu : MonoBehaviour
     public void LoadSettings() {
         targetFrameRate = PlayerPrefs.GetInt(TargetFrameRateKey, 60);
         enablePostProcessing = PlayerPrefs.GetInt(EnablePostProcessingKey, 1) == 1;
-        masterVolume = PlayerPrefs.GetFloat(MasterVolumeKey);
-        musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey);
-        sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey);
+        masterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, .7f);
+        musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
         inputAction.LoadBindingOverridesFromJson(PlayerPrefs.GetString(BindingOverridesKey, ""));
         UpdateSettings();
         UpdateUI();

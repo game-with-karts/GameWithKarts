@@ -41,18 +41,17 @@ public class GwkButton : MonoBehaviour
 
     private void Awake() {
         if (playSoundOnHover)
-            onHover.AddListener(UIAudioManager.OnHover);
+            onHover.AddListener(SoundManager.OnHoverUI);
         UnityAction call = clickMode switch {
-            ClickMode.Default => UIAudioManager.OnConfirm,
-            ClickMode.Confirm => UIAudioManager.OnConfirm,
-            ClickMode.Back => UIAudioManager.OnBack,
+            ClickMode.Default => SoundManager.OnConfirmUI,
+            ClickMode.Confirm => SoundManager.OnConfirmUI,
+            ClickMode.Back => SoundManager.OnBackUI,
             _ => () => {}
         };
         onClick.AddListener(call);
     }
 
     private void Start() {
-        print($"{gameObject.name}\t{transform.localPosition}");
         hoverAnimation.SetTransform(transform as RectTransform);
         hoverEndAnimation.SetTransform(transform as RectTransform);
     }

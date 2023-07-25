@@ -2142,13 +2142,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106791353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9eb4fabc1216f4280a512e7f226f79, type: 3}
+  m_Script: {fileID: 11500000, guid: 00d2586f555a45a4a9a34d6f6aaee023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSFX: {fileID: 8300000, guid: 895431ba7b6070b4f980e0ac8ebaf6c6, type: 3}
-  confirmSFX: {fileID: 8300000, guid: e3bed51b713c8c74dab5f4838a7a8749, type: 3}
-  backSFX: {fileID: 8300000, guid: a0dc7d176b6249c419759e039c4248b8, type: 3}
-  mixerGroup: {fileID: -7242372512411786117, guid: 0ef75398ebdba2f4ba0b74385bfb66b6, type: 2}
 --- !u!1 &1156236478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,7 +2158,6 @@ GameObject:
   - component: {fileID: 1156236483}
   - component: {fileID: 1156236482}
   - component: {fileID: 1156236481}
-  - component: {fileID: 1156236480}
   m_Layer: 5
   m_Name: StartGame
   m_TagString: Untagged
@@ -2190,19 +2185,6 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 30}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 1, y: 0}
---- !u!114 &1156236480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156236478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b509ca16dc93c84f9f3a5858f4e4779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goToMenu: 0
 --- !u!114 &1156236481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2219,9 +2201,9 @@ MonoBehaviour:
   onSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1156236480}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadLevel
+      - m_Target: {fileID: 849696357}
+        m_TargetAssemblyTypeName: LevelTransition, Assembly-CSharp
+        m_MethodName: StartTransition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

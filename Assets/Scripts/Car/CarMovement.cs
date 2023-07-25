@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using UnityEngine;
 
@@ -15,8 +16,7 @@ public class CarMovement : CarComponent
     [SerializeField] private Transform wheel_rr;
     [SerializeField] private Transform wheel_rl;
     [SerializeField] private float gravity;
-    [Range(0, 1)]
-    [SerializeField] private float iceGrip;
+    [SerializeField] private CarFrictionSettings[] frictionSettings;
     [SerializeField] private bool isAntigrav;
     [SerializeField] private float normalRayLength;
     [SerializeField] private LayerMask normalRayLayers;
@@ -46,11 +46,40 @@ public class CarMovement : CarComponent
 
     public bool IsFullyGrounded { 
         get {
-            bool g = false;
+            bool g = true;
             foreach (var w in wheels) {
                 g &= w.isGrounded;
             }
             return g;
+        }
+    }
+
+    /// <summary>
+    /// DO NOT USE THIS ALONE!!! USE currentFrictionSettings INSTEAD!!!
+    /// </summary>
+    private CarFrictionSettings cfs;
+    private CarFrictionSettings currentFrictionSettings {
+        get {
+            SurfaceType st = GetSurface();
+            if (cfs.surface != st)
+                cfs = Array.Find(frictionSettings, x => x.surface == GetSurface());
+            return cfs;
+        }
+    }
+    /// <summary>
+    /// DO NOT USE THIS ALONE!!! USE currentGrip INSTEAD!!!
+    /// </summary>
+    private float cg = 1f;
+    private void UpdateCurrentGrip() {
+        if (cg < currentFrictionSettings.grip)
+            cg += Time.fixedDeltaTime * currentFrictionSettings.gripRecoverySpeed;
+    }
+    private float currentGrip {
+        get => cg;
+        set {
+            if (value < cg) {
+                cg = value;
+            }
         }
     }
 
@@ -63,10 +92,8 @@ public class CarMovement : CarComponent
         }
     }
 
-    void FixedUpdate()
-    {
-        if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers))
-        {
+    void FixedUpdate() {
+        if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers)) {
             normal = hit.normal;
         }
         localUp = (isAntigrav ? normal : Vector3.up);
@@ -75,22 +102,18 @@ public class CarMovement : CarComponent
         isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
         isBraking = Vector3.Dot(vel.normalized, transform.forward * car.Input.AxisVert) < 0;
 
-        SurfaceType surface = GetSurface();
-        if (!car.IsBot) print(surface);
+        currentGrip = currentFrictionSettings.grip;
+        UpdateCurrentGrip();
 
-        CorrectVelocityVector(surface == SurfaceType.Ice ? iceGrip : 1);
-        if (controlable)
-        {
+        CorrectVelocityVector(currentGrip);
+        if (controlable) {
             PerformMovement(vel);
             Turn(localVel);
         }
 
         car.RB.velocity += currSpeed * transform.forward;
 
-        float groundResistance = 1;
-        if (surface == SurfaceType.Ground) groundResistance = 5;
-        car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * groundResistance * Time.fixedDeltaTime;
-        
+        car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * currentFrictionSettings.groundResistance * Time.fixedDeltaTime;
 
         // downforce
         car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
@@ -122,7 +145,7 @@ public class CarMovement : CarComponent
                 Brake(vel);
             }
             else {
-                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
+                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration * Mathf.Pow(Mathf.Log(currentGrip + 1, 2), 0.5f));
                 else if (car.Input.AxisVert < 0) Reverse(vel);
                 else currSpeed = 0;
             }
@@ -152,7 +175,6 @@ public class CarMovement : CarComponent
         float velHoriz = vel.z;
         float velVert = vel.y;
         float gripExp = Mathf.Pow(.005f, 1 - grip);
-        if (!car.IsBot) print(gripExp);
         Vector3 finalVector = Vector3.Lerp(car.RB.velocity, transform.forward * velHoriz + transform.up * velVert, gripExp);
         car.RB.velocity = finalVector;
     }

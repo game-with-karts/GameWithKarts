@@ -63,20 +63,26 @@ public class CarBotController : CarComponent
         Ray right = new Ray(RightRayOriginOffset + transform.position, RightRayDirection);
         Ray left = new Ray(LeftRayOriginOffset + transform.position, LeftRayDirection);
 
-        RaycastHit info;
+        RaycastHit infoForward;
+        RaycastHit infoForwardLeft;
+        RaycastHit infoForwardRight;
+        RaycastHit infoLeft;
+        RaycastHit infoRight;
 
-        forwardRightHit = Physics.Raycast(forwardRight, out info, rayLength, checkLayers);
-        forwardLeftHit = Physics.Raycast(forwardLeft, out info, rayLength, checkLayers);
-        rightHit = Physics.Raycast(right, out info, rayLength, checkLayers);
-        leftHit = Physics.Raycast(left, out info, rayLength, checkLayers);
-        forwardHit = Physics.Raycast(forward, out info, rayLength, checkLayers);
+        forwardRightHit = Physics.Raycast(forwardRight, out infoForwardRight, rayLength, checkLayers);
+        forwardLeftHit = Physics.Raycast(forwardLeft, out infoForwardLeft, rayLength, checkLayers);
+        rightHit = Physics.Raycast(right, out infoRight, rayLength, checkLayers);
+        leftHit = Physics.Raycast(left, out infoLeft, rayLength, checkLayers);
+        forwardHit = Physics.Raycast(forward, out infoForward, rayLength, checkLayers);
+
+
 
         if (isStuck)
         {
             Ray backward = new Ray(BackwardRayOriginOffset + transform.position, -transform.forward);
             vert = -1;
             horiz = dir * -1;
-            if (Physics.Raycast(backward, out info, rayLength / 3, checkLayers)) {
+            if (Physics.Raycast(backward, rayLength / 3, checkLayers)) {
                 vert = 1;
                 horiz *= -1;
             }
@@ -86,24 +92,26 @@ public class CarBotController : CarComponent
             car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
             return;
         }
-        if (forwardHit && !IsWall(info.normal)) {
-            horiz = transform.InverseTransformDirection(info.normal).x > 0 ? 1 : -1;
-            if (info.distance < rayLength / 2) vert = 0;
-            if (info.distance < rayLength / 3) isStuck = true;
+        if (forwardHit && !IsWall(infoForward.normal)) {
+            print(infoForward.distance);
+            horiz = (transform.InverseTransformDirection(infoForward.normal).x > 0 ? 1 : -1) * GetImportance(infoForward);
+            if (infoForward.distance < rayLength / 2) vert = 0;
+            if (infoForward.distance < rayLength / 3) isStuck = true;
         }
         if (forwardLeftHit) {
-            horiz += .5f;
+            horiz += .5f * GetImportance(infoForwardLeft);
         }
         if (leftHit) {
-            horiz += .5f;
+            horiz += .5f * GetImportance(infoLeft);
         }
         if (forwardRightHit) {
-            horiz -= .5f;
+            horiz -= .5f * GetImportance(infoForwardRight);
         }
         if (rightHit) {
-            horiz -= .5f;
+            horiz -= .5f * GetImportance(infoRight);
         }
 
+        // turn towards next point
         if (car.Movement.GetSurface() == SurfaceType.Ice)
             horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold / 3) * dir) + horiz, -1, 1);
         else
@@ -139,5 +147,9 @@ public class CarBotController : CarComponent
     public override void Init() {
         car.Path.OnRaceEnd += (BaseCar _) => { this.enabled = true; };
         if (!car.IsBot) this.enabled = false;
+    }
+
+    public float GetImportance(RaycastHit hit) {
+        return 1 - hit.distance / rayLength;
     }
 }

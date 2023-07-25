@@ -19,7 +19,7 @@ public class CarPathFollower : CarComponent
     public int finalPlacement { get; set; }
     public int currentPlacement { get; set; }
 
-    private const float maxPathTimeDelta = 0.1f;
+    private const float maxPathTimeDelta = 0.3f;
 
     public Action OnFinalLap;
     public Action OnNextLap;
@@ -56,10 +56,7 @@ public class CarPathFollower : CarComponent
     }
 
     private void Update() {
-        float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
-        float pathTimeDelta = pathTime - CurrentPathTime;
-        if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
-            CurrentPathTime = pathTime;
+        
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -85,6 +82,11 @@ public class CarPathFollower : CarComponent
 
     private IEnumerator UpdatePoint() {
         while (true) {
+            float time = currentPath.times[CurrentPathPoint];
+            float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
+            float pathTimeDelta = pathTime - CurrentPathTime;
+            if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
+                CurrentPathTime = pathTime;
             prevDistanceToNextPoint = DistanceToNextPoint;
             DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
 
