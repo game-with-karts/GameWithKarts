@@ -82,7 +82,6 @@ public class CarPathFollower : CarComponent
 
     private IEnumerator UpdatePoint() {
         while (true) {
-            float time = currentPath.times[CurrentPathPoint];
             float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
             float pathTimeDelta = pathTime - CurrentPathTime;
             if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)

@@ -6,10 +6,9 @@ using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager instance = null;
 
     [Header("Music")]
-    [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private AudioClip mainMusic;
     [Space]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private bool playOnStart;
@@ -31,12 +30,8 @@ public class SoundManager : MonoBehaviour
     private static Action OnMusicPlay;
     private static Action OnMusicStop;
     private static Action<AudioClip> OnMusicSet;
-    private static Action OnMusicMenuSet;
 
     void Awake() {
-        if (instance is not null) Destroy(gameObject);
-        else instance = this;
-        DontDestroyOnLoad(gameObject);
         sources = new();
         for (int i = 0; i < 4; i++) {
             AudioSource src = gameObject.AddComponent<AudioSource>();
@@ -62,7 +57,6 @@ public class SoundManager : MonoBehaviour
     public static void PlayMusic() => OnMusicPlay?.Invoke();
     public static void StopMusic() => OnMusicStop?.Invoke();
     public static void SetMusic(AudioClip music) => OnMusicSet?.Invoke(music);
-    public static void SetMenuMusic() => OnMusicMenuSet?.Invoke();
 
     private void Hover() {
         SetAndPlay(hoverSFX);
@@ -94,8 +88,8 @@ public class SoundManager : MonoBehaviour
         musicSource.clip = music;
     }
 
-    private void MusicSetMenu() {
-        MusicSet(menuMusic);
+    private void MusicLoopable(bool loopable) {
+        musicSource.loop = loopable;
     }
 
     private void OnDestroy() {

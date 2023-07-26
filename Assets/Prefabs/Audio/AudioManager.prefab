@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a58436f03f7598469dfa4df636bdd6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuMusic: {fileID: 8300000, guid: 4b19be25816a43d48b7fc7317f996ab6, type: 3}
+  mainMusic: {fileID: 0}
   musicSource: {fileID: 8908104826203151227}
   playOnStart: 0
   hoverSFX: {fileID: 8300000, guid: 895431ba7b6070b4f980e0ac8ebaf6c6, type: 3}
@@ -70,7 +70,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

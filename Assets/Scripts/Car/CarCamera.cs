@@ -29,12 +29,14 @@ public class CarCamera : CarComponent
     }
 
     public override void Init() {
-        cameraTransform.gameObject.SetActive(!car.IsBot);
+        cameraTransform.gameObject.SetActive(false);
         cameraTransform.parent = null;
         car.Path.OnRaceEnd += RaceEnd;
         offset = Quaternion.identity;
         IsFollowingPlayer = true;
     }
+
+    public void ActivateCamera() => cameraTransform.gameObject.SetActive(!car.IsBot);
 
     private void RaceEnd(BaseCar _) {
         StartCoroutine(nameof(RaceEndAnimation));

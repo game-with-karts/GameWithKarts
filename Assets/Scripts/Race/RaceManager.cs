@@ -15,6 +15,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private PostRaceScreen postRaceScreen;
     [SerializeField] private CountdownScreen countdownScreen;
     [Header("Per-Track settings")]
+    [SerializeField] private PreRaceSequence sequence;
     [SerializeField] private Volume globalVolume;
     [SerializeField] private bool startOnAntigrav = false;
     
@@ -26,12 +27,14 @@ public class RaceManager : MonoBehaviour
                                       GameRulesManager.players, 
                                       startOnAntigrav);
         foreach (var car in cars) {
-            OnRaceReset += car.ResetCar;
-            OnRaceReset += () => { car.Path.SetPath(startFinish.GetPathAtLap(1)); };
+            OnRaceReset += () => car.ResetCar(false);
+            OnRaceReset += () => car.Path.SetPath(startFinish.GetPathAtLap(1));
             OnRaceStart += car.StartRace;
             car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
             if (!car.IsBot) {
                 car.Path.OnRaceEnd += pauseMenu.RaceEnd;
+                sequence.OnSequenceEnd += car.Camera.ActivateCamera;
+                sequence.OnSequenceEnd += car.UI.ActivateCanvas;
             }
                 
         }
@@ -39,7 +42,13 @@ public class RaceManager : MonoBehaviour
         postRaceScreen.SetScreenVisibility(false);
         carPlacement.OnFinalPlacement += postRaceScreen.SetFinalPlace;
         countdownScreen.OnCountdownOver += StartRace;
-        countdownScreen.StartCountdown();
+        sequence.OnSequenceEnd += countdownScreen.StartCountdown;
+        sequence.OnSequenceEnd += () => pauseMenu.gameObject.SetActive(true);
+    }
+
+    private void Start() {
+        pauseMenu.gameObject.SetActive(false);
+        sequence.StartSequence();
     }
 
     public void ResetRace() {

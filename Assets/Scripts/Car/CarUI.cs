@@ -32,12 +32,14 @@ public class CarUI : CarComponent
     }
 
     public override void Init() {
-        canvas.SetActive(!car.IsBot);
+        canvas.SetActive(false);
         transform.parent = null;
         lapCounter.text = "Lap -/-";
         positionDisplay.text = "-/-";
         car.Path.OnRaceEnd += RaceEnd;
     }
+
+    public void ActivateCanvas() => canvas.SetActive(!car.IsBot);
 
     private void RaceEnd(BaseCar _) {
         canvas.SetActive(false);

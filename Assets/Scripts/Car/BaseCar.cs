@@ -39,14 +39,14 @@ public class BaseCar : MonoBehaviour
 
     void Awake() {}
 
-    public void ResetCar() {
+    public void ResetCar(bool onInit) {
         isEleminated = false;
         isBot = startingIsBot;
         movement.SetAntigrav(startOnAntigrav);
         if (!isBot) {
             path.OnRaceEnd += TurnIntoBot;
         }
-        InitComponents();
+        InitComponents(onInit);
     }
 
     public void Init(bool isBot, bool startOnAntigrav) {
@@ -64,11 +64,22 @@ public class BaseCar : MonoBehaviour
         }
 
         rb.centerOfMass = new Vector3(0, -0.4f, 0);
-        ResetCar();
+        ResetCar(true);
     }
 
-    private void InitComponents() {
-        components.ForEach(x => x.Init());
+    private void InitComponents(bool onInit) {
+        foreach (CarComponent c in components) {
+            c.Init();
+            if (!onInit) {
+                if (c is CarCamera) {
+                    (c as CarCamera).ActivateCamera();
+                }
+                if (c is CarUI) {
+                    (c as CarUI).ActivateCanvas();
+                }
+            }
+            
+        }
     }
 
     private void TurnIntoBot(BaseCar _) {
