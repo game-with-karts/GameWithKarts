@@ -1358,6 +1358,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1578772057}
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
+      propertyPath: track
+      value: 
+      objectReference: {fileID: 1549883030}
+    - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: sequence
       value: 
       objectReference: {fileID: 1264389204}

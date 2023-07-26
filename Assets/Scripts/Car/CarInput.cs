@@ -49,6 +49,7 @@ public class CarInput : CarComponent
     }
 
     private void Update() {
+        if (!car.Movement.IsControlable) return;
         AxisJump1ThisFrame = jump1 - jump1Prev == 1;
         AxisJump2ThisFrame = jump2 - jump2Prev == 1;
         jump1Prev = jump1;

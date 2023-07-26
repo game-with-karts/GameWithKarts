@@ -148,6 +148,8 @@ public class PlaylistEditor : MonoBehaviour
             entries[i].IndexDisplay.text = (i + 1).ToString();
             entries[i].NameDisplay.text = trackNames[playlist[i].sceneIdx - 1];
             entries[i].RaceModeDisplay.text = "test";
+            entries[i].LapCountDisplay.text = $"{playlist[i].settings.numberOfLaps} lap{(playlist[i].settings.numberOfLaps == 1 ? '\0' : 's')}";
+            entries[i].MirrorModeDisplay.enabled = playlist[i].settings.mirrorMode;
             entries[i].index = i;
             entries[i].color = i == selectedItem ? selectedColour : defaultColour;
         }

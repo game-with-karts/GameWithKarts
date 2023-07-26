@@ -21,6 +21,7 @@ public class CarMovement : CarComponent
     [SerializeField] private float normalRayLength;
     [SerializeField] private LayerMask normalRayLayers;
     private bool controlable;
+    public bool IsControlable => controlable;
 
     private float currSpeed = 0;
     private Vector3 normal = Vector3.up;

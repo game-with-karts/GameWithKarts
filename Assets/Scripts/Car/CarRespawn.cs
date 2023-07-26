@@ -11,6 +11,8 @@ public class CarRespawn : CarComponent
     [SerializeField] private float respawnDuration = 1f;
     [SerializeField] private float respawnSpeed = 2f;
     [SerializeField] private LayerMask surfaceLayers;
+
+    private bool isMirrored;
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag(RESPAWN_TRIGGER_TAG)) {
             StartCoroutine(nameof(Respawn));
@@ -22,7 +24,8 @@ public class CarRespawn : CarComponent
         car.Camera.IsFollowingPlayer = false;
 
         Vector3 respawnPosition = car.Path.GetNextPoint();
-        Quaternion respawnRotation = car.Path.GetRotationOnPath() * Quaternion.Euler(90, 0, 90);
+        Vector3 respawnEuler = isMirrored ? new(90, 0, -90) : new(90, 0, 90) ;
+        Quaternion respawnRotation = car.Path.GetRotationOnPath() * Quaternion.Euler(respawnEuler) ;
         Vector3 respawnUpDirection = respawnRotation * Vector3.down;
         RaycastHit hit;
         if (Physics.Raycast(respawnPosition, -respawnUpDirection, out hit, 20f, surfaceLayers)) {
@@ -47,5 +50,6 @@ public class CarRespawn : CarComponent
     }
     public override void Init() {
         StopCoroutine(nameof(Respawn));
+        isMirrored = GameRulesManager.currentTrack.settings.mirrorMode;
     }
 }

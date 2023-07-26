@@ -63,24 +63,34 @@ public class CarDrifting : CarComponent
 
             case DriftState.Idle:
                 driftDirection = 0;
-                if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame) && car.Movement.IsGrounded) 
+                if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame) 
+                   && car.Movement.IsGrounded && car.Movement.IsControlable) 
                     Jump();
                 break;
 
             case DriftState.Jumping:
-                if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && localVel.z > 3f) {
+                if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold
+                   && hasLeftGround) {
                     jumpTimer.Stop();
                     OnLand?.Invoke();
                     if (jumpTimer.Time >= jumpBoostTime) AddBoost(jumpBoostAmount);
                     jumpTimer.Reset();
                     state = DriftState.Idle;
-                    if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) && car.Input.AxisHori != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) {
+                    if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) 
+                       && car.Input.AxisHori != 0 && car.RB.velocity.magnitude > 5 
+                       && !car.Movement.IsReversing) {
                         state = DriftState.Drifting;
                         driftBoostCount = 0;
                         driftKey = car.Input.AxisJump1 == 1 ? 1 : (car.Input.AxisJump2 == 1 ? -1 : 0);
                         driftDirection = Mathf.Sign(car.Input.AxisHori);
                         driftTimer.Start();
                     }
+                }
+                else if (!car.Movement.IsGrounded) hasLeftGround = true;
+                else if (localVel.y < jumpVerticalVelocityThreshold + 4f) {
+                    jumpTimer.Stop();
+                    jumpTimer.Reset();
+                    state = DriftState.Idle;
                 }
                 break;
 

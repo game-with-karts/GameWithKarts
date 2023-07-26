@@ -15,12 +15,14 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private PostRaceScreen postRaceScreen;
     [SerializeField] private CountdownScreen countdownScreen;
     [Header("Per-Track settings")]
+    [SerializeField] private Transform track;
     [SerializeField] private PreRaceSequence sequence;
     [SerializeField] private Volume globalVolume;
     [SerializeField] private bool startOnAntigrav = false;
     
 
     private void Awake() {
+        track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
                                       GameRulesManager.currentTrack.settings, 
