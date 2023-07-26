@@ -18,6 +18,9 @@ public class LevelLoader : MonoBehaviour
         }
             
         var loading = SceneManager.LoadSceneAsync(goToMenu ? menuSceneIdx : t.sceneIdx + menuSceneIdx);
+        if (goToMenu) {
+            GameRulesManager.players = null;
+        }
         while (!loading.isDone) {
             yield return new WaitForEndOfFrame();
         }

@@ -93,7 +93,6 @@ public class CarBotController : CarComponent
             return;
         }
         if (forwardHit && !IsWall(infoForward.normal)) {
-            print(infoForward.distance);
             horiz = (transform.InverseTransformDirection(infoForward.normal).x > 0 ? 1 : -1) * GetImportance(infoForward);
             if (infoForward.distance < rayLength / 2) vert = 0;
             if (infoForward.distance < rayLength / 3) isStuck = true;

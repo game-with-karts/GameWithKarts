@@ -1308,7 +1308,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 3873701842409797679}
   toggleTransition: 1
   graphic: {fileID: 3873701842201462593}
@@ -3483,7 +3483,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3873701841270743414}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999908
+  m_Size: 0.99996114
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5664,7 +5664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00048655889}
+  m_AnchoredPosition: {x: 0, y: 0.000061211715}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3873701843227728766

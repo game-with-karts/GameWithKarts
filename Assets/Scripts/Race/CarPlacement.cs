@@ -39,7 +39,6 @@ public class CarPlacement : MonoBehaviour
 
     private void SendFinalPlacement(BaseCar car) {
         int place = Array.IndexOf(cars, car) + 1;
-        print(place);
         car.Path.finalPlacement = place;
         car.Path.OnRaceEnd -= SendFinalPlacement;
         if(car.playerControlled) OnFinalPlacement?.Invoke(place);

@@ -8,12 +8,16 @@ public class CarAppearance : CarComponent
     private ChromaticAberration ca;
     private LensDistortion lens;
     [SerializeField] private Transform model;
+    [SerializeField] private Transform skidmarksParent;
     [SerializeField] private float jumpAmount;
     [SerializeField] private float landAmount;
     [SerializeField] private float animationSpeed;
     [SerializeField] private float defaultFOV = 60;
     [SerializeField] private float boostFOV = 80;
     [SerializeField] private ParticleSystem speedLines;
+    [SerializeField] private TrailRenderer[] skidmarks;
+    [SerializeField] private Gradient skidmarkDriftGradient;
+    [SerializeField] private Gradient skidmarkIceGradient;
     [Space]
     [SerializeField] private AnimationCurve chromaticAberrationCurve;
     private float caAmount;
@@ -45,6 +49,7 @@ public class CarAppearance : CarComponent
         Vector3 rotDelta = new Vector3(0, 30 * car.Drifting.DriftDirection + 90, 0) - currentRot.eulerAngles;
         currentRot *= Quaternion.Euler(rotDelta * animationSpeed * Time.deltaTime);
         model.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
+        skidmarksParent.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
 
         
         float targetFOV = car.Drifting.isBoosting ? boostFOV : defaultFOV;
@@ -60,6 +65,13 @@ public class CarAppearance : CarComponent
             if (speedLines.isStopped) speedLines.Play();
         }
         else speedLines.Stop();
+
+        SurfaceType surfaceType = car.Movement.GetSurface();
+
+        foreach(var r in skidmarks) {
+            r.colorGradient = surfaceType == SurfaceType.Ice ? skidmarkIceGradient : skidmarkDriftGradient;
+            r.emitting = car.Drifting.IsDrifting || (surfaceType == SurfaceType.Ice && car.Movement.IsGrounded);
+        }
     }
 
     void JumpAnimation() {
