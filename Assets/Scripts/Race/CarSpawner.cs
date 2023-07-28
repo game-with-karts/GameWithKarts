@@ -1,11 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+
+using URandom = UnityEngine.Random;
+using SRandom = System.Random;
 public class CarSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject carPrefab;
     [SerializeField] private StartFinish startFinish;
+    [Space]
+    [SerializeField] private CarStats playerStats;
+    [SerializeField] private CarStats botStats;
 
     private RaceSettings settings;
+    private CarBuilder carBuilder;
     private Transform[] startPositions;
     public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, List<PlayerInfo> players, bool startsOnAntigrav) {
         List<PlayerInfo> playersOnly = players.FindAll(x => x.IsPlayer);
@@ -40,7 +48,7 @@ public class CarSpawner : MonoBehaviour
         int idx;
         for (int x = 0; x < players.Count; x++)
         {
-            idx = Random.Range(0, range);
+            idx = URandom.Range(0, range);
             cars[i] = SpawnCar(startPositions[i], players[idx], startOnntigrav);
             (players[idx], players[range]) = (players[range], players[idx]);
             range--;
@@ -49,12 +57,14 @@ public class CarSpawner : MonoBehaviour
     }
 
     private BaseCar SpawnCar(Transform pos, PlayerInfo player, bool startOnAntigrav) {
-        GameObject car = Instantiate(carPrefab, pos.position, pos.rotation);
-        car.name = player.Name;
-        BaseCar carObj = car.GetComponent<BaseCar>();
-        carObj.Path.SetPath(startFinish.FirstPath);
-        carObj.Init(!player.IsPlayer, startOnAntigrav);
-        carObj.Path.numLaps = settings.numberOfLaps;
-        return carObj;
+        bool isBot = !player.IsPlayer;
+        (BaseCar car, GameObject _) = new CarBuilder(carPrefab, pos, player.Name)
+                                         .IsBot(isBot)
+                                         .SetStats(isBot ? botStats : playerStats)
+                                         .StartOnAntigrav(startOnAntigrav)
+                                         .SetPath(startFinish.FirstPath)
+                                         .SetNumberOfLaps(settings.numberOfLaps)
+                                         .Build();
+        return car;
     }
 }
