@@ -18,7 +18,6 @@ public class PreRaceSequence : MonoBehaviour
     void Update() {
         if (!gameObject.activeSelf) return;
         if (currentSequence < 0 || currentSequence >= sequences.Length) return;
-        print("sequence continue");
         (Vector3 pos, Quaternion rot) = sequences[currentSequence].Evaluate(Time.deltaTime);
         cameraTransform.SetPositionAndRotation(pos, rot);
     }
@@ -36,7 +35,6 @@ public class PreRaceSequence : MonoBehaviour
     }
 
     public void StopSequence() {
-        print("sequence stop");
         SoundManager.StopMusic();
         cameraTransform.gameObject.SetActive(false);
         gameObject.SetActive(false);

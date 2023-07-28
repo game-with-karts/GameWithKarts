@@ -17,7 +17,7 @@ public static class GameRulesManager
     public static void SpawnPlayersForRace() {
         if (players is not null) return;
         int numPlayers = 1;
-        int numBots = currentTrack.settings.spawnBots ? MAX_PLAYERS - numPlayers : 0;
+        int numBots = MAX_PLAYERS - numPlayers;
         players = new();
         for (int i = 0; i < numPlayers; i++) {
             players.Add(new(playerName, true));

@@ -22,6 +22,7 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private CarPathFollower path;
     [SerializeField] private CarUI ui;
     [SerializeField] private CarBotController botController;
+    [SerializeField] private CarLapTimer timer;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
@@ -30,6 +31,7 @@ public class BaseCar : MonoBehaviour
     public CarPathFollower Path => path;
     public CarUI UI => ui;
     public CarBotController BotController => botController;
+    public CarLapTimer Timer => timer;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;

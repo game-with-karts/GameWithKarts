@@ -8,9 +8,10 @@ public class CarSpawner : MonoBehaviour
     private RaceSettings settings;
     private Transform[] startPositions;
     public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, List<PlayerInfo> players, bool startsOnAntigrav) {
-        BaseCar[] cars = new BaseCar[players.Count];
         List<PlayerInfo> playersOnly = players.FindAll(x => x.IsPlayer);
         List<PlayerInfo> botsOnly = players.FindAll(x => !x.IsPlayer);
+        int numCars = GameRulesManager.currentTrack.settings.spawnBots ? players.Count : playersOnly.Count;
+        BaseCar[] cars = new BaseCar[numCars];
         this.settings = settings;
         this.startPositions = startPositions;
         int i = 0;

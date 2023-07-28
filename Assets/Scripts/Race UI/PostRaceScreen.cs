@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
 
 public class PostRaceScreen : MonoBehaviour
 {
@@ -13,11 +14,14 @@ public class PostRaceScreen : MonoBehaviour
     [SerializeField] private float leaderboardEntryHeight;
     [Header("Final Position")]
     [SerializeField] private TMP_Text finalPlaceDisplay;
+    [SerializeField] private TMP_Text finalTimeDisplay;
     [Header("Buttons")]
     [SerializeField] private Button nextRaceBtn;
     [SerializeField] private Button BackToMenuBtn;
 
     private List<BaseCar> raceLeaderboard = new();
+
+    private PostRaceState state;
 
     void Awake() {
         lastDisplayedIndex = 0;
@@ -25,15 +29,28 @@ public class PostRaceScreen : MonoBehaviour
 
     public void SetScreenVisibility(bool visible) {
         screen.SetActive(visible);
+        finalPlaceDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
+        finalTimeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
+    }
+
+    public void SetState<T>() where T : PostRaceState, new() {
+        state = new T();
+        state.SetLeaderboard(this.raceLeaderboard);
+        state.SetUIElements(leaderboardDisplayParent, leaderboardEntryPrefab, leaderboardEntryHeight);
     }
 
     public void RaceEnded(BaseCar car) {
-        raceLeaderboard.Add(car);
-        Display();
         car.Path.OnRaceEnd -= RaceEnded;
+        car.Path.OnNextLap -= NextLap;
+        state.RaceEnded(car);
         if (!car.playerControlled) return;
+        finalTimeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.TotalTime);
         SetScreenVisibility(true);
         nextRaceBtn.gameObject.SetActive(!GameRulesManager.isPlaylistEmpty);
+    }
+
+    public void NextLap(BaseCar car) {
+        state.NextLap(car);
     }
 
     public void SetFinalPlace(int place) {
@@ -43,17 +60,10 @@ public class PostRaceScreen : MonoBehaviour
     public void RestartRace() {
         SetScreenVisibility(false);
         lastDisplayedIndex = 0;
+        state.RestartRace();
     }
 
-    private void Display() {
-        BaseCar car = raceLeaderboard[lastDisplayedIndex];
-        GameObject entry = Instantiate(leaderboardEntryPrefab, leaderboardDisplayParent);
-        ((RectTransform)entry.transform).anchoredPosition = new(0, leaderboardEntryHeight * -lastDisplayedIndex);
-        entry.GetComponent<PostRaceLeaderboardEntry>().Display(car.gameObject.name, lastDisplayedIndex + 1);
-        lastDisplayedIndex++;
-    }
-
-    private string FormatPlace(int place) {
+    public static string FormatPlace(int place) {
         string suffix;
         if ((place / 10) % 10 != 1) {
             suffix = (place % 10) switch {

@@ -30,6 +30,7 @@ public class SoundManager : MonoBehaviour
     private static Action OnMusicPlay;
     private static Action OnMusicStop;
     private static Action<AudioClip> OnMusicSet;
+    private static Action<bool> OnMusicLoop;
 
     void Awake() {
         sources = new();
@@ -44,6 +45,7 @@ public class SoundManager : MonoBehaviour
         OnMusicPlay += MusicPlay;
         OnMusicStop += MusicStop;
         OnMusicSet += MusicSet;
+        OnMusicLoop += MusicLoopable;
     }
 
     void Start() {
@@ -57,6 +59,7 @@ public class SoundManager : MonoBehaviour
     public static void PlayMusic() => OnMusicPlay?.Invoke();
     public static void StopMusic() => OnMusicStop?.Invoke();
     public static void SetMusic(AudioClip music) => OnMusicSet?.Invoke(music);
+    public static void SetMusicLooping(bool isLooping) => OnMusicLoop?.Invoke(isLooping);
 
     private void Hover() {
         SetAndPlay(hoverSFX);
@@ -99,5 +102,6 @@ public class SoundManager : MonoBehaviour
         OnMusicPlay -= MusicPlay;
         OnMusicStop -= MusicStop;
         OnMusicSet -= MusicSet;
+        OnMusicLoop -= MusicLoopable;
     }
 }

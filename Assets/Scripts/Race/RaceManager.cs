@@ -18,6 +18,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private Transform track;
     [SerializeField] private PreRaceSequence sequence;
     [SerializeField] private Volume globalVolume;
+    [SerializeField] private AudioClip music;
     [SerializeField] private bool startOnAntigrav = false;
     
 
@@ -33,19 +34,32 @@ public class RaceManager : MonoBehaviour
             OnRaceReset += () => car.Path.SetPath(startFinish.GetPathAtLap(1));
             OnRaceStart += car.StartRace;
             car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
+            car.Path.OnNextLap += postRaceScreen.NextLap;
             if (!car.IsBot) {
                 car.Path.OnRaceEnd += pauseMenu.RaceEnd;
                 sequence.OnSequenceEnd += car.Camera.ActivateCamera;
                 sequence.OnSequenceEnd += car.UI.ActivateCanvas;
+                sequence.OnSequenceEnd += () => SoundManager.SetMusic(music);
+                if (GameRulesManager.currentTrack.settings.timeAttackMode)
+                    pauseMenu.OnPause += car.Timer.ToggleTimer;
             }
                 
         }
         carPlacement.Init(cars);
         postRaceScreen.SetScreenVisibility(false);
-        carPlacement.OnFinalPlacement += postRaceScreen.SetFinalPlace;
+        if (GameRulesManager.currentTrack.settings.timeAttackMode) {
+            postRaceScreen.SetState<PostRaceTimeTrialState>();
+        }
+        else {
+            postRaceScreen.SetState<PostRaceRegularRaceState>();
+            carPlacement.OnFinalPlacement += postRaceScreen.SetFinalPlace;
+        }
         countdownScreen.OnCountdownOver += StartRace;
-        sequence.OnSequenceEnd += countdownScreen.StartCountdown;
-        sequence.OnSequenceEnd += () => pauseMenu.gameObject.SetActive(true);
+        sequence.OnSequenceEnd += () => {
+            pauseMenu.gameObject.SetActive(true);
+            SoundManager.SetMusicLooping(true);
+            countdownScreen.StartCountdown();
+        };
     }
 
     private void Start() {
@@ -54,6 +68,7 @@ public class RaceManager : MonoBehaviour
     }
 
     public void ResetRace() {
+        SoundManager.StopMusic();
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
         OnRaceReset?.Invoke();
@@ -61,5 +76,13 @@ public class RaceManager : MonoBehaviour
         countdownScreen.StartCountdown();
     }
 
-    private void StartRace() => OnRaceStart?.Invoke();
+    private void StartRace() {
+        OnRaceStart?.Invoke();
+        SoundManager.PlayMusic();
+    }
+
+    private void OnDestroy() {
+        OnRaceReset = null;
+        OnRaceStart = null;
+    }
 }

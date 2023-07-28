@@ -16,6 +16,9 @@ public class CarUI : CarComponent
     [Space]
     [Header("Position Display")]
     [SerializeField] private TMP_Text positionDisplay;
+    [Space]
+    [Header("Time display")]
+    [SerializeField] private TMP_Text timeDisplay;
     private int numCars;
 
     void Update() {
@@ -29,6 +32,8 @@ public class CarUI : CarComponent
         
         int place = car.Path.finalPlacement == -1 ? car.Path.currentPlacement : car.Path.finalPlacement;
         positionDisplay.text = $"{place}/{numCars}";
+
+        timeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.TotalTime);
     }
 
     public override void Init() {
@@ -37,6 +42,8 @@ public class CarUI : CarComponent
         lapCounter.text = "Lap -/-";
         positionDisplay.text = "-/-";
         car.Path.OnRaceEnd += RaceEnd;
+        positionDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
+        timeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
     }
 
     public void ActivateCanvas() => canvas.SetActive(!car.IsBot);

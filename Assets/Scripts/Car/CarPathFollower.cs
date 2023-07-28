@@ -22,7 +22,7 @@ public class CarPathFollower : CarComponent
     private const float maxPathTimeDelta = 0.3f;
 
     public Action OnFinalLap;
-    public Action OnNextLap;
+    public Action<BaseCar> OnNextLap;
     public Action<BaseCar> OnRaceEnd;
 
     public void SetPath(VertexPath path) {
@@ -48,7 +48,7 @@ public class CarPathFollower : CarComponent
         CurrentPathNumber = 1;
         CurrentPathPoint = 0;
         CurrentPathTime = 0;
-        OnNextLap?.Invoke();
+        OnNextLap?.Invoke(car);
         if (CurrentLap == numLaps) OnFinalLap?.Invoke();
         else if (CurrentLap > numLaps) {
             OnRaceEnd?.Invoke(car);
@@ -56,7 +56,10 @@ public class CarPathFollower : CarComponent
     }
 
     private void Update() {
-        
+        float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
+            float pathTimeDelta = pathTime - CurrentPathTime;
+            if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
+                CurrentPathTime = pathTime;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -82,10 +85,6 @@ public class CarPathFollower : CarComponent
 
     private IEnumerator UpdatePoint() {
         while (true) {
-            float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
-            float pathTimeDelta = pathTime - CurrentPathTime;
-            if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
-                CurrentPathTime = pathTime;
             prevDistanceToNextPoint = DistanceToNextPoint;
             DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
 
