@@ -41,10 +41,12 @@ public class PreRaceSequence : MonoBehaviour
         OnSequenceEnd?.Invoke();
     }
 
+    #if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (var s in sequences) {
             s.DrawGizmo();
         }
     }
+    #endif
 
 }
