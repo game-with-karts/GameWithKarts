@@ -1,6 +1,6 @@
 using UnityEngine;
-using System;
 using UnityEngine.Rendering;
+using System;
 public class RaceManager : MonoBehaviour
 {
     private Action OnRaceReset;
@@ -16,6 +16,8 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private CountdownScreen countdownScreen;
     [Header("Per-Track settings")]
     [SerializeField] private Transform track;
+    [SerializeField] private MinimapTransform minimapTransform;
+    [SerializeField] private Sprite minimapImage;
     [SerializeField] private PreRaceSequence sequence;
     [SerializeField] private Volume globalVolume;
     [SerializeField] private AudioClip music;
@@ -33,6 +35,7 @@ public class RaceManager : MonoBehaviour
             OnRaceReset += () => car.ResetCar(false);
             OnRaceReset += () => car.Path.SetPath(startFinish.GetPathAtLap(1));
             OnRaceStart += car.StartRace;
+            pauseMenu.OnPause += car.Audio.Play;
             car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
             car.Path.OnNextLap += postRaceScreen.NextLap;
             if (!car.IsBot) {
@@ -42,6 +45,9 @@ public class RaceManager : MonoBehaviour
                 sequence.OnSequenceEnd += () => SoundManager.SetMusic(music);
                 if (GameRulesManager.currentTrack.settings.timeAttackMode)
                     pauseMenu.OnPause += car.Timer.ToggleTimer;
+                car.UI.Minimap.SetMinimapImage(minimapImage);
+                car.UI.Minimap.SetMinimapTransform(minimapTransform);
+                car.UI.Minimap.AddCars(cars);
             }
                 
         }

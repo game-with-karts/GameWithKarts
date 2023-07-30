@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5464185123301264723}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5464185123301264721
 MonoBehaviour:
@@ -46,18 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f700c355b840bb740b6f19659c7118ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  startFinish: {fileID: 0}
   carSpawner: {fileID: 5464185123301264720}
   carPlacement: {fileID: 5464185123301264719}
   pauseMenu: {fileID: 0}
+  postRaceScreen: {fileID: 0}
+  countdownScreen: {fileID: 0}
+  track: {fileID: 0}
+  sequence: {fileID: 0}
+  globalVolume: {fileID: 0}
+  music: {fileID: 0}
   startOnAntigrav: 0
 --- !u!114 &5464185123301264720
 MonoBehaviour:
@@ -71,8 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379ebd3b2b7f1e24ab6f8b3902e20ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carPrefab: {fileID: 4253112666149923750, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
+  carPrefab: {fileID: 4253112666149923751, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
   startFinish: {fileID: 0}
+  playerStats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
+  botStats: {fileID: 11400000, guid: 13efcfe96cdd1b546b7eb880e810866b, type: 2}
 --- !u!114 &5464185123301264719
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private CarUI ui;
     [SerializeField] private CarBotController botController;
     [SerializeField] private CarLapTimer timer;
+    [SerializeField] private CarAudio audio;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
@@ -32,6 +33,7 @@ public class BaseCar : MonoBehaviour
     public CarUI UI => ui;
     public CarBotController BotController => botController;
     public CarLapTimer Timer => timer;
+    public CarAudio Audio => audio;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;

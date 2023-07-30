@@ -25,9 +25,15 @@ public class CarPathFollower : CarComponent
     public Action<BaseCar> OnNextLap;
     public Action<BaseCar> OnRaceEnd;
 
+    private int timeCalcCurrentPoint; 
+    private int timeCalcNextPoint => (timeCalcCurrentPoint + 1) % currentPath.NumPoints;
+    private float timeCalcPrevDistanceToNext;
+    private bool justChanged = false;
+
     public void SetPath(VertexPath path) {
         currentPath = path;
         CurrentPathPoint = 0;
+        timeCalcCurrentPoint = 0;
     }
 
     public Vector3 GetNextPoint() {
@@ -56,10 +62,26 @@ public class CarPathFollower : CarComponent
     }
 
     private void Update() {
-        float pathTime = currentPath.GetClosestTimeOnPath(transform.position);
-            float pathTimeDelta = pathTime - CurrentPathTime;
-            if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
-                CurrentPathTime = pathTime;
+        if (!car.Movement.IsControlable) return;
+        float timeCalcDistanceToNext = (currentPath.GetPoint(timeCalcNextPoint) - transform.position).magnitude;
+        float delta = timeCalcDistanceToNext - timeCalcPrevDistanceToNext;
+        Vector3 tangent = currentPath.GetTangent(timeCalcNextPoint);
+        float dot = Vector3.Dot(car.RB.velocity.normalized, tangent);
+        if (delta > 0.1f && dot > 0) {
+            if (justChanged) {
+                justChanged = false;
+            }
+            else {
+                timeCalcCurrentPoint = (timeCalcCurrentPoint + 1) % currentPath.NumPoints;
+                justChanged = true;
+            }
+        }
+        timeCalcPrevDistanceToNext = timeCalcDistanceToNext;
+        float pathTime = GetClosestTime();
+        float pathTimeDelta = pathTime - CurrentPathTime;
+        if (pathTimeDelta <= maxPathTimeDelta && pathTimeDelta > 0)
+            CurrentPathTime = pathTime;
+        
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -77,6 +99,44 @@ public class CarPathFollower : CarComponent
         CurrentPathPoint = 0;
         CurrentPathTime = 0;
         finalPlacement = -1;
+        justChanged = false;
+        if (currentPath is not null) {
+            timeCalcCurrentPoint = GetClosestIndex();
+        }
+    }
+
+    private void Start() {
+        timeCalcCurrentPoint = GetClosestIndex();
+    }
+
+    private int GetClosestIndex(int startFrom = 0, bool loopAround = false, bool ignoreMaxDeltaCheck = true) {
+        float maxDistanceDelta = 10;
+        Vector3 closestPoint = currentPath.GetPoint(startFrom);
+        int i = loopAround ? 0 : startFrom;
+        int currIdx = 0;
+        int closestIdx = startFrom;
+        float minDistance = (closestPoint - transform.position).magnitude;
+        float currDistance;
+        for (; i < currentPath.NumPoints; i++) {
+            currIdx = loopAround ? (i + startFrom) % currentPath.NumPoints : i;
+            currDistance = (transform.position - currentPath.GetPoint(currIdx)).magnitude;
+            if (currDistance < minDistance){
+                minDistance = currDistance;
+                closestIdx = currIdx;
+            }
+            else if (!ignoreMaxDeltaCheck && currDistance > maxDistanceDelta) break;
+        }
+        return closestIdx;
+    }
+
+    private float GetClosestTime() {
+        float timeBegin = currentPath.times[timeCalcCurrentPoint];
+        float timeEnd = currentPath.times[timeCalcNextPoint];
+        if (timeEnd == 0) timeEnd = 1;
+        Vector3 ac = transform.position - currentPath.GetPoint(timeCalcCurrentPoint);
+        Vector3 ab = currentPath.GetPoint(timeCalcNextPoint) - currentPath.GetPoint(timeCalcCurrentPoint);
+        float t = Vector3.Dot(ac, ab) / Vector3.Dot(ab, ab);
+        return Mathf.Lerp(timeBegin, timeEnd, t);
     }
 
     public override void StartRace() {
@@ -107,4 +167,25 @@ public class CarPathFollower : CarComponent
     private void OnDestroy() {
         StopCoroutine(nameof(UpdatePoint));
     }
+
+    #if UNITY_EDITOR
+
+    private void OnDrawGizmosSelected() {
+        if (currentPath is null) return;
+        Vector3 closestPoint = currentPath.GetPointAtTime(CurrentPathTime);
+        Vector3 segmentStart = currentPath.GetPoint(timeCalcCurrentPoint);
+        Vector3 segmentEnd = currentPath.GetPoint(timeCalcNextPoint);
+
+        Gizmos.color = new(0.45f, 0.55f, 1f);
+        Gizmos.DrawWireSphere(segmentStart, 3);
+        Gizmos.DrawWireCube(segmentEnd, new(3, 3, 3));
+        Gizmos.DrawLine(segmentStart, segmentEnd);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 3);
+        Gizmos.DrawSphere(closestPoint, 1);
+        Gizmos.DrawLine(transform.position, closestPoint);
+    }
+
+    #endif
 }

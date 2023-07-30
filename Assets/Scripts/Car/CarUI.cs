@@ -13,12 +13,17 @@ public class CarUI : CarComponent
     [Space]
     [Header("Lap Counter")]
     [SerializeField] private TMP_Text lapCounter;
+    [SerializeField] private TMP_Text maxLaps;
     [Space]
     [Header("Position Display")]
     [SerializeField] private TMP_Text positionDisplay;
     [Space]
     [Header("Time display")]
     [SerializeField] private TMP_Text timeDisplay;
+    [Space]
+    [Header("Minimap")]
+    [SerializeField] private MinimapDisplay minimap;
+    public MinimapDisplay Minimap => minimap;
     private int numCars;
 
     void Update() {
@@ -28,7 +33,8 @@ public class CarUI : CarComponent
         gaugeFill.color = boostGaugeGradient.Evaluate(gauge.value);
 
         int numLap = Mathf.Clamp(car.Path.CurrentLap, 1, car.Path.numLaps);
-        lapCounter.text = $"Lap {numLap}/{car.Path.numLaps}";
+        lapCounter.text = string.Format("{0:00}", numLap);
+        maxLaps.text = string.Format("{0:00}", car.Path.numLaps);
         
         int place = car.Path.finalPlacement == -1 ? car.Path.currentPlacement : car.Path.finalPlacement;
         positionDisplay.text = $"{place}/{numCars}";

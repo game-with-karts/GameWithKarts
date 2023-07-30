@@ -2,16 +2,14 @@ using UnityEngine;
 using PathCreation;
 
 public class CarBuilder {
-    private GameObject carObj;
     private BaseCar car;
     private bool isBot;
     private bool startOnAntigrav;
 
-    public CarBuilder(GameObject prefab, Transform startPos, string name) {
-        carObj = GameObject.Instantiate(prefab);
-        carObj.transform.SetPositionAndRotation(startPos.position, startPos.rotation);
-        car = carObj.GetComponent<BaseCar>();
-        carObj.name = name;
+    public CarBuilder(BaseCar prefab, Transform startPos, string name) {
+        car = GameObject.Instantiate(prefab);
+        car.transform.SetPositionAndRotation(startPos.position, startPos.rotation);
+        car.gameObject.name = name;
     }
 
     public CarBuilder SetStats(CarStats stats) {
@@ -39,8 +37,8 @@ public class CarBuilder {
         return this;
     }
 
-    public (BaseCar, GameObject) Build() {
+    public BaseCar Build() {
         car.Init(isBot, startOnAntigrav);
-        return (car, carObj);
+        return car;
     }
 }

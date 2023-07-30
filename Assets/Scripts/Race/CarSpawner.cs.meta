@@ -3,7 +3,11 @@ guid: 379ebd3b2b7f1e24ab6f8b3902e20ef1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - carPrefab: {instanceID: 0}
+  - startFinish: {instanceID: 0}
+  - playerStats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
+  - botStats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

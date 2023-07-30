@@ -6,7 +6,7 @@ using URandom = UnityEngine.Random;
 using SRandom = System.Random;
 public class CarSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject carPrefab;
+    [SerializeField] private BaseCar carPrefab;
     [SerializeField] private StartFinish startFinish;
     [Space]
     [SerializeField] private CarStats playerStats;
@@ -58,13 +58,12 @@ public class CarSpawner : MonoBehaviour
 
     private BaseCar SpawnCar(Transform pos, PlayerInfo player, bool startOnAntigrav) {
         bool isBot = !player.IsPlayer;
-        (BaseCar car, GameObject _) = new CarBuilder(carPrefab, pos, player.Name)
-                                         .IsBot(isBot)
-                                         .SetStats(isBot ? botStats : playerStats)
-                                         .StartOnAntigrav(startOnAntigrav)
-                                         .SetPath(startFinish.FirstPath)
-                                         .SetNumberOfLaps(settings.numberOfLaps)
-                                         .Build();
-        return car;
+        return new CarBuilder(carPrefab, pos, player.Name)
+                          .IsBot(isBot)
+                          .SetStats(isBot ? botStats : playerStats)
+                          .StartOnAntigrav(startOnAntigrav)
+                          .SetPath(startFinish.FirstPath)
+                          .SetNumberOfLaps(settings.numberOfLaps)
+                          .Build();
     }
 }
