@@ -26,6 +26,8 @@ public class CarMovement : CarComponent
     private float currSpeed = 0;
     private Vector3 normal = Vector3.up;
 
+    private SurfaceType? surfaceOverride = null;
+
     bool isReversing;
     bool isBraking;
     public bool IsReversing => isReversing;
@@ -86,6 +88,17 @@ public class CarMovement : CarComponent
 
     private Vector3 localUp = Vector3.up;
     public Vector3 LocalUp => localUp;
+
+    public override void Init() {
+        controlable = false;
+        IsAffectedByGravity = true;
+        currSpeed = 0;
+        StartCoroutine(StopAllMotion(startingPosition, startingRotation));
+    }
+
+    public override void StartRace() {
+        controlable = true;
+    }
 
     void Update() {
         foreach (var wheel in wheels) {
@@ -181,30 +194,20 @@ public class CarMovement : CarComponent
     }
 
     public SurfaceType GetSurface() {
+        if (surfaceOverride is not null) return (SurfaceType)surfaceOverride;
         SurfaceType s = SurfaceType.Ice;
         foreach(var w in wheels)
         {
-            if ((int)w.surface > (int)s) s = w.surface;
+            if (w.surface > s) s = w.surface;
         }
         return s;
     }
 
-    public void SetAntigrav(bool antigrav) {
-        this.isAntigrav = antigrav;
-    }
+    public void SetSurfaceOverride(SurfaceType? surface) => surfaceOverride = surface;
+
+    public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
 
     public void SetControllableState(bool state) => controlable = state;
-
-    public override void Init() {
-        controlable = false;
-        IsAffectedByGravity = true;
-        currSpeed = 0;
-        StartCoroutine(StopAllMotion(startingPosition, startingRotation));
-    }
-
-    public override void StartRace() {
-        controlable = true;
-    }
 
     public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot) {
         for (int i = 0; i < 2; i++) {

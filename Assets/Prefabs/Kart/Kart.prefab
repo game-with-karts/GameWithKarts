@@ -1821,8 +1821,8 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
   reverseThreshold: 5
   downforceAmount: 40
-  boostingSpeed: 60
-  boostingAcceleration: 55
+  boostingSpeed: 55
+  boostingAcceleration: 60
   wheels:
   - {fileID: 4253112667898450597}
   - {fileID: 4253112667886288559}

@@ -61,7 +61,7 @@ public class CarPathFollower : CarComponent
         }
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if (!car.Movement.IsControlable) return;
         float timeCalcDistanceToNext = (currentPath.GetPoint(timeCalcNextPoint) - transform.position).magnitude;
         float delta = timeCalcDistanceToNext - timeCalcPrevDistanceToNext;
@@ -149,13 +149,7 @@ public class CarPathFollower : CarComponent
             DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
 
             if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
-                Vector3 closestPoint = currentPath.GetClosestPointOnPath(transform.position);
-                for (int i = 0; i < currentPath.NumPoints && DistanceToNextPoint < distanceToSwitch; i++) {
-                    if (currentPath.GetPoint(i) == closestPoint) {
-                        CurrentPathPoint = Mathf.Clamp(i + 1, 0, CurrentPath.NumPoints - 1);
-                        break;
-                    }
-                }
+                CurrentPathPoint = Mathf.Clamp(GetClosestIndex() + 1, 0, CurrentPath.NumPoints - 1);
             }
             if (DistanceToNextPoint < distanceToSwitch) {
                 CurrentPathPoint++;
