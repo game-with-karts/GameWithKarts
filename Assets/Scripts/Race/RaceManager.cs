@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 using System;
 public class RaceManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private PauseMenu pauseMenu;
     [SerializeField] private PostRaceScreen postRaceScreen;
     [SerializeField] private CountdownScreen countdownScreen;
+    [SerializeField] private SettingsMenu settingsMenu;
     [Header("Per-Track settings")]
     [SerializeField] private Transform track;
     [SerializeField] private MinimapTransform minimapTransform;
@@ -25,6 +27,7 @@ public class RaceManager : MonoBehaviour
     
 
     private void Awake() {
+        settingsMenu.inputs = new();
         track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
@@ -38,6 +41,7 @@ public class RaceManager : MonoBehaviour
             pauseMenu.OnPause += car.Audio.Play;
             car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
             car.Path.OnNextLap += postRaceScreen.NextLap;
+            settingsMenu.inputs.Add(car.GetComponent<PlayerInput>());
             if (!car.IsBot) {
                 car.Path.OnRaceEnd += pauseMenu.RaceEnd;
                 sequence.OnSequenceEnd += car.Camera.ActivateCamera;

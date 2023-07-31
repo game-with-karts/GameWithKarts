@@ -1149,14 +1149,14 @@ AudioReverbZone:
   m_Enabled: 1
   m_MinDistance: 62.568375
   m_MaxDistance: 82.67886
-  m_ReverbPreset: 9
-  m_Room: -1000
+  m_ReverbPreset: 27
+  m_Room: -2422
   m_RoomHF: 0
   m_DecayTime: 2.91
   m_DecayHFRatio: 1.3
   m_Reflections: -602
   m_ReflectionsDelay: 0.015
-  m_Reverb: -302
+  m_Reverb: 0
   m_ReverbDelay: 0.022
   m_HFReference: 5000
   m_Diffusion: 100
@@ -1352,15 +1352,15 @@ MonoBehaviour:
       points:
       - {x: -53.35839, y: -1.2522507, z: 27.635002}
       - {x: -65.77559, y: 2.403716, z: 34.366432}
-      - {x: -82.8228, y: 5.332059, z: 49.98287}
-      - {x: -94.66044, y: 5.6839795, z: 63.112892}
-      - {x: -100.97035, y: 5.871567, z: 70.1117}
+      - {x: -83.82275, y: 5.332059, z: 50.31618}
+      - {x: -93.66048, y: 5.6839795, z: 64.11285}
+      - {x: -99.13128, y: 5.879684, z: 71.78523}
       - {x: -107.598404, y: 6.412261, z: 91.2303}
       - {x: -108.44333, y: 8.260678, z: 106.821686}
       - {x: -110.44958, y: 12.649689, z: 143.84294}
-      - {x: -116.56165, y: 13.404661, z: 185.68166}
-      - {x: -162.73357, y: 13.579107, z: 170.33557}
-      - {x: -201.52293, y: 13.72566, z: 157.4432}
+      - {x: -129.36115, y: 13.332222, z: 175.46207}
+      - {x: -160.2064, y: 13.506668, z: 166.35207}
+      - {x: -199.4078, y: 13.728373, z: 154.77412}
       - {x: -196.15706, y: 15.109361, z: 120.08724}
       - {x: -189.771, y: 16.367624, z: 97.90543}
       - {x: -177.04753, y: 18.874563, z: 53.710854}
@@ -1379,15 +1379,15 @@ MonoBehaviour:
       - {x: 82.57567, y: -1.6467049, z: -152.8143}
       - {x: 83.726364, y: -4.0088344, z: -115.27306}
       - {x: 84.68191, y: -5.970359, z: -84.09863}
-      - {x: 98.21361, y: -6.8701606, z: -78.0602}
-      - {x: 108.089714, y: -6.863202, z: -63.392235}
-      - {x: 126.2271, y: -6.8504233, z: -36.45465}
-      - {x: 94.417305, y: -6.7246675, z: 13.659254}
+      - {x: 99.28389, y: -6.867643, z: -70.53179}
+      - {x: 103.152756, y: -6.863202, z: -53.277298}
+      - {x: 114.27718, y: -6.8504333, z: -3.6641188}
+      - {x: 86.16907, y: -6.7246675, z: 11.992659}
       - {x: 55.991344, y: -6.426403, z: 12.851956}
-      - {x: 14.603748, y: -6.10515, z: 11.982437}
-      - {x: 7.9931016, y: -7.550571, z: 6.12}
-      - {x: -13.500923, y: -5.262844, z: 13.241791}
-      - {x: -22.818209, y: -4.2711544, z: 16.328964}
+      - {x: 14.612171, y: -6.017428, z: 14.0302105}
+      - {x: 7.6597834, y: -7.550571, z: 12.786378}
+      - {x: -15.834155, y: -5.262844, z: 13.908428}
+      - {x: -25.642033, y: -4.3078003, z: 14.376844}
       - {x: -44.962135, y: -3.724341, z: 23.083345}
       isClosed: 1
       space: 0
@@ -1430,7 +1430,7 @@ MonoBehaviour:
     showPathOptions: 1
     showVertexPathDisplayOptions: 0
     showVertexPathOptions: 1
-    showNormals: 1
+    showNormals: 0
     showNormalsHelpInfo: 0
     tabIndex: 0
   initialized: 1
@@ -1724,6 +1724,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+--- !u!114 &2086960723054838674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557034132145306547, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+  m_PrefabInstance: {fileID: 2086960723054838673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a14229ca520cc34599b7f7f0e9e1be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2445466622428717460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2019,6 +2030,10 @@ PrefabInstance:
       propertyPath: minimapImage
       value: 
       objectReference: {fileID: 21300000, guid: 696abb29ad3aeb840a87be8cc1a3eb69, type: 3}
+    - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
+      propertyPath: settingsMenu
+      value: 
+      objectReference: {fileID: 2086960723054838674}
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: postRaceScreen
       value: 

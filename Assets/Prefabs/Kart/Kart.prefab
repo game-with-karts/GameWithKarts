@@ -920,14 +920,14 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: 116a84fa0403ec04f9ef6a8509295639, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
@@ -1389,7 +1389,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -20, y: 20}
-  m_SizeDelta: {x: 100, y: 80}
+  m_SizeDelta: {x: 150, y: 80}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &4253112665956187278
 GameObject:
@@ -1835,16 +1835,19 @@ MonoBehaviour:
   gravity: 25
   frictionSettings:
   - surface: 7
-    grip: 0.775
-    groundResistance: 1
+    forwardFriction: 0.1
+    sidewaysFriction: 1
+    groundResistance: 5
     gripRecoverySpeed: 0.5
   - surface: 6
-    grip: 0.05
+    forwardFriction: 0.05
+    sidewaysFriction: 0.05
     groundResistance: 0.5
     gripRecoverySpeed: 1
   - surface: 8
-    grip: 1
-    groundResistance: 5
+    forwardFriction: 0.5
+    sidewaysFriction: 1
+    groundResistance: 20
     gripRecoverySpeed: 1
   isAntigrav: 0
   normalRayLength: 100
@@ -1942,7 +1945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335c6a73fc2040c47a8799e76f5e20a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToSwitch: 45
+  distanceToSwitch: 35
   numLaps: 0
 --- !u!114 &4253112666149923754
 MonoBehaviour:
@@ -2017,7 +2020,7 @@ MonoBehaviour:
   narrowness: 1.7
   forwardRayOriginOffset: 0.9
   rightRayOriginOffset: 0.9
-  maxPathHorizontalDeviation: 10
+  maxPathHorizontalDeviation: 7
   wallThreshold: 0.5
 --- !u!114 &4253112666149923753
 MonoBehaviour:
@@ -2150,6 +2153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engineSource: {fileID: 1442665609474275377}
+  pitchResolution: 15
   boostSource: {fileID: 0}
   tyreScreechSource: {fileID: 0}
 --- !u!114 &228279470013541860
@@ -3027,7 +3031,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.8
+      value: 0.7
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3235,10 +3239,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6671918453172491774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00033569336, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 150, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &640628658676435403
 CanvasRenderer:
@@ -3268,10 +3272,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1/8
+  m_text: 12th
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 3e68f2d13a94aca42995830f1bbd5ebd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc074d4cfa37b434f911d9491bdfa1d5, type: 2}
+  m_sharedMaterial: {fileID: -4569968080895878501, guid: fc074d4cfa37b434f911d9491bdfa1d5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3279,14 +3283,14 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: 116a84fa0403ec04f9ef6a8509295639, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
@@ -3301,8 +3305,8 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 32
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

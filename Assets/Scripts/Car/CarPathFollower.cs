@@ -96,7 +96,7 @@ public class CarPathFollower : CarComponent
     public override void Init() {
         CurrentLap = 1;
         CurrentPathNumber = 1;
-        CurrentPathPoint = 0;
+        CurrentPathPoint = GetClosestIndex();
         CurrentPathTime = 0;
         finalPlacement = -1;
         justChanged = false;
@@ -135,7 +135,7 @@ public class CarPathFollower : CarComponent
         if (timeEnd == 0) timeEnd = 1;
         Vector3 ac = transform.position - currentPath.GetPoint(timeCalcCurrentPoint);
         Vector3 ab = currentPath.GetPoint(timeCalcNextPoint) - currentPath.GetPoint(timeCalcCurrentPoint);
-        float t = Vector3.Dot(ac, ab) / Vector3.Dot(ab, ab);
+        float t = Vector3.Dot(ac, ab) / ab.sqrMagnitude;
         return Mathf.Lerp(timeBegin, timeEnd, t);
     }
 
@@ -147,13 +147,16 @@ public class CarPathFollower : CarComponent
         while (true) {
             prevDistanceToNextPoint = DistanceToNextPoint;
             DistanceToNextPoint = (GetNextPoint() - transform.position).magnitude;
-
-            if (DistanceToNextPoint - prevDistanceToNextPoint > 0) {
-                CurrentPathPoint = Mathf.Clamp(GetClosestIndex() + 1, 0, CurrentPath.NumPoints - 1);
-            }
+            float distanceDelta = DistanceToNextPoint - prevDistanceToNextPoint;
             if (DistanceToNextPoint < distanceToSwitch) {
                 CurrentPathPoint++;
             }
+            if (distanceDelta > 0.01f) {
+                int closest = GetClosestIndex();
+                for (; closest < CurrentPath.NumPoints && (currentPath.GetPoint(closest) - transform.position).magnitude < distanceToSwitch; closest++) {}
+                CurrentPathPoint = Mathf.Clamp(closest, 0, CurrentPath.NumPoints - 1);
+            }
+            
             yield return new WaitForSeconds(.1f);
         }
     }

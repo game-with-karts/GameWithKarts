@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using System.Collections.Generic;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] private InputActionAsset inputAction;
     [Header("General Settings")]
     [SerializeField] private Slider masterVolumeSld;
     [SerializeField] private Slider musicVolumeSld;
@@ -19,6 +19,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private TMP_InputField targetFrameRateInp;
     [SerializeField] private Toggle enablePostProcessingChk;
     [Header("Input Settings (soon)")]
+    [SerializeField] private InputActionAsset inputAction;
+    public List<PlayerInput> inputs { get; set; }
     public static readonly string TargetFrameRateKey = "TARGET_FRAMERATE";
     public static readonly string EnablePostProcessingKey = "ENABLE_PP";
     public static readonly string MasterVolumeKey = "MASTER_VOLUME";
@@ -62,7 +64,11 @@ public class SettingsMenu : MonoBehaviour
 
     public void UpdateKeybinds() {
         // this doesn't make sense, but it might work
-        inputAction.LoadBindingOverridesFromJson(inputAction.SaveBindingOverridesAsJson());
+        string overrides = inputAction.SaveBindingOverridesAsJson();
+        if (inputs is null) return;
+        foreach (var input in inputs) {
+            input.actions.LoadBindingOverridesFromJson(overrides);
+        }
     }
 
     public void UpdateSettings() {

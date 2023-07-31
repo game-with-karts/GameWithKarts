@@ -37,7 +37,7 @@ public class CarUI : CarComponent
         maxLaps.text = string.Format("{0:00}", car.Path.numLaps);
         
         int place = car.Path.finalPlacement == -1 ? car.Path.currentPlacement : car.Path.finalPlacement;
-        positionDisplay.text = $"{place}/{numCars}";
+        positionDisplay.text = FormatPlace(place);
 
         timeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.TotalTime);
     }
@@ -57,6 +57,20 @@ public class CarUI : CarComponent
     private void RaceEnd(BaseCar _) {
         canvas.SetActive(false);
         car.Path.OnRaceEnd -= RaceEnd;
+    }
+
+    public static string FormatPlace(int place) {
+        string suffix;
+        if ((place / 10) % 10 != 1) {
+            suffix = (place % 10) switch {
+                1 => "st",
+                2 => "nd",
+                3 => "rd",
+                _ => "th"
+            };
+        }
+        else suffix = "th";
+        return $"{place}{suffix}";
     }
 
     public void SetNumberOfCars(int num) => numCars = num;

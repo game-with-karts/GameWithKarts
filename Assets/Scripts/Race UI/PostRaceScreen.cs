@@ -54,7 +54,7 @@ public class PostRaceScreen : MonoBehaviour
     }
 
     public void SetFinalPlace(int place) {
-        finalPlaceDisplay.text = FormatPlace(place);
+        finalPlaceDisplay.text = CarUI.FormatPlace(place);
     }
 
     public void RestartRace() {
@@ -63,17 +63,4 @@ public class PostRaceScreen : MonoBehaviour
         state.RestartRace();
     }
 
-    public static string FormatPlace(int place) {
-        string suffix;
-        if ((place / 10) % 10 != 1) {
-            suffix = (place % 10) switch {
-                1 => "st",
-                2 => "nd",
-                3 => "rd",
-                _ => "th"
-            };
-        }
-        else suffix = "th";
-        return $"{place}{suffix}";
-    }
 }
