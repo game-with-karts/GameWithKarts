@@ -1581,7 +1581,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4253112666149923758}
-  - component: {fileID: 4253112666149923759}
   - component: {fileID: 4253112666149923752}
   - component: {fileID: 4253112666149923751}
   - component: {fileID: 4253112666149923756}
@@ -1596,6 +1595,7 @@ GameObject:
   - component: {fileID: 3945629943473880784}
   - component: {fileID: 228279470013541860}
   - component: {fileID: 4898140581127465034}
+  - component: {fileID: 1791051160934044411}
   m_Layer: 3
   m_Name: Kart
   m_TagString: Untagged
@@ -1628,27 +1628,6 @@ Transform:
   - {fileID: 3115804079846731651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &4253112666149923759
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4253112666149923750}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 2}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &4253112666149923752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,7 +1801,7 @@ MonoBehaviour:
   reverseThreshold: 5
   downforceAmount: 40
   boostingSpeed: 55
-  boostingAcceleration: 60
+  boostingAcceleration: 2500
   wheels:
   - {fileID: 4253112667898450597}
   - {fileID: 4253112667886288559}
@@ -1835,19 +1814,19 @@ MonoBehaviour:
   gravity: 25
   frictionSettings:
   - surface: 7
-    forwardFriction: 0.1
+    forwardFriction: 1
     sidewaysFriction: 1
-    groundResistance: 5
-    gripRecoverySpeed: 0.5
+    groundResistance: 1
+    gripRecoverySpeed: 0.3
   - surface: 6
-    forwardFriction: 0.05
-    sidewaysFriction: 0.05
-    groundResistance: 0.5
+    forwardFriction: 0.5
+    sidewaysFriction: 0.1
+    groundResistance: 0.3
     gripRecoverySpeed: 1
   - surface: 8
-    forwardFriction: 0.5
+    forwardFriction: 0.7
     sidewaysFriction: 1
-    groundResistance: 20
+    groundResistance: 5
     gripRecoverySpeed: 1
   isAntigrav: 0
   normalRayLength: 100
@@ -2187,6 +2166,27 @@ MonoBehaviour:
   surfaceLayers:
     serializedVersion: 2
     m_Bits: 448
+--- !u!65 &1791051160934044411
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253112666149923750}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &4253112666214254335
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,7 +2956,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -7242372512411786117, guid: 0ef75398ebdba2f4ba0b74385bfb66b6, type: 2}
   m_audioClip: {fileID: 8300000, guid: 8c51440faa1125e4ba70a5a55d6cd504, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
   Loop: 1

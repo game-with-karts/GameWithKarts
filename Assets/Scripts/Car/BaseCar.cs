@@ -66,8 +66,6 @@ public class BaseCar : MonoBehaviour
                 components.Add(comp as CarComponent);
             }
         }
-
-        rb.centerOfMass = new Vector3(0, -0.4f, 0);
         ResetCar(true);
     }
 

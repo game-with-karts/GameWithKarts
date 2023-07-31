@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections;
 using UnityEngine;
 
@@ -70,18 +69,33 @@ public class CarMovement : CarComponent
         }
     }
     /// <summary>
-    /// DO NOT USE THIS ALONE!!! USE currentGrip INSTEAD!!!
+    /// DO NOT USE THIS ALONE!!! USE currentForwardFriction INSTEAD!!!
     /// </summary>
-    private float cg = 1f;
+    private float cff = 1f;
+    /// <summary>
+    /// DO NOT USE THIS ALONE!!! USE currentSidewaysFriction INSTEAD!!!
+    /// </summary>
+    private float csf = 1f;
     private void UpdateCurrentGrip() {
-        if (cg < currentFrictionSettings.grip)
-            cg += Time.fixedDeltaTime * currentFrictionSettings.gripRecoverySpeed;
+        if (cff < currentFrictionSettings.forwardFriction)
+            cff += Time.fixedDeltaTime * currentFrictionSettings.gripRecoverySpeed;
+        if (csf < currentFrictionSettings.sidewaysFriction)
+            csf += Time.fixedDeltaTime * currentFrictionSettings.gripRecoverySpeed;
     }
-    private float currentGrip {
-        get => cg;
+    private float currentForwardFriction {
+        get => cff;
         set {
-            if (value < cg) {
-                cg = value;
+            if (value < cff) {
+                cff = value;
+            }
+        }
+    }
+
+    private float currentSidewaysFriction {
+        get => csf;
+        set {
+            if (value < csf) {
+                csf = value;
             }
         }
     }
@@ -116,18 +130,22 @@ public class CarMovement : CarComponent
         isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
         isBraking = Vector3.Dot(vel.normalized, transform.forward * car.Input.AxisVert) < 0;
 
-        currentGrip = currentFrictionSettings.grip;
+        currentForwardFriction = currentFrictionSettings.forwardFriction;
+        currentSidewaysFriction = currentFrictionSettings.sidewaysFriction;
         UpdateCurrentGrip();
 
-        CorrectVelocityVector(currentGrip);
+        // CorrectVelocityVector(currentForwardFriction);
         if (controlable) {
             PerformMovement(vel);
             Turn(localVel);
         }
+        // car.RB.velocity += currSpeed * transform.forward;
+        car.RB.AddForce(currSpeed * transform.forward * car.RB.mass, ForceMode.Force);
+        //car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * currentFrictionSettings.groundResistance * Time.fixedDeltaTime;
+        Vector3 horizVel = transform.TransformDirection(new(localVel.x, 0, localVel.z));
+        car.RB.AddForce(-horizVel * stats.idleDeceleration * currentFrictionSettings.groundResistance * car.RB.mass, ForceMode.Force);
 
-        car.RB.velocity += currSpeed * transform.forward;
-
-        car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * currentFrictionSettings.groundResistance * Time.fixedDeltaTime;
+        ApplySidewaysFriction(currentSidewaysFriction, localVel, vel.normalized);
 
         // downforce
         car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
@@ -159,7 +177,7 @@ public class CarMovement : CarComponent
                 Brake(vel);
             }
             else {
-                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration * Mathf.Pow(Mathf.Log(currentGrip + 1, 2), 0.5f));
+                if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
                 else if (car.Input.AxisVert < 0) Reverse(vel);
                 else currSpeed = 0;
             }
@@ -171,26 +189,31 @@ public class CarMovement : CarComponent
     }
 
     private void Move(Vector3 vel, float maxSpeed, float accel) {
-        currSpeed = Mathf.Lerp(accel, 0, vel.magnitude / maxSpeed) * Time.fixedDeltaTime;
+        currSpeed = Mathf.Lerp(accel, 0, vel.magnitude / maxSpeed) * currentForwardFriction * Time.fixedDeltaTime;
     }
 
     private void Brake(Vector3 vel) {
         float brake = stats.brakeForce * ((vel.magnitude + stats.brakeForce / 2)/ stats.maxSpeed) * -car.Input.AxisVert;
-        currSpeed = -brake * Time.fixedDeltaTime;
+        currSpeed -= brake * Time.fixedDeltaTime;
     }
 
-    private void UpdateWheelPosition(WheelCollider collider, Transform wheel) {
-        collider.GetWorldPose(out var pos, out var rot);
-        wheel.SetPositionAndRotation(pos, rot);
-    }
+    // private void UpdateWheelPosition(WheelCollider collider, Transform wheel) {
+    //     collider.GetWorldPose(out var pos, out var rot);
+    //     wheel.SetPositionAndRotation(pos, rot);
+    // }
     
-    void CorrectVelocityVector(float grip) {
-        Vector3 vel = transform.InverseTransformDirection(car.RB.velocity);
-        float velHoriz = vel.z;
-        float velVert = vel.y;
-        float gripExp = Mathf.Pow(.005f, 1 - grip);
-        Vector3 finalVector = Vector3.Lerp(car.RB.velocity, transform.forward * velHoriz + transform.up * velVert, gripExp);
-        car.RB.velocity = finalVector;
+    // void CorrectVelocityVector(float grip) {
+    //     Vector3 vel = transform.InverseTransformDirection(car.RB.velocity);
+    //     float velHoriz = vel.z;
+    //     float velVert = vel.y;
+    //     float gripExp = Mathf.Pow(.005f, 1 - grip);
+    //     Vector3 finalVector = Vector3.Lerp(car.RB.velocity, transform.forward * velHoriz + transform.up * velVert, gripExp);
+    //     car.RB.velocity = finalVector;
+    // }
+
+    void ApplySidewaysFriction(float sideways, Vector3 localVel, Vector3 velDir) {
+        float sidewaysFriction = localVel.x * sideways * 5f;
+        car.RB.AddForce(sidewaysFriction * -transform.right * car.RB.mass, ForceMode.Force);
     }
 
     public SurfaceType GetSurface() {
@@ -204,9 +227,7 @@ public class CarMovement : CarComponent
     }
 
     public void SetSurfaceOverride(SurfaceType? surface) => surfaceOverride = surface;
-
     public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
-
     public void SetControllableState(bool state) => controlable = state;
 
     public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot) {

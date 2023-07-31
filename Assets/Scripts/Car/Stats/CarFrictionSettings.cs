@@ -6,7 +6,9 @@ public struct CarFrictionSettings
 {
     public SurfaceType surface;
     [Range(0, 1)]
-    public float grip;
+    public float forwardFriction;
+    [Range(0, 1)]
+    public float sidewaysFriction;
     public float groundResistance;
     public float gripRecoverySpeed;
 }
