@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   maxSpeed: 35
-  acceleration: 1000
+  acceleration: 2250
   maxReverseSpeed: 15
   reverseAcceleration: 200
-  brakeForce: 19
+  brakeForce: 100
   turnAngle: 0.05
   idleDeceleration: 0.25

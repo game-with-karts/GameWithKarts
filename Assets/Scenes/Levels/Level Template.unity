@@ -969,6 +969,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1406444855}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetRace
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RaceManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1035766367066821690, guid: 46d2c144d6994f940bd4d7b60b54d683, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

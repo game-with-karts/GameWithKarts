@@ -11,7 +11,7 @@ public class CarAudio : CarComponent
     [SerializeField] private AudioSource boostSource;
     [SerializeField] private AudioSource tyreScreechSource;
     public override void Init() {
-        return;
+        Play(false);
     }
 
     public void Play(bool isPaused) {

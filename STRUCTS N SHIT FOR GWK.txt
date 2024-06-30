@@ -1,0 +1,145 @@
+modders dont really need this coz C# is very easily decompilable
+sharing this coz i have ideas
+-K
+
+TODO: all of this shite
+
+--- STRUCTS N SHIT FOR GWK ---
+
+the joys and wonders of OOP eh?
+nah fr, fuck that shit.
+
+MasterGameManager
+- class
+- possibly a singleton? (i hope not but i dont see another way of doin it in c#)
+- parent game object not destroyed on scene load
+- keeps track of current playlist
+
+SettingsManager
+- contains settings for volume, keybinds, graphics etc.
+- everything controlled via settings menu
+- every change saved to PlayerPrefs
+
+Playlist
+- class
+- contains all tracks 
+- contains settings for each track
+- field:
+  - Track[] tracks
+  - bool useScoring
+
+Track
+- class
+- fields:
+  - TrackSettings settings
+  - Scene level
+
+TrackSettings
+- struct
+- contains following settings:
+  - number of laps
+  - max number of bots
+  - item settings
+  - player spawning settings
+  - track features toggle
+  - mirror mode (later)
+  - survival mode
+  - race mode (explained in google doc)
+
+RaceStarter
+- class
+- responsible for initialisation of the level
+- toggles all pickups and track features to their default state
+- spawns all cars and sets their state according to the track settings
+
+ItemSettings
+- struct
+- has an indicator of an item
+- other fields:
+  - bool isAvailable - if it's available in race
+  - bool isUnlocked - if it's unlocked
+  - ItemPower power - item's power
+  - uint weight - weight of an item (higher weight = higher chance of item appearing)
+
+ItemPower
+- enum
+> Low
+> MidLow
+> Medium
+> MidHigh
+> High
+
+PlayerStartSpawn
+- enum
+- p much useless if there are no bots
+> PlayersFirst
+> PlayersLast
+> Random
+
+Item
+- abstract class
+- base class for all items
+- contains:
+  - ItemPower power
+  - Kart owner
+
+Kart
+- class
+- contains references to all relevant components
+- contains events Action (or Action<>) for various things
+
+KartComponent
+- abstract class
+- contains a reference to base Kart
+- contains abstract methods that are subscribed to Kart's events
+
+ITargetable
+- interface
+- for objects that can be targeted by certain items, like MK red shell and blue shell or CTR missiles
+
+--- ITEMZZZZ ---
+
+here's a list of all items from MK and CTR/CNK and my counterparts (not gonna implement all of them... or am i?)
+look at the beautifully formatted table that i made by hand (it's useless)
++---------------+---------------+---------------+---------------+
+|      MK       |      CTR      |      CNK      |      GWK      |
++---------------+---------------+---------------+---------------+
+|Mushroom       |Boost tank     |Boost tank     | ???           |
+|Green shell    |Rolling bomb   |Rolling bomb   | ???           |
+|Red shell      |Missile        |Missile        | ???           |
+|Blue shell     |Orb            |Tornado        | ???           |
+|Banana peel    |N-Brio's flask |---            | ???           |
+|Bob-omb        |---            |---            | ???           |
+|Bullet Bill    |---            |---            | ???           |
+|Fire flower    |---            |---            | ???           |
+|Boomerand flo. |---            |---            | ???           |
+|Star           |Mask           |Mask           | ???           |
+|Big mushroom   |---            |---            | ???           |
+|Boo            |---            |---            | ???           |
+|Lightning      |N-Tropy's clock|N-Tropy's clock| ???           |
+|---            |TNT Crate      |TNT Crate      | ???           |
+|---            |Nitro crate    |Nitro crate    | ???           |
+|---            |---            |Static orb     | ???           |
+|---            |---            |Freeze mine    | ???           |
++---------------+---------------+---------------+---------------+
+
+N-Tropy's clock
+more like
+N-tropy's cock
+.
+.
+.
+.
+now laugh.
+
+
+--- KART COMPONENTS ---
+
+parts of this will be yoinked from my last attempt coz kart was p much working
+- Movement
+- Drifting
+- Camera
+- Appearance
+- Placement (new)
+- ItemController (new)
+- AIController (new)

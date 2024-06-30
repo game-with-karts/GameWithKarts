@@ -107,7 +107,7 @@ public class CarMovement : CarComponent
         controlable = false;
         IsAffectedByGravity = true;
         currSpeed = 0;
-        StartCoroutine(StopAllMotion(startingPosition, startingRotation));
+        StartCoroutine(StopAllMotion(startingPosition, startingRotation, 5));
     }
 
     public override void StartRace() {
@@ -230,8 +230,8 @@ public class CarMovement : CarComponent
     public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
     public void SetControllableState(bool state) => controlable = state;
 
-    public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot) {
-        for (int i = 0; i < 2; i++) {
+    public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot, int iter = 2) {
+        for (int i = 0; i < iter; i++) {
             car.RB.velocity = Vector3.zero;
             car.RB.angularVelocity = Vector3.zero;
             transform.SetPositionAndRotation(pos, rot);

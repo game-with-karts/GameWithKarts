@@ -10,7 +10,15 @@ public class CarLapTimer : CarComponent
     private double fastestTime;
     private bool eventsSubscribed = false;
     public List<double> LapTimes => lapTimes;
-    public double TotalTime => lapTimes.Sum() + Math.Round(timer.Elapsed.TotalSeconds, 3, MidpointRounding.AwayFromZero);
+    public double TotalTime {
+        get {
+            double sum = lapTimes.Sum();
+            if (timer.IsRunning) {
+                sum += Math.Round(timer.Elapsed.TotalSeconds, 3, MidpointRounding.AwayFromZero);
+            }
+            return sum;
+        }
+    }
     public override void Init() {
         timer.Stop();
         timer.Reset();

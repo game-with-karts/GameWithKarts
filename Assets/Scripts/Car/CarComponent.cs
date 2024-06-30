@@ -1,12 +1,10 @@
-
 using UnityEngine;
 
 public abstract class CarComponent : MonoBehaviour
 {
     protected BaseCar car;
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake() {
         car = GetComponent<BaseCar>();
     }
 

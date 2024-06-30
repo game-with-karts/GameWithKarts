@@ -30,7 +30,9 @@ public class CarBotController : CarComponent
     private Vector3 RightRayOriginOffset => ForwardRayOriginOffset + rightRayOriginOffset * transform.right;
     private Vector3 LeftRayOriginOffset => ForwardRayOriginOffset - rightRayOriginOffset * transform.right;
     private Vector3 RightRayDirection => (transform.forward * narrowness + transform.right).normalized;
+    private Vector3 ForwardRightRayDirection => (transform.forward * narrowness + transform.right / 2).normalized;
     private Vector3 LeftRayDirection => (transform.forward * narrowness - transform.right).normalized;
+    private Vector3 ForwardLeftRayDirection => (transform.forward * narrowness - transform.right / 2).normalized;
 
     private bool forwardHit;
     private bool forwardRightHit;
@@ -58,8 +60,8 @@ public class CarBotController : CarComponent
         float horiz = 0;
 
         Ray forward = new Ray(ForwardRayOriginOffset + transform.position, transform.forward);
-        Ray forwardRight = new Ray(RightRayOriginOffset + transform.position, transform.forward);
-        Ray forwardLeft = new Ray(LeftRayOriginOffset + transform.position, transform.forward);
+        Ray forwardRight = new Ray(RightRayOriginOffset + transform.position, ForwardRightRayDirection);
+        Ray forwardLeft = new Ray(LeftRayOriginOffset + transform.position, ForwardLeftRayDirection);
         Ray right = new Ray(RightRayOriginOffset + transform.position, RightRayDirection);
         Ray left = new Ray(LeftRayOriginOffset + transform.position, LeftRayDirection);
 
@@ -128,10 +130,10 @@ public class CarBotController : CarComponent
         Gizmos.DrawLine(transform.position + ForwardRayOriginOffset, transform.position + ForwardRayOriginOffset + transform.forward * rayLength);
 
         Gizmos.color = forwardRightHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + RightRayOriginOffset + transform.forward * rayLength);
+        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + RightRayOriginOffset + ForwardRightRayDirection * rayLength);
 
         Gizmos.color = forwardLeftHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + LeftRayOriginOffset + transform.forward * rayLength);
+        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + LeftRayOriginOffset + ForwardLeftRayDirection * rayLength);
 
         Gizmos.color = rightHit ? Color.red : new(1f, .5f, 1f);
         Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + ForwardRayOriginOffset + RightRayDirection * rayLength);

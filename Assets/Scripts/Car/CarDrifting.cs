@@ -65,7 +65,7 @@ public class CarDrifting : CarComponent
                 driftDirection = 0;
                 if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame) 
                    && car.Movement.IsGrounded && car.Movement.IsControlable) 
-                    Jump();
+                    Jump(1.05f);
                 break;
 
             case DriftState.Jumping:
@@ -73,7 +73,9 @@ public class CarDrifting : CarComponent
                    && hasLeftGround) {
                     jumpTimer.Stop();
                     OnLand?.Invoke();
-                    if (jumpTimer.Time >= jumpBoostTime) AddBoost(jumpBoostAmount);
+                    if (jumpTimer.Time >= jumpBoostTime) {
+                        AddBoost(jumpBoostAmount);
+                    }
                     jumpTimer.Reset();
                     state = DriftState.Idle;
                     if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) 
@@ -87,10 +89,13 @@ public class CarDrifting : CarComponent
                     }
                 }
                 else if (!car.Movement.IsGrounded) hasLeftGround = true;
-                else if (localVel.y < jumpVerticalVelocityThreshold + 4f) {
-                    jumpTimer.Stop();
-                    jumpTimer.Reset();
-                    state = DriftState.Idle;
+                else if (localVel.y < jumpVerticalVelocityThreshold) {
+                    Debug.Log($"Drift failed! Did not leave the ground! localVel.y = {localVel.y}");
+                    // experimental solution
+                    Jump(0.4f);
+                    //jumpTimer.Stop();
+                    //jumpTimer.Reset();
+                    //state = DriftState.Idle;
                 }
                 break;
 
@@ -102,13 +107,13 @@ public class CarDrifting : CarComponent
         }
     }
 
-    private void Jump() {
+    private void Jump(float boostValue) {
         OnJump?.Invoke();
         state = DriftState.Jumping;
         hasLeftGround = false;
         //transform.position += car.Movement.LocalUp * .25f;
-        float dot = Vector3.Dot(transform.forward, car.Movement.LocalUp);
-        float jumpBoost = dot > .7f ? 1.5f : 1;
+        float dot = Vector3.Dot(transform.up, car.Movement.LocalUp);
+        float jumpBoost = boostValue + (1 - Mathf.Abs(dot)) / 2;
         car.RB.AddForce(car.Movement.LocalUp * jumpStrength * jumpBoost * car.RB.mass);
         jumpTimer.Start();
     }

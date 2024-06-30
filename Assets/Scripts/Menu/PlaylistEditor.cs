@@ -147,11 +147,23 @@ public class PlaylistEditor : MonoBehaviour
             (entries[i].transform as RectTransform).anchoredPosition = new(0, -i * entries[i].height);
             entries[i].IndexDisplay.text = (i + 1).ToString();
             entries[i].NameDisplay.text = trackNames[playlist[i].sceneIdx - 1];
-            entries[i].RaceModeDisplay.text = "test";
+            entries[i].RaceModeDisplay.text = GetRaceModeString(i);
             entries[i].LapCountDisplay.text = $"{playlist[i].settings.numberOfLaps} lap{(playlist[i].settings.numberOfLaps == 1 ? '\0' : 's')}";
             entries[i].MirrorModeDisplay.enabled = playlist[i].settings.mirrorMode;
             entries[i].index = i;
             entries[i].color = i == selectedItem ? selectedColour : defaultColour;
         }
+    }
+
+    private string GetRaceModeString(int idx) {
+        RaceMode mode = playlist[idx].settings.raceMode;
+        return mode switch {
+            RaceMode.Regular => "Regular Race",
+            RaceMode.Arcade => "Arcade",
+            RaceMode.Domination => "Domination",
+            RaceMode.HotPotato => "Hot Potato",
+            RaceMode.LastManStanding => "Last Man Standing",
+            _ => string.Empty
+        };
     }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Bot Difficult
   m_EditorClassIdentifier: 
   maxSpeed: 42
-  acceleration: 1000
+  acceleration: 1700
   maxReverseSpeed: 15
   reverseAcceleration: 200
-  brakeForce: 19
+  brakeForce: 100
   turnAngle: 0.05
   idleDeceleration: 0.25
