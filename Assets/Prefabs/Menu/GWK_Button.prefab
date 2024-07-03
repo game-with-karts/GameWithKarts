@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1701753382460929492}
   - component: {fileID: 7597097101036983353}
   - component: {fileID: 8813494327705418490}
+  - component: {fileID: 6347517420592417142}
   - component: {fileID: 3448878792644252821}
   - component: {fileID: 4663105087458568572}
   m_Layer: 5
@@ -78,6 +79,112 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6347517420592417142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7202714473953394456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: ecadd76d6bc8d814e8e0aa1d839996d5, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a9d7808-f13e-40b5-844c-b24d009c7fcb
+    m_ActionName: Car/Vertical[/Keyboard/s,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8639e25c-38ef-4d5b-9bdd-8a6bcce58894
+    m_ActionName: Car/Horizontal[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b1ea6199-ea07-4745-8b42-ef38396cd523
+    m_ActionName: Car/Jump1[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c4626d75-512d-43f4-8edd-33439d07fca4
+    m_ActionName: Car/Jump2[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2b96e61a-f1d5-4c49-8e2a-2357d87f1eab
+    m_ActionName: Car/Item[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bc736962-d6e9-41ca-8c9c-0dd7654ae9af
+    m_ActionName: Car/BackCamera[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6856bdc3-ae88-42d0-8e2d-eeba6765695e
+    m_ActionName: UI/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1d47ed0e-3ef4-47ab-b922-c7178e2e2b92
+    m_ActionName: UI/AnyKey[/Keyboard/anyKey]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3448878792644252821}
+        m_TargetAssemblyTypeName: GWK.UI.UIElement, Assembly-CSharp
+        m_MethodName: OnUpDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 93e1e3b2-ae85-4e0d-9dde-bf8c7741ba46
+    m_ActionName: UI/UpDown
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3448878792644252821}
+        m_TargetAssemblyTypeName: GWK.UI.UIElement, Assembly-CSharp
+        m_MethodName: OnLeftRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 11b39d0d-57f0-436d-a87b-50543ab2e688
+    m_ActionName: UI/LeftRight
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ebf3b508-d895-40f4-9fe6-afa8b39b47a3
+    m_ActionName: UI/Confirm
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cfa00a50-9e83-421d-b4d0-97f2685272f2
+    m_ActionName: UI/Cancel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2796e918-5f9c-40f2-a912-ae44d69c8038
+    m_ActionName: UI/Alternative
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!114 &3448878792644252821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +197,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18b3c9968d9a6c41af912fe10481db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectUp: {fileID: 0}
+  selectDown: {fileID: 0}
+  selectRight: {fileID: 0}
+  selectLeft: {fileID: 0}
   OnFocusGained:
     m_PersistentCalls:
       m_Calls:
@@ -104,6 +215,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6347517420592417142}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   OnFocusLost:
     m_PersistentCalls:
@@ -120,8 +243,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  button: {fileID: 0}
-  trigger: {fileID: 4663105087458568572}
+      - m_Target: {fileID: 6347517420592417142}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   playSoundOnHover: 1
   clickMode: 0
   onClick:
