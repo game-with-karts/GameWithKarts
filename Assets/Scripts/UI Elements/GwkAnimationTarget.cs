@@ -1,7 +1,8 @@
 using UnityEngine;
 using System;
+
 [Serializable]
-public class GwkAnimationTarget
+public class AnimationTarget
 {
     [SerializeField] private Vector3 positionDelta = Vector3.zero;
     [SerializeField] private Vector3 eulerTarget = Vector3.zero;
