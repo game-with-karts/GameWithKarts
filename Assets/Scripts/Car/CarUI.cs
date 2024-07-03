@@ -39,7 +39,7 @@ public class CarUI : CarComponent
         int place = car.Path.finalPlacement == -1 ? car.Path.currentPlacement : car.Path.finalPlacement;
         positionDisplay.text = FormatPlace(place);
 
-        timeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.TotalTime);
+        timeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.ElapsedTime);
     }
 
     public override void Init() {

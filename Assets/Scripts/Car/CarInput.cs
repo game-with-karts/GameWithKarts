@@ -15,7 +15,9 @@ public class CarInput : CarComponent
         if (!car.IsBot) vert = ctx.ReadValue<float>();
     }
     public void GetHorizontal(InputAction.CallbackContext ctx) {
-        if (!car.IsBot)horiz = ctx.ReadValue<float>();
+        float val = ctx.ReadValue<float>();
+        Debug.Log(val);
+        if (!car.IsBot) horiz = val;
     }
     public void GetJump1(InputAction.CallbackContext ctx) {
         if (!car.IsBot) {

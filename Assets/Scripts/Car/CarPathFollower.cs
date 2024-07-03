@@ -21,9 +21,9 @@ public class CarPathFollower : CarComponent
 
     private const float maxPathTimeDelta = 0.3f;
 
-    public Action OnFinalLap;
-    public Action<BaseCar> OnNextLap;
-    public Action<BaseCar> OnRaceEnd;
+    public event Action OnFinalLap;
+    public event Action<BaseCar> OnNextLap;
+    public event Action<BaseCar> OnRaceEnd;
 
     private int timeCalcCurrentPoint; 
     private int timeCalcNextPoint => (timeCalcCurrentPoint + 1) % currentPath.NumPoints;

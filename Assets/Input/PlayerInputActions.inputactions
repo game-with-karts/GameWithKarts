@@ -294,6 +294,17 @@
                 },
                 {
                     "name": "",
+                    "id": "44a31819-08f5-4755-b45a-1498a7526097",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bad95ea8-826f-49d8-8ed3-02a51aa40d03",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",

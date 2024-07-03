@@ -19,7 +19,7 @@ public class PostRaceTimeTrialState : PostRaceState
         BaseCar car = leaderboard[lastDisplayedIndex];
         GameObject entry = GameObject.Instantiate(leaderboardEntryPrefab, leaderboardDisplayParent);
         ((RectTransform)entry.transform).anchoredPosition = new(0, leaderboardEntryHeight * -lastDisplayedIndex);
-        entry.GetComponent<PostRaceLeaderboardEntry>().Display(CarLapTimer.GetFormattedTime(car.Timer.LapTimes[lastDisplayedIndex]), lastDisplayedIndex + 1);
+        entry.GetComponent<PostRaceLeaderboardEntry>().Display(CarLapTimer.GetFormattedTime(car.Timer.LapTimes[lastDisplayedIndex], true), lastDisplayedIndex + 1);
         lastDisplayedIndex++;
     }
 

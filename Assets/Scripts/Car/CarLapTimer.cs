@@ -5,20 +5,15 @@ using System.Diagnostics;
 using System;
 public class CarLapTimer : CarComponent
 {
-    private Stopwatch timer = new();
+    private readonly Stopwatch timer = new();
     private List<double> lapTimes;
     private double fastestTime;
     private bool eventsSubscribed = false;
     public List<double> LapTimes => lapTimes;
-    public double TotalTime {
-        get {
-            double sum = lapTimes.Sum();
-            if (timer.IsRunning) {
-                sum += Math.Round(timer.Elapsed.TotalSeconds, 3, MidpointRounding.AwayFromZero);
-            }
-            return sum;
-        }
-    }
+    public double TotalTimeMS => lapTimes.Sum();
+    public double TotalTime => TotalTimeMS / 1000;
+    public double ElapsedTime => timer.Elapsed.TotalSeconds;
+    public double ElapsedTimeMS => timer.Elapsed.TotalMilliseconds;
     public override void Init() {
         timer.Stop();
         timer.Reset();
@@ -41,10 +36,11 @@ public class CarLapTimer : CarComponent
 
     private void SaveLap(BaseCar _) {
         timer.Stop();
-        lapTimes.Add(Math.Round(timer.Elapsed.TotalSeconds, 3, MidpointRounding.AwayFromZero));
-        if (timer.Elapsed.TotalSeconds < fastestTime)
-            fastestTime = timer.Elapsed.TotalSeconds;
-        timer.Restart();
+        double time = Math.Floor(ElapsedTimeMS) - TotalTimeMS;
+        lapTimes.Add(time);
+        if (time < fastestTime)
+            fastestTime = time;
+        timer.Start();
     }
 
     private void StopTimer(BaseCar _) {
@@ -58,7 +54,10 @@ public class CarLapTimer : CarComponent
         timer.Start();
     }
 
-    public static string GetFormattedTime(double time) {
+    public static string GetFormattedTime(double time, bool asMs = false) {
+        if (asMs) {
+            time /= 1000;
+        }
         if (time == double.MaxValue) return "--:--.---";
         int m = (int)time / 60;
         int s = (int)time % 60;
