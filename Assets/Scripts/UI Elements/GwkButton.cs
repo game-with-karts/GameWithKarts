@@ -50,7 +50,6 @@ namespace GWK.UI
             onClick.AddListener(call);
             hoverAnimation.SetTransform(transform as RectTransform);
             hoverEndAnimation.SetTransform(transform as RectTransform);
-            Debug.Log($"Awake done! {gameObject.name}");
         }
 
         void Update() {

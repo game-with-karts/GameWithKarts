@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace GWK.UI {
     public class Window : MonoBehaviour {
@@ -8,22 +10,22 @@ namespace GWK.UI {
         public UIElement FirstFocused => firstFocused;
         private UIElement currentFocused;
         public UIElement CurrentFocused => currentFocused;
+        [SerializeField] private UnityEvent OnBackPressed;
 
         private List<UIElement> elements;
-        private List<(UIElement sender, UIElement dest)> polledElements;
 
         void Awake() {
             elements = GetComponentsInChildren<UIElement>().ToList();
             elements.ForEach(e => e.Init(this));
-            polledElements = new(elements.Count);
         }
 
         void OnEnable() {
-            Debug.Log($"OnEnable done! Window");
             firstFocused.SetFocused();
+            UIEventHandler.OnCancel += Back;
         }
 
         void OnDisable() {
+            UIEventHandler.OnCancel -= Back;
             currentFocused.SetUnfocused();
             currentFocused = null;
         }
@@ -31,17 +33,14 @@ namespace GWK.UI {
         public void SetFocused(UIElement element) {
             currentFocused?.SetUnfocused();
             currentFocused = element;
-            Debug.Log($"Currently focused {element.gameObject.name}");
         }
 
-        public void PollForFocusChange(UIElement sender, UIElement dest) {
-            Debug.Log($"Polling from {sender} wanting to switch to {dest}");
-            polledElements.Add((sender, dest));
-            Debug.Log($"Tuple added! Current count: {polledElements.Count}");
-            if (elements.Count == polledElements.Count) {
-                polledElements.Where(e => e.sender.focused).First().dest.SetFocused();
-                polledElements.Clear();
+        public void Back(InputAction.CallbackContext ctx) {
+            Debug.Log("Back button pressed");
+            if (!ctx.performed) {
+                return;
             }
+            OnBackPressed.Invoke();
         }
     }
 }
