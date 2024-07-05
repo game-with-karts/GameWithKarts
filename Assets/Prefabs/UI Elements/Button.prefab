@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3448878792644252821}
   - component: {fileID: 4663105087458568572}
   m_Layer: 5
-  m_Name: GWK_Button
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
