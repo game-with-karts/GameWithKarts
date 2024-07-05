@@ -10,7 +10,6 @@ namespace GWK.UI {
         public UIElement FirstFocused => firstFocused;
         private UIElement currentFocused;
         public UIElement CurrentFocused => currentFocused;
-        [SerializeField] private UnityEvent OnBackPressed;
 
         private List<UIElement> elements;
 
@@ -21,11 +20,9 @@ namespace GWK.UI {
 
         void OnEnable() {
             firstFocused.SetFocused();
-            UIEventHandler.OnCancel += Back;
         }
 
         void OnDisable() {
-            UIEventHandler.OnCancel -= Back;
             currentFocused.SetUnfocused();
             currentFocused = null;
         }
@@ -33,14 +30,6 @@ namespace GWK.UI {
         public void SetFocused(UIElement element) {
             currentFocused?.SetUnfocused();
             currentFocused = element;
-        }
-
-        public void Back(InputAction.CallbackContext ctx) {
-            Debug.Log("Back button pressed");
-            if (!ctx.performed) {
-                return;
-            }
-            OnBackPressed.Invoke();
         }
     }
 }

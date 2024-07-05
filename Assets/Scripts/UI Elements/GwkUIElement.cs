@@ -14,6 +14,15 @@ namespace GWK.UI {
         public UnityEvent OnFocusGained;
         public UnityEvent OnFocusLost;
         public UnityEvent OnConfirm;
+        public UnityEvent OnCancel;
+        public UnityEvent OnAlternative;
+        public UnityEvent<float> OnTabs;
+
+        protected static readonly ElementSwitchLock moveLock = new((v, l) => v != 0 && l == 0);
+        protected static readonly ElementSwitchLock confirmLock = new((v, l) => v == 0 && l != 0);
+        protected static readonly ElementSwitchLock cancelLock = new((v, l) => v == 0 && l != 0);
+        protected static readonly ElementSwitchLock altLock = new((v, l) => v == 0 && l != 0);
+        protected static readonly ElementSwitchLock tabsLock = new((v, l) => v != 0 && l == 0);
         public void Init(Window win) {
             window = win;
             // GetComponent<PlayerInput>().enabled = false;
@@ -26,8 +35,11 @@ namespace GWK.UI {
             window.SetFocused(this);
             OnFocusGained.Invoke();
             UIEventHandler.OnUpDown += OnUpDown;
-            UIEventHandler.OnLeftRight += OnUpDown;
+            UIEventHandler.OnLeftRight += OnLeftRight;
             UIEventHandler.OnConfirm += OnInputConfirm;
+            UIEventHandler.OnCancel += OnInputCancel;
+            UIEventHandler.OnAlternative += OnInputAlternative;
+            UIEventHandler.OnTabs += OnInputTabs;
         }
 
         public void SetUnfocused() {
@@ -35,8 +47,11 @@ namespace GWK.UI {
                 return;
             }
             UIEventHandler.OnUpDown -= OnUpDown;
-            UIEventHandler.OnLeftRight -= OnUpDown;
+            UIEventHandler.OnLeftRight -= OnLeftRight;
             UIEventHandler.OnConfirm -= OnInputConfirm;
+            UIEventHandler.OnCancel -= OnInputCancel;
+            UIEventHandler.OnAlternative -= OnInputAlternative;
+            UIEventHandler.OnTabs -= OnInputTabs;
             OnFocusLost.Invoke();
         }
 
@@ -49,7 +64,6 @@ namespace GWK.UI {
             StartCoroutine(coroutine);
         }
 
-        private static readonly ElementSwitchLock moveLock = new((v, l) => v != 0 && l == 0);
         // no idea if this even should be a coroutine but it works so idgaf :)
         private IEnumerator HandleMoveEvents(InputAction.CallbackContext ctx, UIElement pos, UIElement neg) {
             if (!ctx.started) {
@@ -63,12 +77,10 @@ namespace GWK.UI {
             float val = ctx.ReadValue<float>();
             val = val == 0 ? val : Mathf.Sign(val);
             bool shouldSwitch = moveLock.ShouldSwitch(val);
-            Debug.Log($"{ctx.ReadValue<float>()} {val}");
             if (shouldSwitch){
                 HandleUIInput(val, pos, neg);
             }
         }
-        private static readonly ElementSwitchLock confirmLock = new((v, l) => v == 0 && l != 0);
 
         public virtual void OnInputConfirm(InputAction.CallbackContext ctx) {
             // triggered on release
@@ -88,8 +100,52 @@ namespace GWK.UI {
             }
         }
 
+        public virtual void OnInputCancel(InputAction.CallbackContext ctx) {
+            // triggered on release
+            if (!ctx.canceled) {
+                if (ctx.started) {
+                    cancelLock.ShouldSwitch(1);
+                }
+                return;
+            }
+            if (!focused) {
+                return;
+            }
+            float val = Mathf.Round(ctx.ReadValue<float>());
+            bool shouldSwitch = cancelLock.ShouldSwitch(val);
+            if (shouldSwitch){
+                OnCancel.Invoke();
+            }
+        }
 
-        private void HandleUIInput(float val, UIElement pos, UIElement neg) {
+        public virtual void OnInputAlternative(InputAction.CallbackContext ctx) {
+            // triggered on release
+            if (!ctx.canceled) {
+                if (ctx.started) {
+                    altLock.ShouldSwitch(1);
+                }
+                return;
+            }
+            if (!focused) {
+                return;
+            }
+            float val = Mathf.Round(ctx.ReadValue<float>());
+            bool shouldSwitch = altLock.ShouldSwitch(val);
+            if (shouldSwitch){
+                OnAlternative.Invoke();
+            }
+        }
+
+        public virtual void OnInputTabs(InputAction.CallbackContext ctx) {
+            if (!ctx.started) {
+                return;
+            }
+            float val = ctx.ReadValue<float>();
+            OnTabs.Invoke(val);
+        }
+
+
+        protected void HandleUIInput(float val, UIElement pos, UIElement neg) {
             if (!focused) {
                 return;
             }

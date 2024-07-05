@@ -9,11 +9,15 @@ namespace GWK.UI {
         public static event InputCallback OnConfirm;
         public static event InputCallback OnCancel;
         public static event InputCallback OnAlternative;
+        public static event InputCallback OnTabs;
 
         public void UpDown(InputAction.CallbackContext ctx) => OnUpDown?.Invoke(ctx);
         public void LeftRight(InputAction.CallbackContext ctx) => OnLeftRight?.Invoke(ctx);
         public void Confirm(InputAction.CallbackContext ctx) => OnConfirm?.Invoke(ctx);
         public void Cancel(InputAction.CallbackContext ctx) => OnCancel?.Invoke(ctx);
         public void Alternative(InputAction.CallbackContext ctx) => OnAlternative?.Invoke(ctx);
+        public void Tabs(InputAction.CallbackContext ctx) {
+            OnTabs?.Invoke(ctx);
+        }
     }
 }

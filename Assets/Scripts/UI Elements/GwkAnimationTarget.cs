@@ -9,10 +9,11 @@ namespace GWK.UI {
         [SerializeField] private Vector3 eulerTarget = Vector3.zero;
         [SerializeField] private Vector3 scaleTarget = Vector3.one;
         [Min(0.001f)]
-        [SerializeField] private float duration = 1;
+        [SerializeField] private float duration = 0.001f;
         [SerializeField] private AnimationCurve curve;
 
         private float currentTime;
+        public float CurrentProgress => Mathf.Clamp01(currentTime / duration);
         private Vector3 startPos;
         private Vector3 startAnimPos;
         private Quaternion startRot;
@@ -27,6 +28,20 @@ namespace GWK.UI {
         public Vector3 PositionDelta => positionDelta;
         public Vector3 EulerTarget => eulerTarget;
         public Vector3 ScaleTarget => scaleTarget;
+        public float Duration => duration;
+        public AnimationCurve Curve => curve;
+
+        public AnimationTarget() {
+            this.curve = AnimationCurve.Linear(9, 9, 1, 9);
+        }
+
+        public AnimationTarget(Vector3 posDelta, Vector3 euler, Vector3 scale, float duration, AnimationCurve curve) {
+            positionDelta = posDelta;
+            eulerTarget = euler;
+            scaleTarget = scale;
+            this.duration = duration;
+            this.curve = curve;
+        }
 
         public void SetTransform(RectTransform transform) {
             target = transform;

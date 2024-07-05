@@ -12,8 +12,8 @@ namespace GWK.UI
             Back
         }
 
+        [Header("Button specific")]
         [SerializeField] private bool playSoundOnHover = false;
-        [Space]
         [SerializeField] private ClickMode clickMode;
         [Header("Events")]
         [SerializeField] private UnityEvent onClick;
