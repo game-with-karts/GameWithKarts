@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using System;
+using UnityEngine.InputSystem;
 
 namespace GWK.UI {
     public class Slideshow : UIElement {
@@ -63,6 +64,18 @@ namespace GWK.UI {
         void SetGraphic() {
             mainImage.sprite = entries[CurrentIdx].image;
             mainLabel.text = entries[CurrentIdx].caption;
+        }
+
+        public override void OnLeftRight(InputAction.CallbackContext ctx) {
+            if (!ctx.started) {
+                return;
+            }
+            float val = ctx.ReadValue<float>();
+            val = val == 0 ? val : Mathf.Sign(val);
+            if (val == 0) {
+                return;
+            }
+            OnTabs.Invoke(val);
         }
 
         public void Advance(float d) {
