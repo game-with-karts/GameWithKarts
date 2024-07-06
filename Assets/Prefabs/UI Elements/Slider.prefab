@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.13922615, b: 0.32941177, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -179,7 +179,6 @@ MonoBehaviour:
   bg: {fileID: 1768607330571715750}
   fillArea: {fileID: 3064849282649060622}
   fill: {fileID: 3473950001393998255}
-  parentCanvas: {fileID: 0}
   minValue: 0
   maxValue: 1
   _value: 0

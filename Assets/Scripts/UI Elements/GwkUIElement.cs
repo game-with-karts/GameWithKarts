@@ -55,6 +55,9 @@ namespace GWK.UI {
             OnFocusLost.Invoke();
         }
 
+        public void SetSelectDown(UIElement elem) => selectDown = elem;
+        public void SetSelectUp(UIElement elem) => selectUp = elem;
+
         public virtual void OnUpDown(InputAction.CallbackContext ctx) {
             IEnumerator coroutine = HandleMoveEvents(ctx, selectUp, selectDown);
             StartCoroutine(coroutine);

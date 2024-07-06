@@ -17,8 +17,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private AudioMixerGroup musicMixGroup;
     [SerializeField] private AudioMixerGroup sfxMixGroup;
     [Header("Graphics Settings")]
-    [SerializeField] private TMP_InputField targetFrameRateInp;
-    [SerializeField] private Toggle enablePostProcessingChk;
+    [SerializeField] private NumberInputBox targetFrameRateInp;
+    [SerializeField] private CheckBox enablePostProcessingChk;
     [Header("Input Settings (soon)")]
     [SerializeField] private InputActionAsset inputAction;
     public List<PlayerInput> inputs { get; set; }
@@ -35,8 +35,8 @@ public class SettingsMenu : MonoBehaviour
     private float musicVolume;
     private float sfxVolume;
     public void SaveSettings() {
-        PlayerPrefs.SetInt(TargetFrameRateKey, int.Parse(targetFrameRateInp.text));
-        PlayerPrefs.SetInt(EnablePostProcessingKey, enablePostProcessingChk.isOn ? 1 : 0);
+        PlayerPrefs.SetInt(TargetFrameRateKey, targetFrameRateInp.Value);
+        PlayerPrefs.SetInt(EnablePostProcessingKey, enablePostProcessingChk.Value ? 1 : 0);
         PlayerPrefs.SetFloat(MasterVolumeKey, masterVolumeSld.Value);
         PlayerPrefs.SetFloat(MusicVolumeKey, musicVolumeSld.Value);
         PlayerPrefs.SetFloat(SFXVolumeKey, sfxVolumeSld.Value);
@@ -59,8 +59,8 @@ public class SettingsMenu : MonoBehaviour
         musicVolumeSld.Value = musicVolume;
         sfxVolumeSld.Value = sfxVolume;
 
-        targetFrameRateInp.text = targetFrameRate.ToString();
-        enablePostProcessingChk.isOn = enablePostProcessing;
+        targetFrameRateInp.Value = targetFrameRate;
+        enablePostProcessingChk.Value = enablePostProcessing;
     }
 
     public void UpdateKeybinds() {
@@ -76,7 +76,7 @@ public class SettingsMenu : MonoBehaviour
         SetVolume(masterMixGroup, "MasterVolume", masterVolumeSld.Value);
         SetVolume(musicMixGroup, "MusicVolume", musicVolumeSld.Value);
         SetVolume(sfxMixGroup, "SFXVolume", sfxVolumeSld.Value);
-        Application.targetFrameRate = int.Parse(targetFrameRateInp.text);
+        Application.targetFrameRate = targetFrameRateInp.Value;
     }
 
     public static void SetVolume(AudioMixerGroup group, string name, float value) {

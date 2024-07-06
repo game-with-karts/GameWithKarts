@@ -27,6 +27,7 @@ namespace GWK.UI {
             set {
                 _value = value;
                 mainText.text = entries[value];
+                OnValueChanged.Invoke(value);
             }
         }
         private readonly Gradient gradient = new() {
@@ -63,19 +64,19 @@ namespace GWK.UI {
             if (val == 0) {
                 return;
             }
-            OnValueChanged.Invoke(valInt);
+            Advance(valInt);
         }
 
         public void Advance(int delta) {
             if (Playing) {
                 return;
             }
-            transitionText.text = entries[_value];
-            _value = (_value + delta) % entries.Length;
-            if (_value < 0) {
-                _value += entries.Length;
+            transitionText.text = entries[Value];
+            int newValue = (Value + delta) % entries.Length;
+            if (newValue < 0) {
+                newValue += entries.Length;
             }
-            mainText.text = entries[_value];
+            Value = newValue;
             Play(-delta);
         }
 

@@ -34,7 +34,7 @@ namespace GWK.UI {
         }
 
         void Awake() {
-            Debug.Log($"{fillArea.rect.width} {fillArea.rect.xMin}");
+            targetColour = bgColourDeselected;
         }
 
         private static Vector2 MousePosition() {
@@ -68,7 +68,6 @@ namespace GWK.UI {
 
         public void Advance(int delta) {
             Value = Math.Clamp(Value + delta * incDecRate, minValue, maxValue);
-            SoundManager.OnHoverUI();
         }
 
         void Update() {

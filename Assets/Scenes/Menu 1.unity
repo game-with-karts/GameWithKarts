@@ -7172,8 +7172,45 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4278848010
       objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1191194105}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853233374719489377, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860865234645559559, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
+      propertyPath: parentCanvas
+      value: 
+      objectReference: {fileID: 1106791356}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2800787900626073906, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07d1d54c2adf63f458fb2135fcc96310, type: 3}

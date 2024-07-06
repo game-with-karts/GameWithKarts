@@ -14,7 +14,7 @@ namespace GWK.UI {
         private List<UIElement> elements;
 
         void Awake() {
-            elements = GetComponentsInChildren<UIElement>().ToList();
+            elements = GetComponentsInChildren<UIElement>(true).ToList();
             elements.ForEach(e => e.Init(this));
         }
 
