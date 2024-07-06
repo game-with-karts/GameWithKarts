@@ -1,16 +1,17 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using TMPro;
+using GWK.UI;
 using System.Collections.Generic;
 
 public class SettingsMenu : MonoBehaviour
 {
     [Header("General Settings")]
-    [SerializeField] private Slider masterVolumeSld;
-    [SerializeField] private Slider musicVolumeSld;
-    [SerializeField] private Slider sfxVolumeSld;
+    [SerializeField] private GWK.UI.Slider masterVolumeSld;
+    [SerializeField] private GWK.UI.Slider musicVolumeSld;
+    [SerializeField] private GWK.UI.Slider sfxVolumeSld;
     [Space]
     [SerializeField] private AudioMixerGroup masterMixGroup;
     [SerializeField] private AudioMixerGroup musicMixGroup;
@@ -36,9 +37,9 @@ public class SettingsMenu : MonoBehaviour
     public void SaveSettings() {
         PlayerPrefs.SetInt(TargetFrameRateKey, int.Parse(targetFrameRateInp.text));
         PlayerPrefs.SetInt(EnablePostProcessingKey, enablePostProcessingChk.isOn ? 1 : 0);
-        PlayerPrefs.SetFloat(MasterVolumeKey, masterVolumeSld.value);
-        PlayerPrefs.SetFloat(MusicVolumeKey, musicVolumeSld.value);
-        PlayerPrefs.SetFloat(SFXVolumeKey, sfxVolumeSld.value);
+        PlayerPrefs.SetFloat(MasterVolumeKey, masterVolumeSld.Value);
+        PlayerPrefs.SetFloat(MusicVolumeKey, musicVolumeSld.Value);
+        PlayerPrefs.SetFloat(SFXVolumeKey, sfxVolumeSld.Value);
         PlayerPrefs.SetString(BindingOverridesKey, inputAction.SaveBindingOverridesAsJson());
     }
 
@@ -54,9 +55,9 @@ public class SettingsMenu : MonoBehaviour
     }
 
     public void UpdateUI() {
-        masterVolumeSld.value = masterVolume;
-        musicVolumeSld.value = musicVolume;
-        sfxVolumeSld.value = sfxVolume;
+        masterVolumeSld.Value = masterVolume;
+        musicVolumeSld.Value = musicVolume;
+        sfxVolumeSld.Value = sfxVolume;
 
         targetFrameRateInp.text = targetFrameRate.ToString();
         enablePostProcessingChk.isOn = enablePostProcessing;
@@ -72,9 +73,9 @@ public class SettingsMenu : MonoBehaviour
     }
 
     public void UpdateSettings() {
-        SetVolume(masterMixGroup, "MasterVolume", masterVolumeSld.value);
-        SetVolume(musicMixGroup, "MusicVolume", musicVolumeSld.value);
-        SetVolume(sfxMixGroup, "SFXVolume", sfxVolumeSld.value);
+        SetVolume(masterMixGroup, "MasterVolume", masterVolumeSld.Value);
+        SetVolume(musicMixGroup, "MusicVolume", musicVolumeSld.Value);
+        SetVolume(sfxMixGroup, "SFXVolume", sfxVolumeSld.Value);
         Application.targetFrameRate = int.Parse(targetFrameRateInp.text);
     }
 
