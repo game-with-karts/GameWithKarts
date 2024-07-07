@@ -56,9 +56,6 @@ namespace GWK.UI {
         }
 
         public override void OnLeftRight(InputAction.CallbackContext ctx) {
-            if (!ctx.started) {
-                return;
-            }
             float val = ctx.ReadValue<float>();
             int valInt = (int)(val == 0 ? val : Mathf.Sign(val));
             if (val == 0) {
@@ -111,8 +108,8 @@ namespace GWK.UI {
             if (mainAnimation is null || transitionAnimation is null) {
                 return;
             }
-            mainAnimation.Tick(Time.deltaTime);
-            transitionAnimation.Tick(Time.deltaTime);
+            mainAnimation.Tick(Time.unscaledDeltaTime);
+            transitionAnimation.Tick(Time.unscaledDeltaTime);
             mainText.color = gradient.Evaluate(mainAnimation.CurrentProgress);
             transitionText.color = gradient.Evaluate(1 - transitionAnimation.CurrentProgress);
 

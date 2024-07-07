@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(Rigidbody))]
@@ -60,11 +61,9 @@ public class BaseCar : MonoBehaviour
         startingIsBot = isBot;
         this.startOnAntigrav = startOnAntigrav;
 
-        Component[] comps = GetComponents<Component>();
+        CarComponent[] comps = GetComponents<CarComponent>();
         foreach (var comp in comps) {
-            if (comp is CarComponent) {
-                components.Add(comp as CarComponent);
-            }
+            components.Add(comp);
         }
         ResetCar(true);
     }
@@ -80,7 +79,6 @@ public class BaseCar : MonoBehaviour
                     (c as CarUI).ActivateCanvas();
                 }
             }
-            
         }
     }
 

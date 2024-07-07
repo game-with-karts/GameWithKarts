@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using GWK.UI;
 using System.Collections.Generic;
+using System;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class SettingsMenu : MonoBehaviour
     public static readonly string SFXVolumeKey = "SFX_VOLUME";
     public static readonly string BindingOverridesKey = "BINDINGS";
 
+    public static event Action OnSettingsUpdated;
+
     private int targetFrameRate;
     private bool enablePostProcessing;
     private float masterVolume;
@@ -41,6 +44,7 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat(MusicVolumeKey, musicVolumeSld.Value);
         PlayerPrefs.SetFloat(SFXVolumeKey, sfxVolumeSld.Value);
         PlayerPrefs.SetString(BindingOverridesKey, inputAction.SaveBindingOverridesAsJson());
+        OnSettingsUpdated?.Invoke();
     }
 
     public void LoadSettings() {

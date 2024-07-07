@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +12,12 @@ public class CarInput : CarComponent
     private float jump2Prev;
     private float item;
     private float backCamera;
+    private PlayerInputActions inputs;
     public void GetVertical(InputAction.CallbackContext ctx) {
         if (!car.IsBot) vert = ctx.ReadValue<float>();
     }
     public void GetHorizontal(InputAction.CallbackContext ctx) {
-        float val = ctx.ReadValue<float>();
-        Debug.Log(val);
-        if (!car.IsBot) horiz = val;
+        if (!car.IsBot) horiz = ctx.ReadValue<float>();;
     }
     public void GetJump1(InputAction.CallbackContext ctx) {
         if (!car.IsBot) {
@@ -36,7 +36,7 @@ public class CarInput : CarComponent
     }
 
     public void GetBackCamera(InputAction.CallbackContext ctx) {
-        if (!car.IsBot)backCamera = ctx.ReadValue<float>();
+        if (!car.IsBot)backCamera = Mathf.Round(ctx.ReadValue<float>());
     }
     public float AxisVert => vert;
     public float AxisHori => horiz;
@@ -46,8 +46,49 @@ public class CarInput : CarComponent
     public bool AxisJump2ThisFrame { get; private set; }
     public float BackCamera => backCamera;
 
-    public override void Init() {
+    public override void Init() {}
+
+    void OnEnable() {
+        if (car.IsBot) {
+            return;
+        }
+        inputs = new();
+
+        EnableAction(inputs.Car.Vertical, GetVertical);
+        EnableAction(inputs.Car.Horizontal, GetHorizontal);
+        EnableAction(inputs.Car.Jump1, GetJump1);
+        EnableAction(inputs.Car.Jump2, GetJump2);
+        EnableAction(inputs.Car.Item, GetItem);
+        EnableAction(inputs.Car.BackCamera, GetBackCamera);
+
+        SettingsMenu.OnSettingsUpdated += UpdateInputOverrides;
+    }
+
+    void OnDisable() {
+        DisableAction(inputs.Car.Vertical, GetVertical);
+        DisableAction(inputs.Car.Horizontal, GetHorizontal);
+        DisableAction(inputs.Car.Jump1, GetJump1);
+        DisableAction(inputs.Car.Jump2, GetJump2);
+        DisableAction(inputs.Car.Item, GetItem);
+        DisableAction(inputs.Car.BackCamera, GetBackCamera);
         
+        SettingsMenu.OnSettingsUpdated -= UpdateInputOverrides;
+    }
+
+    private void UpdateInputOverrides() {
+        inputs.LoadBindingOverridesFromJson(PlayerPrefs.GetString(SettingsMenu.BindingOverridesKey));
+    }
+
+    private void EnableAction(InputAction action, Action<InputAction.CallbackContext> func) {
+        action.performed += func;
+        action.canceled += func;
+        action.Enable();
+    }
+
+    private void DisableAction(InputAction action, Action<InputAction.CallbackContext> func) {
+        action.performed -= func;
+        action.canceled -= func;
+        action.Disable();
     }
 
     private void Update() {

@@ -55,9 +55,6 @@ namespace GWK.UI {
         }
 
         public override void OnLeftRight(InputAction.CallbackContext ctx) {
-            if (!ctx.started) {
-                return;
-            }
             float val = ctx.ReadValue<float>();
             int valInt = (int)(val == 0 ? val : Mathf.Sign(val));
             if (valInt == 0) {

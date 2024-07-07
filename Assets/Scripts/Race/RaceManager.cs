@@ -42,17 +42,19 @@ public class RaceManager : MonoBehaviour
             car.Path.OnRaceEnd += postRaceScreen.RaceEnded;
             car.Path.OnNextLap += postRaceScreen.NextLap;
             settingsMenu.inputs.Add(car.GetComponent<PlayerInput>());
-            if (!car.IsBot) {
-                car.Path.OnRaceEnd += pauseMenu.RaceEnd;
-                sequence.OnSequenceEnd += car.Camera.ActivateCamera;
-                sequence.OnSequenceEnd += car.UI.ActivateCanvas;
-                sequence.OnSequenceEnd += () => SoundManager.SetMusic(music);
-                if (GameRulesManager.currentTrack.settings.timeAttackMode)
-                    pauseMenu.OnPause += car.Timer.ToggleTimer;
-                car.UI.Minimap.SetMinimapImage(minimapImage);
-                car.UI.Minimap.SetMinimapTransform(minimapTransform);
-                car.UI.Minimap.AddCars(cars);
+            if (car.IsBot) {
+                continue;
             }
+            car.Path.OnRaceEnd += pauseMenu.RaceEnd;
+            sequence.OnSequenceEnd += car.Camera.ActivateCamera;
+            sequence.OnSequenceEnd += car.UI.ActivateCanvas;
+            sequence.OnSequenceEnd += () => SoundManager.SetMusic(music);
+            if (GameRulesManager.currentTrack.settings.timeAttackMode)
+                pauseMenu.OnPause += car.Timer.ToggleTimer;
+            car.UI.Minimap.SetMinimapImage(minimapImage);
+            car.UI.Minimap.SetMinimapTransform(minimapTransform);
+            car.UI.Minimap.AddCars(cars);
+
                 
         }
         carPlacement.Init(cars);

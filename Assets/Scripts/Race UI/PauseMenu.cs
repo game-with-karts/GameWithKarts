@@ -6,13 +6,18 @@ public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu instance;
     [SerializeField] private GameObject pauseScreen;
+    private PlayerInputActions inputs;
     private bool isPaused;
     public bool IsPaused => isPaused;
     public Action<bool> OnPause;
     private bool raceFinished;
 
     void Awake() {
+        Debug.Log("Pause menu activated!");
+        inputs = new();
         Init();
+        inputs.UI.Pause.performed += TogglePause;
+        inputs.UI.Pause.Enable();
     }
 
     void LateUpdate() {
@@ -21,7 +26,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void TogglePause(InputAction.CallbackContext ctx) {
-        if (ctx.canceled && !raceFinished) {
+        if (!raceFinished) {
             isPaused = !isPaused;
             OnPause?.Invoke(isPaused);
             Cursor.visible = isPaused;
@@ -47,5 +52,7 @@ public class PauseMenu : MonoBehaviour
     {
         Cursor.visible = true;
         Time.timeScale = 1;
+        inputs.UI.Pause.performed -= TogglePause;
+        inputs.UI.Pause.Disable();
     }
 }

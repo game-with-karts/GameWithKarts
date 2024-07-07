@@ -18,11 +18,6 @@ namespace GWK.UI {
         public UnityEvent OnAlternative;
         public UnityEvent<float> OnTabs;
 
-        protected static readonly ElementSwitchLock moveLock = new((v, l) => v != 0 && l == 0);
-        protected static readonly ElementSwitchLock confirmLock = new((v, l) => v == 0 && l != 0);
-        protected static readonly ElementSwitchLock cancelLock = new((v, l) => v == 0 && l != 0);
-        protected static readonly ElementSwitchLock altLock = new((v, l) => v == 0 && l != 0);
-        protected static readonly ElementSwitchLock tabsLock = new((v, l) => v != 0 && l == 0);
         public void Init(Window win) {
             window = win;
             // GetComponent<PlayerInput>().enabled = false;
@@ -34,24 +29,24 @@ namespace GWK.UI {
             }
             window.SetFocused(this);
             OnFocusGained.Invoke();
-            UIEventHandler.OnUpDown += OnUpDown;
-            UIEventHandler.OnLeftRight += OnLeftRight;
-            UIEventHandler.OnConfirm += OnInputConfirm;
-            UIEventHandler.OnCancel += OnInputCancel;
-            UIEventHandler.OnAlternative += OnInputAlternative;
-            UIEventHandler.OnTabs += OnInputTabs;
+            UIEventHandler.inputs.UI.UpDown.performed += OnUpDown;
+            UIEventHandler.inputs.UI.LeftRight.performed += OnLeftRight;
+            UIEventHandler.inputs.UI.Confirm.started += OnInputConfirm;
+            UIEventHandler.inputs.UI.Cancel.started += OnInputCancel;
+            UIEventHandler.inputs.UI.Alternative.started += OnInputAlternative;
+            UIEventHandler.inputs.UI.Tabs.performed += OnInputTabs;
         }
 
         public void SetUnfocused() {
             if (!focused) {
                 return;
             }
-            UIEventHandler.OnUpDown -= OnUpDown;
-            UIEventHandler.OnLeftRight -= OnLeftRight;
-            UIEventHandler.OnConfirm -= OnInputConfirm;
-            UIEventHandler.OnCancel -= OnInputCancel;
-            UIEventHandler.OnAlternative -= OnInputAlternative;
-            UIEventHandler.OnTabs -= OnInputTabs;
+            UIEventHandler.inputs.UI.UpDown.performed -= OnUpDown;
+            UIEventHandler.inputs.UI.LeftRight.performed -= OnLeftRight;
+            UIEventHandler.inputs.UI.Confirm.started -= OnInputConfirm;
+            UIEventHandler.inputs.UI.Cancel.started -= OnInputCancel;
+            UIEventHandler.inputs.UI.Alternative.started -= OnInputAlternative;
+            UIEventHandler.inputs.UI.Tabs.performed -= OnInputTabs;
             OnFocusLost.Invoke();
         }
 
@@ -59,84 +54,29 @@ namespace GWK.UI {
         public void SetSelectUp(UIElement elem) => selectUp = elem;
 
         public virtual void OnUpDown(InputAction.CallbackContext ctx) {
-            IEnumerator coroutine = HandleMoveEvents(ctx, selectUp, selectDown);
-            StartCoroutine(coroutine);
+            Debug.Log($"Event received for {gameObject.name}");
+            HandleMoveEvents(ctx, selectUp, selectDown);
         }
         public virtual void OnLeftRight(InputAction.CallbackContext ctx) {
-            IEnumerator coroutine = HandleMoveEvents(ctx, selectRight, selectLeft);
-            StartCoroutine(coroutine);
+            HandleMoveEvents(ctx, selectRight, selectLeft);
         }
 
-        // no idea if this even should be a coroutine but it works so idgaf :)
-        private IEnumerator HandleMoveEvents(InputAction.CallbackContext ctx, UIElement pos, UIElement neg) {
-            if (!ctx.started) {
-                if (ctx.canceled) {
-                    moveLock.ShouldSwitch(0);
-                }
-                yield break;
-            }
-            yield return new WaitForFixedUpdate();
-            // float val = Mathf.Clamp(Mathf.Round(ctx.ReadValue<float>()) * 10f, -1, 1);
+        private void HandleMoveEvents(InputAction.CallbackContext ctx, UIElement pos, UIElement neg) {
             float val = ctx.ReadValue<float>();
             val = val == 0 ? val : Mathf.Sign(val);
-            bool shouldSwitch = moveLock.ShouldSwitch(val);
-            if (shouldSwitch){
-                HandleUIInput(val, pos, neg);
-            }
+            HandleUIInput(val, pos, neg);
         }
 
         public virtual void OnInputConfirm(InputAction.CallbackContext ctx) {
-            // triggered on release
-            if (!ctx.canceled) {
-                if (ctx.started) {
-                    confirmLock.ShouldSwitch(1);
-                }
-                return;
-            }
-            if (!focused) {
-                return;
-            }
-            float val = Mathf.Round(ctx.ReadValue<float>());
-            bool shouldSwitch = confirmLock.ShouldSwitch(val);
-            if (shouldSwitch){
-                OnConfirm.Invoke();
-            }
+            OnConfirm.Invoke();
         }
 
         public virtual void OnInputCancel(InputAction.CallbackContext ctx) {
-            // triggered on release
-            if (!ctx.canceled) {
-                if (ctx.started) {
-                    cancelLock.ShouldSwitch(1);
-                }
-                return;
-            }
-            if (!focused) {
-                return;
-            }
-            float val = Mathf.Round(ctx.ReadValue<float>());
-            bool shouldSwitch = cancelLock.ShouldSwitch(val);
-            if (shouldSwitch){
-                OnCancel.Invoke();
-            }
+            OnCancel.Invoke();
         }
 
         public virtual void OnInputAlternative(InputAction.CallbackContext ctx) {
-            // triggered on release
-            if (!ctx.canceled) {
-                if (ctx.started) {
-                    altLock.ShouldSwitch(1);
-                }
-                return;
-            }
-            if (!focused) {
-                return;
-            }
-            float val = Mathf.Round(ctx.ReadValue<float>());
-            bool shouldSwitch = altLock.ShouldSwitch(val);
-            if (shouldSwitch){
-                OnAlternative.Invoke();
-            }
+            OnAlternative.Invoke();
         }
 
         public virtual void OnInputTabs(InputAction.CallbackContext ctx) {

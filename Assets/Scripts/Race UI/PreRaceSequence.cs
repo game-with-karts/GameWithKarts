@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public class PreRaceSequence : MonoBehaviour
 {
@@ -8,6 +9,21 @@ public class PreRaceSequence : MonoBehaviour
     [SerializeField] private AudioClip preRaceMusic;
     public Action OnSequenceEnd;
     private int currentSequence = -1;
+    private PlayerInputActions inputs;
+
+    void Awake() {
+        inputs = new();
+    }
+
+    void OnEnable() {
+        inputs.UI.AnyKey.performed += OnAnyKey;
+        inputs.UI.AnyKey.Enable();
+    }
+
+    void OnDisable() {
+        inputs.UI.AnyKey.performed -= OnAnyKey;
+        inputs.UI.AnyKey.Disable();
+    }
 
     public void StartSequence() {
         SoundManager.SetMusic(preRaceMusic);
@@ -39,6 +55,10 @@ public class PreRaceSequence : MonoBehaviour
         cameraTransform.gameObject.SetActive(false);
         gameObject.SetActive(false);
         OnSequenceEnd?.Invoke();
+    }
+
+    private void OnAnyKey(InputAction.CallbackContext ctx) {
+        StopSequence();
     }
 
     #if UNITY_EDITOR
