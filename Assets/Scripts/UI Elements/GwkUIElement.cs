@@ -7,10 +7,10 @@ namespace GWK.UI {
     public class UIElement : MonoBehaviour {
         protected Window window;
         public bool focused => ReferenceEquals(window.CurrentFocused, this);
-        [SerializeField] private UIElement selectUp;
-        [SerializeField] private UIElement selectDown;
-        [SerializeField] private UIElement selectRight;
-        [SerializeField] private UIElement selectLeft;
+        [SerializeField] protected UIElement selectUp;
+        [SerializeField] protected UIElement selectDown;
+        [SerializeField] protected UIElement selectRight;
+        [SerializeField] protected UIElement selectLeft;
         public UnityEvent OnFocusGained;
         public UnityEvent OnFocusLost;
         public UnityEvent OnConfirm;
@@ -18,12 +18,12 @@ namespace GWK.UI {
         public UnityEvent OnAlternative;
         public UnityEvent<float> OnTabs;
 
-        public void Init(Window win) {
+        public virtual void Init(Window win) {
             window = win;
             // GetComponent<PlayerInput>().enabled = false;
         }
 
-        public void SetFocused() {
+        public virtual void SetFocused(UINavigationInfo info) {
             if (focused) {
                 return;
             }
@@ -37,7 +37,7 @@ namespace GWK.UI {
             UIEventHandler.inputs.UI.Tabs.performed += OnInputTabs;
         }
 
-        public void SetUnfocused() {
+        public virtual void SetUnfocused() {
             if (!focused) {
                 return;
             }
@@ -54,16 +54,16 @@ namespace GWK.UI {
         public void SetSelectUp(UIElement elem) => selectUp = elem;
 
         public virtual void OnUpDown(InputAction.CallbackContext ctx) {
-            HandleMoveEvents(ctx, selectUp, selectDown);
+            HandleMoveEvents(ctx, selectUp, selectDown, UINavigationDirection.Up, UINavigationDirection.Down);
         }
         public virtual void OnLeftRight(InputAction.CallbackContext ctx) {
-            HandleMoveEvents(ctx, selectRight, selectLeft);
+            HandleMoveEvents(ctx, selectRight, selectLeft, UINavigationDirection.Right, UINavigationDirection.Left);
         }
 
-        private void HandleMoveEvents(InputAction.CallbackContext ctx, UIElement pos, UIElement neg) {
+        private void HandleMoveEvents(InputAction.CallbackContext ctx, UIElement pos, UIElement neg, UINavigationDirection dirPos, UINavigationDirection dirNeg) {
             float val = ctx.ReadValue<float>();
             val = val == 0 ? val : Mathf.Sign(val);
-            HandleUIInput(val, pos, neg);
+            HandleUIInput(val, pos, neg, dirPos, dirNeg);
         }
 
         public virtual void OnInputConfirm(InputAction.CallbackContext ctx) {
@@ -87,16 +87,41 @@ namespace GWK.UI {
         }
 
 
-        protected void HandleUIInput(float val, UIElement pos, UIElement neg) {
+        protected void HandleUIInput(float val, UIElement pos, UIElement neg, UINavigationDirection dirPos, UINavigationDirection dirNeg) {
             if (!focused) {
                 return;
             }
             if (val > 0f && pos is not null) {
-                pos.SetFocused();
+                pos.SetFocused(new UINavigationInfo{
+                    from = this,
+                    to = pos,
+                    direction = dirPos
+                });
             }
             if (val < 0f && neg is not null) {
-                neg.SetFocused();
+                neg.SetFocused(new UINavigationInfo{
+                    from = this,
+                    to = neg,
+                    direction = dirNeg
+                });
             }
         }
+    }
+
+    public enum UINavigationDirection {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+    public struct UINavigationInfo {
+        public UIElement from;
+        public UIElement to;
+        public UINavigationDirection direction;
+        public static readonly UINavigationInfo Empty = new UINavigationInfo {
+            from = null,
+            to = null,
+            direction = UINavigationDirection.Up
+        };
     }
 }

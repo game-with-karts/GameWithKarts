@@ -14,10 +14,6 @@ public class PlaylistEditorTrackEntry : MonoBehaviour
     [HideInInspector] public int index;
     [HideInInspector] public PlaylistEditor editor;
 
-    public void Select() {
-        editor.SelectForEditing(index);
-    }
-
     public TMP_Text IndexDisplay => indexDisplay;
     public TMP_Text NameDisplay => trackName;
     public TMP_Text RaceModeDisplay => raceMode;

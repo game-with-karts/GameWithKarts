@@ -19,7 +19,7 @@ namespace GWK.UI {
         }
 
         void OnEnable() {
-            firstFocused.SetFocused();
+            firstFocused.SetFocused(UINavigationInfo.Empty);
         }
 
         void OnDisable() {
