@@ -13,7 +13,6 @@ public class PauseMenu : MonoBehaviour
     private bool raceFinished;
 
     void Awake() {
-        Debug.Log("Pause menu activated!");
         inputs = new();
         Init();
         inputs.UI.Pause.performed += TogglePause;

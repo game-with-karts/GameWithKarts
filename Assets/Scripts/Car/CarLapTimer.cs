@@ -48,6 +48,9 @@ public class CarLapTimer : CarComponent
         car.Path.OnRaceEnd -= StopTimer;
         eventsSubscribed = false;
         timer.Stop();
+        if (!car.playerControlled) {
+            Extrapolate();
+        }
     }
 
     public override void StartRace() {
@@ -66,5 +69,34 @@ public class CarLapTimer : CarComponent
         string s_str = string.Format("{0:00}", s);
         string ms_str = string.Format("{0:000}", ms);
         return $"{m_str}:{s_str}.{ms_str}";
+    }
+
+    private void Extrapolate() {
+        UnityEngine.Debug.Log($"------------------------");
+        UnityEngine.Debug.Log($"EXTRAPOLATING FOR {gameObject.name}");
+        UnityEngine.Debug.Log($"RECORDED LAP TIMES: {lapTimes.Count}");
+        UnityEngine.Debug.Log($"CURRENT LAP: {car.Path.CurrentLap}");
+        UnityEngine.Debug.Log($"LAPS REMAINING: {car.Path.numLaps - car.Path.CurrentLap}");
+        if (lapTimes.Count == 0) {
+            lapTimes.Add(Mathf.LerpUnclamped(0, (float)ElapsedTimeMS, 1 / car.Path.CurrentPathTime));
+            return;
+        }
+        double averageLapTime;
+        if (lapTimes.Count == 1) {
+            averageLapTime = Mathf.LerpUnclamped(0, (float)lapTimes[0], 1 / car.Path.CurrentPathTime);
+        }
+        else {
+            averageLapTime = lapTimes.SkipLast(1).Average();
+        }
+        int lapsRemaining = car.Path.numLaps - car.Path.CurrentLap;
+        if (car.Path.CurrentPathTime == 0) {
+            lapTimes.Add(averageLapTime);
+        }
+        else {
+            lapTimes.Add(Mathf.LerpUnclamped(0, (float)(ElapsedTimeMS - TotalTimeMS), 1 / car.Path.CurrentPathTime));
+        }
+        for (int i = 0; i < lapsRemaining; i++) {
+            lapTimes.Add(averageLapTime);
+        }
     }
 }

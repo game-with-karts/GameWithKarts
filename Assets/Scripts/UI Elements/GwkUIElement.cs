@@ -54,7 +54,6 @@ namespace GWK.UI {
         public void SetSelectUp(UIElement elem) => selectUp = elem;
 
         public virtual void OnUpDown(InputAction.CallbackContext ctx) {
-            Debug.Log($"Event received for {gameObject.name}");
             HandleMoveEvents(ctx, selectUp, selectDown);
         }
         public virtual void OnLeftRight(InputAction.CallbackContext ctx) {

@@ -39,12 +39,14 @@ public class BaseCar : MonoBehaviour
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;
     public bool isEleminated { get; private set; }
+    public bool Finished { get; private set; }
     public Action<BaseCar> OnEliminated;
     private List<CarComponent> components;
 
     void Awake() {}
 
     public void ResetCar(bool onInit) {
+        Finished = false;
         isEleminated = false;
         isBot = startingIsBot;
         movement.SetAntigrav(startOnAntigrav);
@@ -60,6 +62,7 @@ public class BaseCar : MonoBehaviour
         movement.startingRotation = transform.rotation;
         startingIsBot = isBot;
         this.startOnAntigrav = startOnAntigrav;
+        Finished = false;
 
         CarComponent[] comps = GetComponents<CarComponent>();
         foreach (var comp in comps) {
@@ -84,6 +87,7 @@ public class BaseCar : MonoBehaviour
 
     private void TurnIntoBot(BaseCar _) {
         isBot = true;
+        Finished = true;
         path.OnRaceEnd -= TurnIntoBot;
     }
 
@@ -95,5 +99,7 @@ public class BaseCar : MonoBehaviour
         isEleminated = true;
         OnEliminated?.Invoke(this);
     }
+
+    public void EndRace() => path.EndRace();
 
 }

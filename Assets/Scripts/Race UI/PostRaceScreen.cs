@@ -1,66 +1,146 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using static System.Linq.Enumerable;
 using System.Collections.Generic;
-using System;
+using GWK.UI;
+using System.Linq;
+using UnityEngine.Assertions;
 
 public class PostRaceScreen : MonoBehaviour
 {
-    static int lastDisplayedIndex;
-    [SerializeField] private GameObject screen;
+    int activeScreen = 0;
+    [SerializeField] private GameObject parentScreen;
+    [Header("Screens")]
+    [SerializeField] private GameObject[] screens;
+    [Header("Position and Lap Times")]
+    [SerializeField] private RectTransform lapTimeParent; 
+    [SerializeField] private GameObject lapTimePrefab; 
     [Header("Leaderboard")]
     [SerializeField] private RectTransform leaderboardDisplayParent;
     [SerializeField] private GameObject leaderboardEntryPrefab;
-    [SerializeField] private float leaderboardEntryHeight;
     [Header("Final Position")]
     [SerializeField] private TMP_Text finalPlaceDisplay;
     [SerializeField] private TMP_Text finalTimeDisplay;
     [Header("Buttons")]
     [SerializeField] private Button nextRaceBtn;
-    [SerializeField] private Button BackToMenuBtn;
 
     private List<BaseCar> raceLeaderboard = new();
-
-    private PostRaceState state;
+    private PlayerInputActions inputs;
 
     void Awake() {
-        lastDisplayedIndex = 0;
+        inputs = new();
+    }
+
+    void OnEnable() {
+        inputs.UI.Confirm.started += _ => SwitchScreens();
+    }
+
+    void OnDisable() {
+        inputs.UI.Confirm.started -= _ => SwitchScreens();
+        inputs.UI.Confirm.Disable();
+    }
+
+    private void SwitchScreens() {
+        if (activeScreen + 1 == screens.Length) {
+            return;
+        }
+        activeScreen += 1;
+        screens[activeScreen - 1].SetActive(false);
+        screens[activeScreen].SetActive(true);
+        SoundManager.OnConfirmUI();
+    }
+
+    public void Show(BaseCar player, List<BaseCar> allCars) {
+        raceLeaderboard = allCars.OrderBy(c => c.Path.currentPlacement).ToList();
+        foreach(int i in Range(0, numPlayers)) {
+            (leaderboardEntries[i].transform as RectTransform).anchoredPosition = new(0, -60 * i);
+            leaderboardEntries[i].Display(raceLeaderboard[i].gameObject.name, i + 1, raceLeaderboard[i].Timer.TotalTime);
+        }
+
+        finalPlaceDisplay.text = CarUI.FormatPlace(player.Path.currentPlacement);
+        finalTimeDisplay.text = CarLapTimer.GetFormattedTime(player.Timer.TotalTime);
+
+        if (useAggregates) {
+            double best = player.Timer.LapTimes.Min();
+            double last = player.Timer.LapTimes.Last();
+            double avg  = player.Timer.LapTimes.Average();
+
+            timeEntries[0].Display("Best", best);
+            timeEntries[1].Display("Last", last);
+            timeEntries[2].Display("Avg.", avg);
+        }
+        else {
+            Assert.IsTrue(timeEntries.Count == player.Timer.LapTimes.Count);
+            foreach (int i in Range(0, timeEntries.Count)) {
+                timeEntries[i].Display($"Lap {i + 1}", player.Timer.LapTimes[i]);
+            }
+        }
+        SetScreenVisibility(true);
     }
 
     public void SetScreenVisibility(bool visible) {
-        screen.SetActive(visible);
+        parentScreen.SetActive(visible);
+        if (!visible) {
+            inputs?.UI.Confirm.Disable();
+            foreach (GameObject g in screens) {
+                g.SetActive(false);
+            }
+            return;
+        }
+        inputs.UI.Confirm.Enable();
+        activeScreen = 0;
+        screens[0].SetActive(true);
         finalPlaceDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
         finalTimeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
     }
 
-    public void SetState<T>() where T : PostRaceState, new() {
-        state = new T();
-        state.SetLeaderboard(this.raceLeaderboard);
-        state.SetUIElements(leaderboardDisplayParent, leaderboardEntryPrefab, leaderboardEntryHeight);
-    }
-
-    public void RaceEnded(BaseCar car) {
-        car.Path.OnRaceEnd -= RaceEnded;
-        car.Path.OnNextLap -= NextLap;
-        state.RaceEnded(car);
-        if (!car.playerControlled) return;
-        finalTimeDisplay.text = CarLapTimer.GetFormattedTime(car.Timer.TotalTime);
-        SetScreenVisibility(true);
-        nextRaceBtn.gameObject.SetActive(!GameRulesManager.isPlaylistEmpty);
-    }
-
-    public void NextLap(BaseCar car) {
-        state.NextLap(car);
-    }
-
-    public void SetFinalPlace(int place) {
-        finalPlaceDisplay.text = CarUI.FormatPlace(place);
-    }
-
     public void RestartRace() {
         SetScreenVisibility(false);
-        lastDisplayedIndex = 0;
-        state.RestartRace();
     }
 
+    private bool useAggregates;
+    private List<PostRaceTimeEntry> timeEntries = new();
+    private List<PostRaceLeaderboardEntry> leaderboardEntries = new();
+    private int numPlayers;
+
+    public void Init(int numLaps, int numPlayers, bool aggregates = false) {
+        if (numLaps > 7) {
+            Init(3, numPlayers, true);
+            return;
+        }
+        useAggregates = aggregates;
+        this.numPlayers = numPlayers;
+        lapTimeParent.sizeDelta = new(lapTimeParent.sizeDelta.x, 80 * numLaps);
+        GameObject temp;
+
+        if (aggregates) {
+            // best time
+            temp = Instantiate(lapTimePrefab, lapTimeParent);
+            (temp.transform as RectTransform).anchoredPosition = new(0, 0);
+            timeEntries.Add(temp.GetComponent<PostRaceTimeEntry>());
+
+            // last time
+            temp = Instantiate(lapTimePrefab, lapTimeParent);
+            (temp.transform as RectTransform).anchoredPosition = new(0, -80);
+            timeEntries.Add(temp.GetComponent<PostRaceTimeEntry>());
+
+            // avg time
+            temp = Instantiate(lapTimePrefab, lapTimeParent);
+            (temp.transform as RectTransform).anchoredPosition = new(0, -160);
+            timeEntries.Add(temp.GetComponent<PostRaceTimeEntry>());
+        }
+        else {
+            foreach (int i in Range(0, numLaps)) {
+                temp = Instantiate(lapTimePrefab, lapTimeParent);
+                (temp.transform as RectTransform).anchoredPosition = new(0, i * -80);
+                timeEntries.Add(temp.GetComponent<PostRaceTimeEntry>());
+                timeEntries.Last().Display($"Lap {i + 1}", 0);
+            }
+        }
+
+        foreach (int i in Range(1, numPlayers)) {
+            temp = Instantiate(leaderboardEntryPrefab, leaderboardDisplayParent);
+            leaderboardEntries.Add(temp.GetComponent<PostRaceLeaderboardEntry>());
+        }
+    }
 }

@@ -5,7 +5,6 @@ using System.Collections;
 public class CarPlacement : MonoBehaviour
 {
     private BaseCar[] cars;
-    public Action<int> OnFinalPlacement;
 
     private IEnumerator CalculatePlacements() {
         if (cars is null) yield return null;
@@ -41,6 +40,5 @@ public class CarPlacement : MonoBehaviour
         int place = Array.IndexOf(cars, car) + 1;
         car.Path.finalPlacement = place;
         car.Path.OnRaceEnd -= SendFinalPlacement;
-        if(car.playerControlled) OnFinalPlacement?.Invoke(place);
     }
 }

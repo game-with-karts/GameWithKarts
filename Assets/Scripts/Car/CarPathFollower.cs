@@ -61,6 +61,8 @@ public class CarPathFollower : CarComponent
         }
     }
 
+    public void EndRace() => OnRaceEnd?.Invoke(car);
+
     private void FixedUpdate() {
         if (!car.Movement.IsControlable) return;
         float timeCalcDistanceToNext = (currentPath.GetPoint(timeCalcNextPoint) - transform.position).magnitude;

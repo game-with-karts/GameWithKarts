@@ -670,6 +670,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: AuxUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1406444855}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetRace
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RaceManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152639222236221145, guid: d99806162ade4774bbb86a236bac9dae, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
