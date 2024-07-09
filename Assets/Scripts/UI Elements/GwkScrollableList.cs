@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
-using System.Collections.Generic;
 using UnityEngine.Assertions;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using TMPro;
 
 namespace GWK.UI {
     public class ScrollableList : UIElement {
@@ -13,9 +11,9 @@ namespace GWK.UI {
         private ScrollableListEntry selectedEntry {
             get => _selectedEntry;
             set {
-                _selectedEntry?.SetSelected(false);
+                _selectedEntry?.SetSelected(false, focused);
                 _selectedEntry = value;
-                _selectedEntry?.SetSelected(true);
+                _selectedEntry?.SetSelected(true, focused);
             }
         }
         // double encapsulation coz why tf not :P
@@ -29,13 +27,20 @@ namespace GWK.UI {
         [Space]
         [SerializeField] private string[] trackNames;
         [SerializeField] private Sprite[] trackThumbnails;
+        [Space]
+        [SerializeField] private TMP_Text emptyText;
+        [SerializeField] private Color emptyColorSelected;
+        [SerializeField] private Color emptyColorDeselected;
+        private Color targetEmptyColor;
+        [Space]
+        [SerializeField] private UnityEvent<int> OnElementChosen;
 
         private List<ScrollableListEntry> entries = new();
         public List<ScrollableListEntry> Entries => entries;
         // first items on top
         private int topIdx = 0;
         private int bottomIdx = 5;
-
+        public (string name, Sprite thumbnail) GetAssetsAtIndex(int sceneIdx) => (trackNames[sceneIdx - 1], trackThumbnails[sceneIdx - 1]);
         public override void OnUpDown(InputAction.CallbackContext ctx) {
             float val = ctx.ReadValue<float>();
             if (val > 0) {
@@ -48,14 +53,29 @@ namespace GWK.UI {
             }
         }
 
+        public override void SetFocused(UINavigationInfo info) {
+            base.SetFocused(info);
+            selectedEntry?.SetSelected(true, true);
+            targetEmptyColor = emptyColorSelected;
+        }
+
+        public override void SetUnfocused() {
+            base.SetUnfocused();
+            selectedEntry?.SetSelected(true, false);
+            targetEmptyColor = emptyColorDeselected;
+        }
+
+
         public void AddTrack(Track track) {
             GameObject entry = Instantiate(entryPrefab, content);
+            (entry.transform as RectTransform).anchoredPosition = new(0, -prefabHeight * entries.Count);
             entries.Add(entry.GetComponent<ScrollableListEntry>());
             int sceneIdx = track.sceneIdx - 1; 
             entries[^1].SetInfo(trackNames[sceneIdx], trackThumbnails[sceneIdx], track.settings);
             selectedEntry = entries[^1];
 
             content.sizeDelta = new(0, prefabHeight * entries.Count);
+            AdjustViewport(entries.Count - 1);
         }
 
         public void UpdateAllTracks(Playlist playlist) {
@@ -133,6 +153,7 @@ namespace GWK.UI {
             AdjustViewport(idx + 1);
         }
 
+        private Vector2 targetPosition;
         private void AdjustViewport(int idx) {
             if (idx <= bottomIdx && idx >= topIdx) {
                 return;
@@ -148,7 +169,13 @@ namespace GWK.UI {
                 topIdx = idx;
                 bottomIdx = idx + 5;
             }
-            content.anchoredPosition += new Vector2(0, prefabHeight) * diff;
+            targetPosition += new Vector2(0, prefabHeight) * diff;
+        }
+
+        void Update() {
+            content.anchoredPosition = Vector2.Lerp(content.anchoredPosition, targetPosition, 10 * Time.unscaledDeltaTime);
+            emptyText.enabled = entries.Count == 0;
+            emptyText.color = Color.Lerp(emptyText.color, targetEmptyColor, 10 * Time.unscaledDeltaTime);
         }
 
         public void MoveUp() {
@@ -167,6 +194,15 @@ namespace GWK.UI {
             entries[SelectedIndex].rectTransform.anchoredPosition -= new Vector2(0, prefabHeight);
             entries[SelectedIndex + 1].rectTransform.anchoredPosition += new Vector2(0, prefabHeight);
             (entries[SelectedIndex], entries[SelectedIndex + 1]) = (entries[SelectedIndex + 1], entries[SelectedIndex]);
+        }
+
+        public void Choose() {
+            if (entries.Count == 0) {
+                SoundManager.OnBackUI();
+                return;
+            }
+            SoundManager.OnConfirmUI();
+            OnElementChosen.Invoke(SelectedIndex);
         }
     }
 }

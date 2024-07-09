@@ -21,11 +21,15 @@ namespace GWK.UI {
                 info.to?.SetFocused(info);
                 return;
             }
+            
+            info.from = this;
             if (info.direction == lastDir) {
-                info.from = this;
                 info.to = lastFocused;
                 lastFocused.SetFocused(info);
+                return;
             }
+            info.to = group[0];
+            group[0].SetFocused(info);
         }
 
         private UINavigationDirection ReverseDirection(UINavigationDirection dir) => dir switch {

@@ -1,55 +1,86 @@
 using UnityEngine;
+using UnityEngine.UI;
 using GWK.UI;
-using UnityEngine.Events;
 using TMPro;
 using System.Collections.Generic;
-using System;
 
 public class PlaylistEditor : MonoBehaviour
 {
+    [Header("Rules Editor")]
     [SerializeField] private TrackRulesEditor trackEditor;
+    [SerializeField] private Image ruleEditorThumbnail;
+    [SerializeField] private TMP_Text ruleEditorTrackName;
     [Header("UI elements")]
     [SerializeField] private ScrollableList scrollableList;
+    [Header("Screens")]
+    [SerializeField] private GameObject trackList;
+    [SerializeField] private GameObject rulesEditor;
+    [SerializeField] private GameObject trackSelector;
     [Header("Defaults")]
     [SerializeField] private Playlist emptyPlaylist;
     [SerializeField] private RaceSettings defaultSettings;
 
     private Playlist playlist;
     public Playlist Playlist => playlist;
-    private RaceSettings settings;
-    private int selectedItem = -1;
-    [SerializeField] private List<string> trackNames;
-    private List<PlaylistEditorTrackEntry> entries = new();
+    private int selectedItem => scrollableList.SelectedIndex;
 
     private void OnEnable() {
+        trackList.SetActive(true);
         scrollableList.Clear();
         playlist = ScriptableObject.CreateInstance<Playlist>();
     }
 
-    public void Add() {
-        selectedItem = playlist.Length;
-        playlist.AddTrack(new(1, RaceSettings.CloneSettings(defaultSettings)));
+    private bool isAdding;
+    public void SetAddingState(bool isAdding) => this.isAdding = isAdding;
+
+    public void Add(int sceneIdx) {
+        if (!isAdding) {
+            playlist[selectedItem].sceneIdx = sceneIdx;
+            trackEditor.SetDisplayFrom(playlist[selectedItem].settings);
+        }
+        else {
+            Track track = new(sceneIdx, RaceSettings.CloneSettings(defaultSettings));
+            playlist.AddTrack(track);
+            scrollableList.AddTrack(track);
+            trackEditor.SetDisplayFrom(track.settings);
+        }
+        (ruleEditorTrackName.text, ruleEditorThumbnail.sprite) = scrollableList.GetAssetsAtIndex(sceneIdx);
+        trackSelector.SetActive(false);
+        rulesEditor.SetActive(true);
+        SoundManager.OnConfirmUI();
     }
 
     public void Remove() {
+        if (playlist.Length == 0) {
+            return;
+        }
+        playlist.RemoveTrackAt(selectedItem);
         scrollableList.Remove();
     }
 
     public void Clear() {
         playlist.Clear();
-
-        foreach(var entry in entries) {
-            Destroy(entry.gameObject);
-        }
-        entries = new();
+        scrollableList.Clear();
     }
 
     public void MoveUp() {
+        if (selectedItem == 0) {
+            return;
+        }
+        (playlist[selectedItem], playlist[selectedItem - 1]) = (playlist[selectedItem - 1], playlist[selectedItem]);
         scrollableList.MoveUp();
     }
 
     public void MoveDown() {
+        if (selectedItem == playlist.Length - 1) {
+            return;
+        }
+        (playlist[selectedItem], playlist[selectedItem + 1]) = (playlist[selectedItem + 1], playlist[selectedItem]);
         scrollableList.MoveDown();
+    }
+
+    public void RefreshTracks() {
+        scrollableList.UpdateAllTracks(playlist);
     }
 
     public void DefaultTrackSettings() {
@@ -63,16 +94,20 @@ public class PlaylistEditor : MonoBehaviour
             if (i == selectedItem) continue;
             settings.CopyTo(playlist[i].settings);
         }
+    }
 
+    public void SelectForEditing(int idx) {
+        trackList.SetActive(false);
+        (ruleEditorTrackName.text, ruleEditorThumbnail.sprite) = scrollableList.GetAssetsAtIndex(playlist[idx].sceneIdx);
+        trackEditor.SetDisplayFrom(playlist[idx].settings);
+        rulesEditor.SetActive(true);
     }
 
     public void UpdateSettings() {
         if (playlist.Length > 0) trackEditor.UpdateRaceSettings(playlist[scrollableList.SelectedIndex].settings);
     }
 
-
-    private string GetRaceModeString(int idx) {
-        RaceMode mode = playlist[idx].settings.raceMode;
+    public static string GetRaceModeString(RaceMode mode) {
         return mode switch {
             RaceMode.Regular => "Regular Race",
             RaceMode.Arcade => "Arcade",
