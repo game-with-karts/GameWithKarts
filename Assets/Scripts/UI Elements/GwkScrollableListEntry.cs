@@ -20,10 +20,13 @@ namespace GWK.UI {
 
         public RectTransform rectTransform => transform as RectTransform;
         private Color targetColor;
+        private ScrollableList parent;
 
         void Awake() {
             trackImg.material = new(trackImg.material);
         }
+
+        public void Init(ScrollableList parent) => this.parent = parent;
 
         public void SetInfo(string name, Sprite trackThumbnail, RaceSettings settings) {
             trackName.text = name;
@@ -47,6 +50,14 @@ namespace GWK.UI {
 
         void Update() {
             bg.color = Color.Lerp(bg.color, targetColor, 10 * Time.unscaledDeltaTime);
+        }
+
+        public void OnHover() {
+            parent.Select(this);
+        }
+
+        public void OnClick() {
+            parent.Choose();
         }
     }
 }

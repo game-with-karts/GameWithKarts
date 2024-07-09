@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace GWK.UI {
     public class ScrollableList : UIElement {
@@ -55,12 +56,14 @@ namespace GWK.UI {
 
         public override void SetFocused(UINavigationInfo info) {
             base.SetFocused(info);
+            UIEventHandler.OnScroll += Scroll;
             selectedEntry?.SetSelected(true, true);
             targetEmptyColor = emptyColorSelected;
         }
 
         public override void SetUnfocused() {
             base.SetUnfocused();
+            UIEventHandler.OnScroll -= Scroll;
             selectedEntry?.SetSelected(true, false);
             targetEmptyColor = emptyColorDeselected;
         }
@@ -70,6 +73,7 @@ namespace GWK.UI {
             GameObject entry = Instantiate(entryPrefab, content);
             (entry.transform as RectTransform).anchoredPosition = new(0, -prefabHeight * entries.Count);
             entries.Add(entry.GetComponent<ScrollableListEntry>());
+            entries[^1].Init(this);
             int sceneIdx = track.sceneIdx - 1; 
             entries[^1].SetInfo(trackNames[sceneIdx], trackThumbnails[sceneIdx], track.settings);
             selectedEntry = entries[^1];
@@ -196,6 +200,20 @@ namespace GWK.UI {
             (entries[SelectedIndex], entries[SelectedIndex + 1]) = (entries[SelectedIndex + 1], entries[SelectedIndex]);
         }
 
+        public void ScrollUp() {
+            if (topIdx == 0) {
+                return;
+            }
+            AdjustViewport(topIdx - 1);
+        }
+
+        public void ScrollDown() {
+            if (bottomIdx == entries.Count - 1) {
+                return;
+            }
+            AdjustViewport(bottomIdx + 1);
+        }
+
         public void Choose() {
             if (entries.Count == 0) {
                 SoundManager.OnBackUI();
@@ -203,6 +221,20 @@ namespace GWK.UI {
             }
             SoundManager.OnConfirmUI();
             OnElementChosen.Invoke(SelectedIndex);
+        }
+
+        public void Select(ScrollableListEntry entry) {
+            selectedEntry = entry;
+        }
+
+        private void Scroll(InputAction.CallbackContext ctx) {
+            float value = ctx.ReadValue<float>();
+            if (value > 0) {
+                ScrollUp();
+            }
+            if (value < 0) {
+                ScrollDown();
+            }
         }
     }
 }

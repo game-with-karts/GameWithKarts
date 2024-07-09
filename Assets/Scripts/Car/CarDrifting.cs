@@ -143,6 +143,7 @@ public class CarDrifting : CarComponent
     }
 
     public void AddBoost(float boostAmount) => tank += boostAmount;
+    public void ResetBoostTank() => tank = 0;
 
     public override void Init() {
         tank = 0;

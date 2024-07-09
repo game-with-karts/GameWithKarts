@@ -24,6 +24,10 @@ namespace GWK.UI {
         }
 
         public virtual void SetFocused(UINavigationInfo info) {
+            HoverFocused();
+        }
+
+        public virtual void HoverFocused() {
             if (focused) {
                 return;
             }

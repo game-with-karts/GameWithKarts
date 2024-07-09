@@ -205,7 +205,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1872011702144818449}
           m_TargetAssemblyTypeName: GWK.UI.UIElement, Assembly-CSharp
-          m_MethodName: SetFocused
+          m_MethodName: HoverFocused
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

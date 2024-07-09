@@ -402,6 +402,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "982579d0-385e-4ae6-b39b-3b39a1fd97a2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -616,17 +625,6 @@
                 },
                 {
                     "name": "",
-                    "id": "51a1cee7-318b-4587-b4d4-f6cdcf2df053",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Confirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "def08feb-4d31-4a86-aa0c-d94d27e3d322",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
@@ -654,6 +652,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Alternative",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e250d68-f148-42cc-9141-066f9583647b",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and keyboard",
                     "action": "Alternative",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -811,6 +820,17 @@
                     "action": "Tabs",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "891bdfd1-b9c5-4d5c-90bf-b4817910f0b2",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and keyboard",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -24,12 +24,16 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = isPaused ? 0 : 1;
     }
 
-    public void TogglePause(InputAction.CallbackContext ctx) {
+    public void SimpleTogglePause() {
         if (!raceFinished) {
             isPaused = !isPaused;
             OnPause?.Invoke(isPaused);
             Cursor.visible = isPaused;
         }
+    }
+
+    public void TogglePause(InputAction.CallbackContext ctx) {
+        SimpleTogglePause();
     }
 
     public void ResetRace() {

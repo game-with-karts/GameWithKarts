@@ -49,6 +49,10 @@ public class CarPathFollower : CarComponent
         return currentPath.GetRotationAtDistance(CurrentPathTime);
     }
 
+    public Vector3 GetDirectionToNextPoint() {
+        return (GetNextPoint() - currentPath.GetPoint(CurrentPathPoint)).normalized;
+    }
+
     public void NextLap() {
         CurrentLap++;
         CurrentPathNumber = 1;

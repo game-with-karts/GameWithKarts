@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-
 namespace GWK.UI {
     public delegate void InputCallback(InputAction.CallbackContext ctx);
     public class UIEventHandler : MonoBehaviour {
@@ -13,6 +11,7 @@ namespace GWK.UI {
         public static event InputCallback OnCancel;
         public static event InputCallback OnAlternative;
         public static event InputCallback OnTabs;
+        public static event InputCallback OnScroll;
 
         public static PlayerInputActions inputs { get; private set; }
         private readonly bool debugInputs = false;
@@ -23,6 +22,7 @@ namespace GWK.UI {
         private void Cancel(InputAction.CallbackContext ctx) => OnCancel?.Invoke(ctx);
         private void Alternative(InputAction.CallbackContext ctx) => OnAlternative?.Invoke(ctx);
         private void Tabs(InputAction.CallbackContext ctx) => OnTabs?.Invoke(ctx);
+        private void Scroll(InputAction.CallbackContext ctx) => OnScroll?.Invoke(ctx);
 
         void Awake() {
             inputs = new();
@@ -36,6 +36,7 @@ namespace GWK.UI {
             EnableAction(inputs.UI.Cancel, Cancel);
             EnableAction(inputs.UI.Alternative, Alternative);
             EnableAction(inputs.UI.Tabs, Tabs);
+            EnableAction(inputs.UI.Scroll, Scroll);
 
             if (debugInputs) {
                 EnableAction(inputs.UI.UpDown, DebugAction);
@@ -44,6 +45,7 @@ namespace GWK.UI {
                 EnableAction(inputs.UI.Cancel, DebugAction);
                 EnableAction(inputs.UI.Alternative, DebugAction);
                 EnableAction(inputs.UI.Tabs, DebugAction);
+                EnableAction(inputs.UI.Scroll, DebugAction);
             }
         }
 
@@ -54,6 +56,7 @@ namespace GWK.UI {
             DisableAction(inputs.UI.Cancel, Cancel);
             DisableAction(inputs.UI.Alternative, Alternative);
             DisableAction(inputs.UI.Tabs, Tabs);
+            DisableAction(inputs.UI.Scroll, Scroll);
 
             if (debugInputs) {
                 DisableAction(inputs.UI.UpDown, DebugAction);
@@ -62,6 +65,7 @@ namespace GWK.UI {
                 DisableAction(inputs.UI.Cancel, DebugAction);
                 DisableAction(inputs.UI.Alternative, DebugAction);
                 DisableAction(inputs.UI.Tabs, DebugAction);
+                DisableAction(inputs.UI.Scroll, DebugAction);
             }
         }
 
