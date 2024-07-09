@@ -22,18 +22,18 @@ namespace GWK.UI {
         [SerializeField] private float _value = 0;
         [SerializeField] private float incDecRate = 5;
         public UnityEvent<float> OnValueChanged;
+        private Vector2 targetAnchorMax;
         public float Value {
             get => _value;
             set {
                 _value = value;
-                Vector2 anchor = fill.anchorMax;
-                anchor.x = Mathf.InverseLerp(minValue, maxValue, value);
-                fill.anchorMax = anchor;
+                targetAnchorMax.x = Mathf.InverseLerp(minValue, maxValue, value);
                 OnValueChanged.Invoke(value);
             }
         }
 
         void Awake() {
+            targetAnchorMax = new(Mathf.InverseLerp(minValue, maxValue, Value), 1f);
             targetColour = bgColourDeselected;
         }
 
@@ -69,6 +69,7 @@ namespace GWK.UI {
 
         void Update() {
             bg.color = Color.Lerp(bg.color, targetColour, 15 * Time.unscaledDeltaTime);
+            fill.anchorMax = Vector2.Lerp(fill.anchorMax, targetAnchorMax, 20 * Time.unscaledDeltaTime);
         }
     }
 }

@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6785cc19fb214498c7fbc8b6d79042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstFocused: {fileID: 1035766367066821690}
+  firstFocused: {fileID: 2008021617348927952}
 --- !u!1 &405901482617539867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,6 +1467,10 @@ PrefabInstance:
     - target: {fileID: 3528470969554197325, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: m_text
       value: Resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528470969554197325, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 7202714473953394456, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: m_Name
