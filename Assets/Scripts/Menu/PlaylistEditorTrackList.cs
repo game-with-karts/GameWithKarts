@@ -8,7 +8,7 @@ namespace GWK.UI {
         [SerializeField] private PlaylistEditor editor;
 
         void OnEnable() {
-            if (editor.Playlist.Length == 0) {
+            if (editor.Playlist is null || editor.Playlist.Length == 0) {
                 window.SetFirstFocused(addBtn);
                 return;
             }

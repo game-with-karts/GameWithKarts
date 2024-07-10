@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+#if !UNITY_STANDALONE_LINUX
 using UnityEngine.InputSystem.Switch;
+#endif
 using UnityEngine.InputSystem.XInput;
 using UnityEngine.InputSystem.DualShock;
 
@@ -28,9 +30,11 @@ namespace GWK.UI {
                 if (activePad is XInputController) {
                     key = "XInput";
                 }
+                #if !UNITY_STANDALONE_LINUX
                 if (activePad is SwitchProControllerHID) {
                     key = "Switch";
                 }
+                #endif
             }
             confirmHint?.SetSprite(HintDict.instance.GetIcons(key).confirm);
             cancelHint?.SetSprite(HintDict.instance.GetIcons(key).cancel);
