@@ -78,11 +78,9 @@ public class RaceManager : MonoBehaviour
     private void OnCarFinished(BaseCar car) {
         car.Path.OnRaceEnd -= OnCarFinished;
         if (!car.playerControlled) {
-            Debug.Log($"Bot {car.gameObject.name} finished");
             return;
         }
         numPlayers -= 1;
-        Debug.Log($"Player {car.gameObject.name} finished, remaining {numPlayers}");
         if (numPlayers == 0) {
             foreach (BaseCar c in cars.Where(c => !c.Finished)) {
                 c.EndRace();

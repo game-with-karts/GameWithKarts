@@ -72,28 +72,30 @@ public class CarLapTimer : CarComponent
     }
 
     private void Extrapolate() {
-        UnityEngine.Debug.Log($"------------------------");
-        UnityEngine.Debug.Log($"EXTRAPOLATING FOR {gameObject.name}");
-        UnityEngine.Debug.Log($"RECORDED LAP TIMES: {lapTimes.Count}");
-        UnityEngine.Debug.Log($"CURRENT LAP: {car.Path.CurrentLap}");
-        UnityEngine.Debug.Log($"LAPS REMAINING: {car.Path.numLaps - car.Path.CurrentLap}");
-        if (lapTimes.Count == 0) {
-            lapTimes.Add(Mathf.LerpUnclamped(0, (float)ElapsedTimeMS, 1 / car.Path.CurrentPathTime));
+        if (lapTimes.Count == car.Path.numLaps) {
             return;
         }
-        double averageLapTime;
-        if (lapTimes.Count == 1) {
-            averageLapTime = Mathf.LerpUnclamped(0, (float)lapTimes[0], 1 / car.Path.CurrentPathTime);
-        }
-        else {
-            averageLapTime = lapTimes.SkipLast(1).Average();
+        if (lapTimes.Count == 0) {
+            float elapsed = (float)ElapsedTimeMS;
+            float reciprocal = 1 / car.Path.CurrentPathTime;
+            for (int i = 0; i < car.Path.numLaps; i++) {
+                lapTimes.Add(Mathf.LerpUnclamped(0, elapsed, reciprocal));
+            }
+            return;
         }
         int lapsRemaining = car.Path.numLaps - car.Path.CurrentLap;
+        double averageLapTime;
+        if (lapTimes.Count == 1) {
+            averageLapTime = Mathf.LerpUnclamped(0, (float)lapTimes[0], .9f / car.Path.CurrentPathTime);
+        }
+        else {
+            averageLapTime = lapTimes.Average();
+        }
         if (car.Path.CurrentPathTime == 0) {
             lapTimes.Add(averageLapTime);
         }
         else {
-            lapTimes.Add(Mathf.LerpUnclamped(0, (float)(ElapsedTimeMS - TotalTimeMS), 1 / car.Path.CurrentPathTime));
+            lapTimes.Add(Mathf.LerpUnclamped(0, (float)(ElapsedTimeMS - TotalTimeMS), .9f / car.Path.CurrentPathTime));
         }
         for (int i = 0; i < lapsRemaining; i++) {
             lapTimes.Add(averageLapTime);

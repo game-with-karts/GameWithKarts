@@ -24,9 +24,9 @@ public class PlaylistEditor : MonoBehaviour
     private int selectedItem => scrollableList.SelectedIndex;
 
     private void OnEnable() {
-        trackList.SetActive(true);
         scrollableList.Clear();
         playlist = ScriptableObject.CreateInstance<Playlist>();
+        trackList.SetActive(true);
     }
 
     private bool isAdding;

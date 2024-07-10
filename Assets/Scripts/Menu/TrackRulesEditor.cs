@@ -70,26 +70,44 @@ public class TrackRulesEditor : MonoBehaviour
     }
 
     private void DisableOnValueChanged(CheckBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
     }
 
     private void DisableOnValueChanged(NumberInputBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
     }
 
     private void DisableOnValueChanged(ChoiceBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
     }
 
     private void EnableOnValueChanged(CheckBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
     }
 
     private void EnableOnValueChanged(NumberInputBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
     }
 
     private void EnableOnValueChanged(ChoiceBox obj) {
+        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
+            return;
+        }
         obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
     }
 

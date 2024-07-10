@@ -347,7 +347,10 @@ MonoBehaviour:
   leaderboardEntryPrefab: {fileID: 3398977434331745644, guid: 93f8230f39410da4a9baa8be9a1f571f, type: 3}
   finalPlaceDisplay: {fileID: 1172177842782468668}
   finalTimeDisplay: {fileID: 1650379121650989770}
+  buttonsWindow: {fileID: 1674013353185701488}
   nextRaceBtn: {fileID: 7546160427047739271}
+  restartBtn: {fileID: 3152639222236221145}
+  menuBtn: {fileID: 5770500026787336860}
 --- !u!114 &719491043916075689
 MonoBehaviour:
   m_ObjectHideFlags: 0

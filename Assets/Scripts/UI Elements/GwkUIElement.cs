@@ -57,6 +57,11 @@ namespace GWK.UI {
         public void SetSelectDown(UIElement elem) => selectDown = elem;
         public void SetSelectUp(UIElement elem) => selectUp = elem;
 
+        public void SetSelectUpAndDown(UIElement up, UIElement down) {
+            SetSelectDown(down);
+            SetSelectUp(up);
+        }
+
         public virtual void OnUpDown(InputAction.CallbackContext ctx) {
             HandleMoveEvents(ctx, selectUp, selectDown, UINavigationDirection.Up, UINavigationDirection.Down);
         }

@@ -22,7 +22,10 @@ public class PostRaceScreen : MonoBehaviour
     [SerializeField] private TMP_Text finalPlaceDisplay;
     [SerializeField] private TMP_Text finalTimeDisplay;
     [Header("Buttons")]
+    [SerializeField] private Window buttonsWindow;
     [SerializeField] private Button nextRaceBtn;
+    [SerializeField] private Button restartBtn;
+    [SerializeField] private Button menuBtn;
 
     private List<BaseCar> raceLeaderboard = new();
     private PlayerInputActions inputs;
@@ -51,7 +54,7 @@ public class PostRaceScreen : MonoBehaviour
     }
 
     public void Show(BaseCar player, List<BaseCar> allCars) {
-        raceLeaderboard = allCars.OrderBy(c => c.Path.currentPlacement).ToList();
+        raceLeaderboard = allCars.OrderBy(c => c.Timer.TotalTimeMS).ToList();
         foreach(int i in Range(0, numPlayers)) {
             (leaderboardEntries[i].transform as RectTransform).anchoredPosition = new(0, -60 * i);
             leaderboardEntries[i].Display(raceLeaderboard[i].gameObject.name, i + 1, raceLeaderboard[i].Timer.TotalTime);
@@ -74,6 +77,30 @@ public class PostRaceScreen : MonoBehaviour
             foreach (int i in Range(0, timeEntries.Count)) {
                 timeEntries[i].Display($"Lap {i + 1}", player.Timer.LapTimes[i]);
             }
+        }
+
+        bool hasNextTrack = GameRulesManager.playlist.Length > 0;
+        nextRaceBtn.gameObject.SetActive(hasNextTrack);
+
+        if (hasNextTrack) {
+            (nextRaceBtn.transform as RectTransform).anchoredPosition = new(0, 50);
+            (restartBtn.transform as RectTransform).anchoredPosition = new(0, 0);
+            (menuBtn.transform as RectTransform).anchoredPosition = new(0, -50);
+
+            nextRaceBtn.SetSelectUpAndDown(menuBtn, restartBtn);
+            restartBtn.SetSelectUpAndDown(nextRaceBtn, menuBtn);
+            menuBtn.SetSelectUpAndDown(restartBtn, nextRaceBtn);
+
+            buttonsWindow.SetFirstFocused(nextRaceBtn);
+        }
+        else {
+            (restartBtn.transform as RectTransform).anchoredPosition = new(0, 25);
+            (menuBtn.transform as RectTransform).anchoredPosition = new(0, -25);
+
+            restartBtn.SetSelectUpAndDown(menuBtn, menuBtn);
+            menuBtn.SetSelectUpAndDown(restartBtn, restartBtn);
+
+            buttonsWindow.SetFirstFocused(restartBtn);
         }
         SetScreenVisibility(true);
     }

@@ -31,5 +31,7 @@ namespace GWK.UI {
             currentFocused?.SetUnfocused();
             currentFocused = element;
         }
+
+        public void SetFirstFocused(UIElement elem) => firstFocused = elem;
     }
 }

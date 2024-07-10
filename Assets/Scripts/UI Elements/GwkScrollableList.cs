@@ -42,6 +42,10 @@ namespace GWK.UI {
         private int topIdx = 0;
         private int bottomIdx = 5;
         public (string name, Sprite thumbnail) GetAssetsAtIndex(int sceneIdx) => (trackNames[sceneIdx - 1], trackThumbnails[sceneIdx - 1]);
+
+        void Awake() {
+            targetEmptyColor = emptyColorDeselected;
+        }
         public override void OnUpDown(InputAction.CallbackContext ctx) {
             float val = ctx.ReadValue<float>();
             if (val > 0) {
