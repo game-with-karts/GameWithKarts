@@ -16,7 +16,7 @@ public class RaceSettings : ScriptableObject
     public bool timeAttackMode;
 
     public static RaceSettings CloneSettings(RaceSettings from) {
-        RaceSettings to = ScriptableObject.CreateInstance<RaceSettings>();
+        RaceSettings to = CreateInstance<RaceSettings>();
         to.numberOfLaps = from.numberOfLaps;
         to.raceMode = from.raceMode;
         to.playerSpawning = from.playerSpawning;

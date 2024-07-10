@@ -37,9 +37,6 @@ public class CarPathFollower : CarComponent
     }
 
     public Vector3 GetNextPoint() {
-    //     Vector3 normal = currentPath.GetNormal(CurrentPathPoint);
-    //     if (isVectorNaN(normal)) normal = Vector3.zero;
-    //     Vector3 offset = car.IsBot ? car.BotController.PathHorizontalDeviation * normal : Vector3.zero;
         if (CurrentPathPoint + 1 >= currentPath.NumPoints) 
             return currentPath.GetPoint(currentPath.NumPoints - 1);
         return currentPath.GetPoint(CurrentPathPoint + 1);
@@ -47,6 +44,10 @@ public class CarPathFollower : CarComponent
 
     public Quaternion GetRotationOnPath() {
         return currentPath.GetRotationAtDistance(CurrentPathTime);
+    }
+
+    public Vector3 GetDirectionToNextPoint() {
+        return (GetNextPoint() - currentPath.GetPoint(CurrentPathPoint)).normalized;
     }
 
     public void NextLap() {
@@ -60,6 +61,8 @@ public class CarPathFollower : CarComponent
             OnRaceEnd?.Invoke(car);
         }
     }
+
+    public void EndRace() => OnRaceEnd?.Invoke(car);
 
     private void FixedUpdate() {
         if (!car.Movement.IsControlable) return;

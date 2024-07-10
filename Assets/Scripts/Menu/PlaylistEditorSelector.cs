@@ -10,8 +10,10 @@ public class PlaylistEditorSelector : MonoBehaviour, ILevelSelector
         set => onSelected = value;
     }
 
-    public void Select()
-    {
+    public void Select() {
+        if (editor.Playlist.Length == 0) {
+            return;
+        }
         GameRulesManager.playlist = editor.Playlist;
         onSelected.Invoke(this);
     }

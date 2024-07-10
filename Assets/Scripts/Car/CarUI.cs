@@ -29,7 +29,6 @@ public class CarUI : CarComponent
     void Update() {
         gauge.gameObject.SetActive(car.Drifting.IsDrifting && car.Drifting.CanDrift);
         gauge.value = car.Drifting.RelativeDriftTimer;
-        //gaugeFill.color = gauge.value > .5f ? Color.red : Color.green;
         gaugeFill.color = boostGaugeGradient.Evaluate(gauge.value);
 
         int numLap = Mathf.Clamp(car.Path.CurrentLap, 1, car.Path.numLaps);

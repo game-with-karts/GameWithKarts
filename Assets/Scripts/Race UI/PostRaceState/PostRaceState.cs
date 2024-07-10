@@ -39,7 +39,7 @@ public abstract class PostRaceState
         BaseCar car = leaderboard[lastDisplayedIndex];
         GameObject entry = GameObject.Instantiate(leaderboardEntryPrefab, leaderboardDisplayParent);
         ((RectTransform)entry.transform).anchoredPosition = new(0, leaderboardEntryHeight * -lastDisplayedIndex);
-        entry.GetComponent<PostRaceLeaderboardEntry>().Display(car.gameObject.name, lastDisplayedIndex + 1);
+        // entry.GetComponent<PostRaceLeaderboardEntry>().Display(car.gameObject.name, lastDisplayedIndex + 1);
         lastDisplayedIndex++;
     }
 }

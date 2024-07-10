@@ -34,7 +34,6 @@ RectTransform:
   m_Children:
   - {fileID: 4964072412585807740}
   m_Father: {fileID: 4964072411525672714}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -152,6 +151,9 @@ MonoBehaviour:
   bindingNumber: 2
   btn: {fileID: 4964072411378718675}
   keyDisplay: {fileID: 4964072412585807739}
+  OnControlRebound:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4964072411525672715
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +186,6 @@ RectTransform:
   - {fileID: 4964072411378718677}
   - {fileID: 4964072411764680754}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -222,7 +223,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4964072411525672714}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -259,8 +259,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Key Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 76872b0cb74a58e40b863b9f84a165ad, type: 2}
+  m_sharedMaterial: {fileID: 7521420560623448277, guid: 76872b0cb74a58e40b863b9f84a165ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -357,7 +357,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4964072411764680754}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -495,7 +494,6 @@ RectTransform:
   m_Children:
   - {fileID: 4964072411758924038}
   m_Father: {fileID: 4964072411525672714}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -613,6 +611,9 @@ MonoBehaviour:
   bindingNumber: 5
   btn: {fileID: 4964072411764680752}
   keyDisplay: {fileID: 4964072411758924037}
+  OnControlRebound:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4964072412585807741
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +645,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4964072411378718677}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

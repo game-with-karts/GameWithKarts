@@ -90,7 +90,6 @@ public class CarDrifting : CarComponent
                 }
                 else if (!car.Movement.IsGrounded) hasLeftGround = true;
                 else if (localVel.y < jumpVerticalVelocityThreshold) {
-                    Debug.Log($"Drift failed! Did not leave the ground! localVel.y = {localVel.y}");
                     // experimental solution
                     Jump(0.4f);
                     //jumpTimer.Stop();
@@ -144,6 +143,7 @@ public class CarDrifting : CarComponent
     }
 
     public void AddBoost(float boostAmount) => tank += boostAmount;
+    public void ResetBoostTank() => tank = 0;
 
     public override void Init() {
         tank = 0;

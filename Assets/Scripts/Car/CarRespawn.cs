@@ -12,7 +12,6 @@ public class CarRespawn : CarComponent
     [SerializeField] private float respawnSpeed = 2f;
     [SerializeField] private LayerMask surfaceLayers;
 
-    private bool isMirrored;
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag(RESPAWN_TRIGGER_TAG)) {
             StartCoroutine(nameof(Respawn));
@@ -24,32 +23,30 @@ public class CarRespawn : CarComponent
         car.Camera.IsFollowingPlayer = false;
 
         Vector3 respawnPosition = car.Path.GetNextPoint();
-        Vector3 respawnEuler = isMirrored ? new(90, 0, -90) : new(90, 0, 90) ;
-        Quaternion respawnRotation = car.Path.GetRotationOnPath() * Quaternion.Euler(respawnEuler) ;
-        Vector3 respawnUpDirection = respawnRotation * Vector3.down;
+        Quaternion respawnRotation = Quaternion.LookRotation(car.Path.GetDirectionToNextPoint(), car.Movement.LocalUp);
+        Vector3 respawnUpDirection = car.Movement.LocalUp;
+
         RaycastHit hit;
-        if (Physics.Raycast(respawnPosition, -respawnUpDirection, out hit, 20f, surfaceLayers)) {
-            respawnPosition = respawnVerticalPosition * respawnUpDirection;
-        }
-        else if (Physics.Raycast(respawnPosition, respawnUpDirection, out hit, 20f, surfaceLayers)) {
-            respawnPosition = respawnVerticalPosition * -respawnUpDirection;
-        }
-        respawnPosition += hit.point;
+        Physics.Raycast(respawnPosition, -respawnUpDirection, out hit, 20f, surfaceLayers);
+        respawnPosition = respawnVerticalPosition * respawnUpDirection + hit.point;
+        car.Drifting?.ResetBoostTank();
         yield return new WaitForSeconds(waitDuration);
+
         car.Camera.IsFollowingPlayer = true;
         car.Movement.IsAffectedByGravity = false;
-        StartCoroutine(car.Movement.StopAllMotion(respawnPosition, respawnRotation));
+        StartCoroutine(car.Movement.StopAllMotion(respawnPosition, respawnRotation, 10));
+
         float s = 0;
         while (s < respawnDuration) {
             s += Time.deltaTime;
             transform.position -= car.Movement.LocalUp * respawnSpeed * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
         car.Movement.SetControllableState(true);
         car.Movement.IsAffectedByGravity = true;
     }
     public override void Init() {
         StopCoroutine(nameof(Respawn));
-        isMirrored = GameRulesManager.currentTrack.settings.mirrorMode;
     }
 }

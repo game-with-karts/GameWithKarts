@@ -13,12 +13,14 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
     private Playlist GetTrackAsPlaylist() {
         Track t = new Track {
             sceneIdx = trackIndex,
-            settings = RaceSettings.CloneSettings(this.settings)
+            settings = RaceSettings.CloneSettings(settings)
         };
         Playlist playlist = ScriptableObject.CreateInstance<Playlist>();
         playlist.AddTrack(t);
         return playlist;
     }
+
+    public void SetIndex(int idx) => trackIndex = idx;
 
     public void Select() {
         GameRulesManager.playlist = GetTrackAsPlaylist();
