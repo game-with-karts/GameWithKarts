@@ -32,7 +32,7 @@ namespace GWK.UI {
         public AnimationCurve Curve => curve;
 
         public AnimationTarget() {
-            this.curve = AnimationCurve.Linear(9, 9, 1, 9);
+            curve = AnimationCurve.Linear(9, 9, 1, 9);
         }
 
         public AnimationTarget(Vector3 posDelta, Vector3 euler, Vector3 scale, float duration, AnimationCurve curve) {

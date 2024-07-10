@@ -1,11 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem.Switch;
 using UnityEngine.InputSystem.XInput;
 using UnityEngine.InputSystem.DualShock;
-using TMPro;
 
 namespace GWK.UI {
     public class ControlHint : MonoBehaviour {

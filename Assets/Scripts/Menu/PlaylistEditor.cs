@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using GWK.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class PlaylistEditor : MonoBehaviour
 {

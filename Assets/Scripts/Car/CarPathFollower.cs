@@ -37,9 +37,6 @@ public class CarPathFollower : CarComponent
     }
 
     public Vector3 GetNextPoint() {
-    //     Vector3 normal = currentPath.GetNormal(CurrentPathPoint);
-    //     if (isVectorNaN(normal)) normal = Vector3.zero;
-    //     Vector3 offset = car.IsBot ? car.BotController.PathHorizontalDeviation * normal : Vector3.zero;
         if (CurrentPathPoint + 1 >= currentPath.NumPoints) 
             return currentPath.GetPoint(currentPath.NumPoints - 1);
         return currentPath.GetPoint(CurrentPathPoint + 1);

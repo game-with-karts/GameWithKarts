@@ -1,8 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Diagnostics;
-using System;
+using System.Collections.Generic;
 public class CarLapTimer : CarComponent
 {
     private readonly Stopwatch timer = new();

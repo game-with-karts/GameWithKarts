@@ -1,5 +1,3 @@
-#if UNITY_EDITOR
-
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -31,5 +29,3 @@ public class EditorUIElements {
     
     [MenuItem("GameObject/GWK UI/Slideshow", false, 2)] static void AddSlideshow() => Add("Slideshow");
 }
-
-#endif

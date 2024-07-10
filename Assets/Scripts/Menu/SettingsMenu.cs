@@ -22,7 +22,6 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private CheckBox enablePostProcessingChk;
     [Header("Input Settings (soon)")]
     [SerializeField] private InputActionAsset inputAction;
-    public List<PlayerInput> inputs { get; set; }
     public static readonly string TargetFrameRateKey = "TARGET_FRAMERATE";
     public static readonly string EnablePostProcessingKey = "ENABLE_PP";
     public static readonly string MasterVolumeKey = "MASTER_VOLUME";
@@ -70,10 +69,6 @@ public class SettingsMenu : MonoBehaviour
     public void UpdateKeybinds() {
         // this doesn't make sense, but it might work
         string overrides = inputAction.SaveBindingOverridesAsJson();
-        if (inputs is null) return;
-        foreach (var input in inputs) {
-            input.actions.LoadBindingOverridesFromJson(overrides);
-        }
     }
 
     public void UpdateSettings() {

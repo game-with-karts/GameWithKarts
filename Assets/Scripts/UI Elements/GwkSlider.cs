@@ -45,7 +45,6 @@ namespace GWK.UI {
         public void OnPointerDown(BaseEventData eventData) {
             Vector2 mousePos = MousePosition();
             bool ok = RectTransformUtility.ScreenPointToLocalPointInRectangle(fillArea, mousePos, Camera.main, out var localPoint);
-            // Vector3 localPointInv = fill.InverseTransformPoint(Camera.main.ScreenToWorldPoint(mousePos));
             float relPos = Mathf.Clamp01((localPoint.x + fillArea.rect.width * fillArea.pivot.x) / fillArea.rect.width);
             Value = Mathf.Lerp(minValue, maxValue, relPos);
         }

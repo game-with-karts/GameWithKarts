@@ -28,8 +28,6 @@ public class RaceManager : MonoBehaviour
     private int numPlayers;
 
     private void Awake() {
-        settingsMenu.inputs = new();
-
         track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
 
@@ -103,7 +101,6 @@ public class RaceManager : MonoBehaviour
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
         foreach (var c in cars.Where(c => c.Finished)) {
-            Debug.Log($"Restarting: adding event to {c.gameObject.name}");
             c.Path.OnRaceEnd += OnCarFinished;
         }
         OnRaceReset?.Invoke();
