@@ -820,11 +820,19 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
@@ -836,11 +844,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
@@ -852,12 +868,20 @@ PrefabInstance:
       value: StartTransition
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: LevelTransition, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
@@ -869,6 +893,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3528470969554197325, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
@@ -937,8 +965,28 @@ PrefabInstance:
       value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -957,8 +1005,16 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 486952521656791786, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -969,8 +1025,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3269118137453261636}
     - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -993,12 +1069,20 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GWK.UI.ChoiceBox, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 748088100386773441, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1009,8 +1093,28 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1029,16 +1133,44 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 794665830390899516, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1057,8 +1189,16 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1062853437655238426, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1077,8 +1217,28 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1101,12 +1261,20 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GWK.UI.NumberInputBox, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2682997546346239722, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1342,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843222853631, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0005345044
+      value: 0.00019119658
       objectReference: {fileID: 0}
     - target: {fileID: 3873701843227728764, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: m_Size
@@ -1397,8 +1565,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8260422740173364014}
     - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1421,12 +1609,20 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GWK.UI.ChoiceBox, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4898402406454843846, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1437,8 +1633,28 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1457,8 +1673,16 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5011741905644605876, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1481,8 +1705,28 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3269118137453261636}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Click
       objectReference: {fileID: 0}
     - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1501,8 +1745,16 @@ PrefabInstance:
       value: UpdateSettings
       objectReference: {fileID: 0}
     - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GWK.UI.Button, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SingleRaceRuleEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
+      propertyPath: OnCancel.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7854535824269419316, guid: 8f01d4828e28f644589b37af15202d2b, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
