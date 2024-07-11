@@ -15,7 +15,7 @@ public class PostRaceLeaderboardEntry : MonoBehaviour
     public int Position { get; private set; }
     private float colorMult = .5f;
 
-    public void Display(string name, int position, double raceTime) {
+    public void Display(string name, int position, int raceTime) {
         positionDisplay.text = CarUI.FormatPlace(position);
         nameDisplay.text = name;
         raceTimeDisplay.text = CarLapTimer.GetFormattedTime(raceTime);

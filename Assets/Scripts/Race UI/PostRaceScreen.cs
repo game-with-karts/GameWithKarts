@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using GWK.UI;
 using System.Linq;
 using UnityEngine.Assertions;
+using System;
 
 public class PostRaceScreen : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class PostRaceScreen : MonoBehaviour
     }
 
     public void Show(BaseCar player, List<BaseCar> allCars) {
-        raceLeaderboard = allCars.OrderBy(c => c.Timer.TotalTimeMS).ToList();
+        raceLeaderboard = allCars.OrderBy(c => c.Timer.TotalTime).ToList();
         foreach(int i in Range(0, numPlayers)) {
             (leaderboardEntries[i].transform as RectTransform).anchoredPosition = new(0, -60 * i);
             leaderboardEntries[i].Display(raceLeaderboard[i].gameObject.name, i + 1, raceLeaderboard[i].Timer.TotalTime);
@@ -64,9 +65,9 @@ public class PostRaceScreen : MonoBehaviour
         finalTimeDisplay.text = CarLapTimer.GetFormattedTime(player.Timer.TotalTime);
 
         if (useAggregates) {
-            double best = player.Timer.LapTimes.Min();
-            double last = player.Timer.LapTimes.Last();
-            double avg  = player.Timer.LapTimes.Average();
+            int best = player.Timer.LapTimes.Min();
+            int last = player.Timer.LapTimes.Last();
+            int avg  = (int)Math.Round(player.Timer.LapTimes.Average(), MidpointRounding.AwayFromZero);
 
             timeEntries[0].Display("Best", best);
             timeEntries[1].Display("Last", last);

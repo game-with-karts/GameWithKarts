@@ -6,18 +6,16 @@ using System.Collections.Generic;
 public class CarLapTimer : CarComponent
 {
     private readonly Stopwatch timer = new();
-    private List<double> lapTimes;
-    private double fastestTime;
+    private List<int> lapTimes;
+    private int fastestTime;
     private bool eventsSubscribed = false;
-    public List<double> LapTimes => lapTimes;
-    public double TotalTimeMS => lapTimes.Sum();
-    public double TotalTime => TotalTimeMS / 1000;
-    public double ElapsedTime => timer.Elapsed.TotalSeconds;
-    public double ElapsedTimeMS => timer.Elapsed.TotalMilliseconds;
+    public List<int> LapTimes => lapTimes;
+    public int TotalTime => lapTimes.Sum();
+    public int ElapsedTime => (int)Math.Round(timer.Elapsed.TotalMilliseconds, MidpointRounding.AwayFromZero);
     public override void Init() {
         timer.Stop();
         timer.Reset();
-        fastestTime = double.MaxValue;
+        fastestTime = int.MaxValue;
         lapTimes = new();
         if (!eventsSubscribed) {
             eventsSubscribed = true;
@@ -36,7 +34,7 @@ public class CarLapTimer : CarComponent
 
     private void SaveLap(BaseCar _) {
         timer.Stop();
-        double time = Math.Floor(ElapsedTimeMS) - TotalTimeMS;
+        int time = ElapsedTime - TotalTime;
         lapTimes.Add(time);
         if (time < fastestTime)
             fastestTime = time;
@@ -57,14 +55,13 @@ public class CarLapTimer : CarComponent
         timer.Start();
     }
 
-    public static string GetFormattedTime(double time, bool asMs = false) {
-        if (asMs) {
-            time /= 1000;
-        }
-        if (time == double.MaxValue) return "--:--.---";
-        int m = (int)time / 60;
-        int s = (int)time % 60;
-        int ms = (int)((time - s - m * 60) * 1000);
+    public static string GetFormattedTime(int time) {
+        if (time == int.MaxValue) return "--:--.---";
+        int seconds = time / 1000;
+
+        int m = seconds / 60;
+        int s = seconds % 60;
+        int ms = time % 1000;
         string m_str = string.Format("{0:00}", m);
         string s_str = string.Format("{0:00}", s);
         string ms_str = string.Format("{0:000}", ms);
@@ -76,26 +73,20 @@ public class CarLapTimer : CarComponent
             return;
         }
         if (lapTimes.Count == 0) {
-            float elapsed = (float)ElapsedTimeMS;
+            int elapsed = ElapsedTime;
             float reciprocal = 1 / car.Path.CurrentPathTime;
             for (int i = 0; i < car.Path.numLaps; i++) {
-                lapTimes.Add(Mathf.LerpUnclamped(0, elapsed, reciprocal));
+                lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, elapsed, reciprocal)));
             }
             return;
         }
         int lapsRemaining = car.Path.numLaps - car.Path.CurrentLap;
-        double averageLapTime;
-        if (lapTimes.Count == 1) {
-            averageLapTime = Mathf.LerpUnclamped(0, (float)lapTimes[0], .9f / car.Path.CurrentPathTime);
-        }
-        else {
-            averageLapTime = lapTimes.Average();
-        }
+        int averageLapTime = (int)Math.Round(lapTimes.Average(), MidpointRounding.AwayFromZero);
         if (car.Path.CurrentPathTime == 0) {
             lapTimes.Add(averageLapTime);
         }
         else {
-            lapTimes.Add(Mathf.LerpUnclamped(0, (float)(ElapsedTimeMS - TotalTimeMS), .9f / car.Path.CurrentPathTime));
+            lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, ElapsedTime - TotalTime, .9f / car.Path.CurrentPathTime)));
         }
         for (int i = 0; i < lapsRemaining; i++) {
             lapTimes.Add(averageLapTime);
