@@ -63,9 +63,10 @@ public class CarDrifting : CarComponent
 
             case DriftState.Idle:
                 driftDirection = 0;
-                if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame) 
-                   && car.Movement.IsGrounded && car.Movement.IsControlable) 
+                if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame)
+                   && car.Movement.IsGrounded && car.Movement.IsControlable) {
                     Jump(1.05f);
+                }
                 break;
 
             case DriftState.Jumping:
@@ -89,7 +90,7 @@ public class CarDrifting : CarComponent
                     }
                 }
                 else if (!car.Movement.IsGrounded) hasLeftGround = true;
-                else if (localVel.y < jumpVerticalVelocityThreshold) {
+                else if (localVel.y < jumpVerticalVelocityThreshold && Time.timeScale > 0) {
                     // experimental solution
                     Jump(0.4f);
                     //jumpTimer.Stop();
