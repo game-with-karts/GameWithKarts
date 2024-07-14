@@ -1592,7 +1592,7 @@ PrefabInstance:
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: selectDown
       value: 
-      objectReference: {fileID: 1035766367066821690}
+      objectReference: {fileID: 2008021617348927952}
     - target: {fileID: 3448878792644252821, guid: 355471734d2067541a63b30255a1f9bc, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

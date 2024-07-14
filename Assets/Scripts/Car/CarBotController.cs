@@ -40,6 +40,15 @@ public class CarBotController : CarComponent
     private bool rightHit;
     private bool leftHit;
 
+    public float RayLength {
+        get {
+            if (car.Movement.GetSurface() == SurfaceType.Ice) {
+                return iceRayLength;
+            }
+            return rayLength;
+        }
+    }
+
     private bool isStuck = false;
 
     private bool isVectorNaN(Vector3 v) => float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
@@ -71,11 +80,11 @@ public class CarBotController : CarComponent
         RaycastHit infoLeft;
         RaycastHit infoRight;
 
-        forwardRightHit = Physics.Raycast(forwardRight, out infoForwardRight, rayLength, checkLayers);
-        forwardLeftHit = Physics.Raycast(forwardLeft, out infoForwardLeft, rayLength, checkLayers);
-        rightHit = Physics.Raycast(right, out infoRight, rayLength, checkLayers);
-        leftHit = Physics.Raycast(left, out infoLeft, rayLength, checkLayers);
-        forwardHit = Physics.Raycast(forward, out infoForward, rayLength, checkLayers);
+        forwardRightHit = Physics.Raycast(forwardRight, out infoForwardRight, RayLength, checkLayers);
+        forwardLeftHit = Physics.Raycast(forwardLeft, out infoForwardLeft, RayLength, checkLayers);
+        rightHit = Physics.Raycast(right, out infoRight, RayLength, checkLayers);
+        leftHit = Physics.Raycast(left, out infoLeft, RayLength, checkLayers);
+        forwardHit = Physics.Raycast(forward, out infoForward, RayLength, checkLayers);
 
 
 
@@ -84,7 +93,7 @@ public class CarBotController : CarComponent
             Ray backward = new Ray(BackwardRayOriginOffset + transform.position, -transform.forward);
             vert = -1;
             horiz = dir * -1;
-            if (Physics.Raycast(backward, rayLength / 3, checkLayers)) {
+            if (Physics.Raycast(backward, RayLength / 3, checkLayers)) {
                 vert = 1;
                 horiz *= -1;
             }
@@ -96,8 +105,8 @@ public class CarBotController : CarComponent
         }
         if (forwardHit && !IsWall(infoForward.normal)) {
             horiz = (transform.InverseTransformDirection(infoForward.normal).x > 0 ? 1 : -1) * GetImportance(infoForward);
-            if (infoForward.distance < rayLength / 2) vert = 0;
-            if (infoForward.distance < rayLength / 3) isStuck = true;
+            if (infoForward.distance < RayLength / 2) vert = 0;
+            if (infoForward.distance < RayLength / 3) isStuck = true;
         }
         if (forwardLeftHit) {
             horiz += .5f * GetImportance(infoForwardLeft);
@@ -114,7 +123,7 @@ public class CarBotController : CarComponent
 
         // turn towards next point
         if (car.Movement.GetSurface() == SurfaceType.Ice)
-            horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold / 3) * dir) + horiz, -1, 1);
+            horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold * 3) * dir * 2) + horiz, -1, 1);
         else
             horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold) * dir / turnSmoothing) + horiz, -1, 1);
         if (vert < 0) horiz *= -1;
@@ -127,19 +136,19 @@ public class CarBotController : CarComponent
         Gizmos.DrawLine(transform.position, car.Path.GetNextPoint());
 
         Gizmos.color = forwardHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + ForwardRayOriginOffset, transform.position + ForwardRayOriginOffset + transform.forward * rayLength);
+        Gizmos.DrawLine(transform.position + ForwardRayOriginOffset, transform.position + ForwardRayOriginOffset + transform.forward * RayLength);
 
         Gizmos.color = forwardRightHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + RightRayOriginOffset + ForwardRightRayDirection * rayLength);
+        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + RightRayOriginOffset + ForwardRightRayDirection * RayLength);
 
         Gizmos.color = forwardLeftHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + LeftRayOriginOffset + ForwardLeftRayDirection * rayLength);
+        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + LeftRayOriginOffset + ForwardLeftRayDirection * RayLength);
 
         Gizmos.color = rightHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + ForwardRayOriginOffset + RightRayDirection * rayLength);
+        Gizmos.DrawLine(transform.position + RightRayOriginOffset, transform.position + ForwardRayOriginOffset + RightRayDirection * RayLength);
 
         Gizmos.color = leftHit ? Color.red : new(1f, .5f, 1f);
-        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + ForwardRayOriginOffset + LeftRayDirection * rayLength);
+        Gizmos.DrawLine(transform.position + LeftRayOriginOffset, transform.position + ForwardRayOriginOffset + LeftRayDirection * RayLength);
     }
 
     private bool IsWall(Vector3 normal) {
@@ -151,6 +160,6 @@ public class CarBotController : CarComponent
     }
 
     public float GetImportance(RaycastHit hit) {
-        return 1 - hit.distance / rayLength;
+        return 1 - hit.distance / RayLength;
     }
 }

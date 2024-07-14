@@ -149,4 +149,16 @@ public class CarDrifting : CarComponent
     public override void Init() {
         tank = 0;
     }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Boost")) {
+            AddBoost(20);
+        }
+    }
+
+    void OnTriggerStay(Collider other) {
+        if (other.gameObject.CompareTag("Boost") && tank < 20) {
+            tank = 20;
+        }
+    }
 }
