@@ -12,6 +12,7 @@ public class CarLapTimer : CarComponent
     public List<int> LapTimes => lapTimes;
     public int TotalTime => lapTimes.Sum();
     public int ElapsedTime => (int)Math.Round(timer.Elapsed.TotalMilliseconds, MidpointRounding.AwayFromZero);
+    public event Action<int> OnLapSaved;
     public override void Init() {
         timer.Stop();
         timer.Reset();
@@ -39,6 +40,7 @@ public class CarLapTimer : CarComponent
         if (time < fastestTime)
             fastestTime = time;
         timer.Start();
+        OnLapSaved?.Invoke(time);
     }
 
     private void StopTimer(BaseCar _) {
@@ -86,10 +88,14 @@ public class CarLapTimer : CarComponent
             lapTimes.Add(averageLapTime);
         }
         else {
-            lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, ElapsedTime - TotalTime, .9f / car.Path.CurrentPathTime)));
+            lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, ElapsedTime - TotalTime, .95f / car.Path.CurrentPathTime)));
         }
         for (int i = 0; i < lapsRemaining; i++) {
             lapTimes.Add(averageLapTime);
         }
+    }
+
+    void OnDestroy() {
+        OnLapSaved = null;
     }
 }
