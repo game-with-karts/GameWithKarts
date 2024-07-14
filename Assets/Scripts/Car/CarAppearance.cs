@@ -27,6 +27,8 @@ public class CarAppearance : CarComponent
     private readonly Vector3 rotationCorrect = new(0, 360, 0);
     private Quaternion currentRot = Quaternion.Euler(0, 90, 0);
 
+    private float targetBoostTime = 0;
+
     private bool usePost;
     public override void Init() {
         car.Drifting.OnJump += JumpAnimation;
@@ -57,7 +59,7 @@ public class CarAppearance : CarComponent
         car.Camera.BackFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
         if (usePost) {
             ca.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount;
-            lens.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount * -.6f;
+            lens.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount * -.75f;
             caTime += Time.deltaTime;
         }
 
@@ -82,7 +84,7 @@ public class CarAppearance : CarComponent
         model.localScale = new Vector3(2, .5f, 2) * landAmount + defaultScale;
     }
 
-    void DriftEffect(float relTime)  {
+    void DriftEffect(float relTime, int _)  {
         caAmount = Mathf.Clamp01(1 - relTime);
         caTime = 0;
     }

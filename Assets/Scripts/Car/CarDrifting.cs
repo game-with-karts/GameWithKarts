@@ -23,7 +23,7 @@ public class CarDrifting : CarComponent
 
     public event Action OnJump;
     public event Action OnLand;
-    public event Action<float> OnDriftBoost;
+    public event Action<float, int> OnDriftBoost;
 
     private float tank = 0;
     public float BoostTank => tank;
@@ -127,7 +127,7 @@ public class CarDrifting : CarComponent
                 secondaryPressed = true;
                 float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
                 float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
-                OnDriftBoost?.Invoke(boostT);
+                OnDriftBoost?.Invoke(boostT, driftBoostCount);
                 AddBoost(boostAmount);
 
                 driftTimer.Reset();

@@ -2636,7 +2636,7 @@ PrefabInstance:
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: music
       value: 
-      objectReference: {fileID: 8300000, guid: bad55db8d63dff6418479c573fe8955a, type: 3}
+      objectReference: {fileID: 8300000, guid: 715d2c72d593b6a4c98f52c8295be180, type: 3}
     - target: {fileID: 5464185123301264721, guid: d2f217cab0181714db87a058ffd79fa7, type: 3}
       propertyPath: track
       value: 

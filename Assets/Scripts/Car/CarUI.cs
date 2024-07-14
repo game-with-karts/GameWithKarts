@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 public class CarUI : CarComponent 
 {
@@ -28,12 +29,16 @@ public class CarUI : CarComponent
     [Header("Last Lap display")]
     [SerializeField] private RectTransform lastLapTransform;
     [SerializeField] private TMP_Text lastLapText;
+    [SerializeField] private TMP_Text lastLapDiff;
+    [SerializeField] private TMP_ColorGradient gradientFaster;
+    [SerializeField] private TMP_ColorGradient gradientEqual;
+    [SerializeField] private TMP_ColorGradient gradientSlower;
     [SerializeField] private float lastLapDuration = 5;
     [SerializeField] private AnimationCurve lastLapCurve;
     private Vector2 lastLapAnchoredPos;
     private int numCars;
     private bool lastLapEventSubscribed = false;
-
+    private int bestLap = -1;
     void Update() {
         gauge.gameObject.SetActive(car.Drifting.IsDrifting && car.Drifting.CanDrift);
         gauge.value = car.Drifting.RelativeDriftTimer;
@@ -64,6 +69,8 @@ public class CarUI : CarComponent
         lastLapAnchoredPos = lastLapTransform.anchoredPosition;
         lastLapAnchoredPos.x = -lastLapTransform.rect.width;
         lastLapTransform.anchoredPosition = lastLapAnchoredPos;
+
+        bestLap = -1;
         
         StopAllCoroutines();
         if (!lastLapEventSubscribed) {
@@ -97,8 +104,30 @@ public class CarUI : CarComponent
 
     private IEnumerator ShowLastLap(int time) {
         float elapsed = 0;
-        float t = 0;
+        float t;
         lastLapText.text = CarLapTimer.GetFormattedTime(time);
+        
+        lastLapDiff.text = "";
+        if (bestLap != -1) {
+            int diff = Math.Abs(time - bestLap);
+            string text = CarLapTimer.GetFormattedTime(diff, false);
+            if (diff == 0) {
+                lastLapDiff.colorGradientPreset = gradientEqual;
+            }
+            else if (time < bestLap) {
+                lastLapDiff.text = $"-{text}";
+                lastLapDiff.colorGradientPreset = gradientFaster;
+                bestLap = time;
+            }
+            else {
+                lastLapDiff.text = $"+{text}";
+                lastLapDiff.colorGradientPreset = gradientSlower;
+            }
+        }
+        else {
+            bestLap = time;
+        }
+
         while (elapsed < lastLapDuration) {
             elapsed += Time.deltaTime;
             t = elapsed / lastLapDuration;
