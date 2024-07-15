@@ -102,12 +102,14 @@ public class CarMovement : CarComponent
 
     private Vector3 localUp = Vector3.up;
     public Vector3 LocalUp => localUp;
+    private Vector3 orientationUp = Vector3.up;
 
     public override void Init() {
         controlable = false;
         IsAffectedByGravity = true;
         currSpeed = 0;
         StartCoroutine(StopAllMotion(startingPosition, startingRotation, 5));
+        transform.rotation = startingRotation;
     }
 
     public override void StartRace() {
@@ -124,7 +126,8 @@ public class CarMovement : CarComponent
         if (Physics.Raycast(transform.position, -transform.up, out var hit, normalRayLength, normalRayLayers)) {
             normal = hit.normal;
         }
-        localUp = (isAntigrav ? normal : Vector3.up);
+        localUp = isAntigrav ? normal : Vector3.up;
+        orientationUp = IsGrounded ? normal : localUp;
         Vector3 vel = car.RB.velocity;
         Vector3 localVel = transform.InverseTransformDirection(car.RB.velocity);
         isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
@@ -140,10 +143,12 @@ public class CarMovement : CarComponent
             Turn(localVel);
         }
         // car.RB.velocity += currSpeed * transform.forward;
-        car.RB.AddForce(currSpeed * transform.forward * car.RB.mass, ForceMode.Force);
+        car.RB.AddForce(currSpeed * transform.forward, ForceMode.Acceleration);
         //car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * currentFrictionSettings.groundResistance * Time.fixedDeltaTime;
         Vector3 horizVel = transform.TransformDirection(new(localVel.x, 0, localVel.z));
-        car.RB.AddForce(-horizVel * stats.idleDeceleration * currentFrictionSettings.groundResistance * car.RB.mass, ForceMode.Force);
+        if (car.Input.AxisVert == 0 || car.Drifting.isBoosting){
+            car.RB.AddForce(-horizVel * stats.idleDeceleration * currentFrictionSettings.groundResistance, ForceMode.Acceleration);
+        }
 
         ApplySidewaysFriction(currentSidewaysFriction, localVel, vel.normalized);
 
@@ -151,21 +156,21 @@ public class CarMovement : CarComponent
         car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
 
         // gravity
-        if (IsAffectedByGravity) car.RB.AddForce(-gravity * car.RB.mass * localUp);
+        if (IsAffectedByGravity) car.RB.AddForce(-gravity * localUp, ForceMode.Acceleration);
+        transform.position = car.RB.transform.position;
     }
 
     private void Turn(Vector3 localVel) {
         float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
         if (!IsGrounded) turnAmount = stats.maxSpeed;
         float turnAngle = stats.turnAngle * turnAmount * (car.Input.AxisHori + car.Drifting.DriftDirection);
-        car.RB.angularVelocity = localUp * turnAngle;
+        // car.RB.angularVelocity = localUp * turnAngle;
+        transform.localRotation *= Quaternion.Euler(Vector3.up * turnAngle);
 
         //align the normals to the normal vector
-        if (!IsGrounded) {
-            float angle = Vector3.Angle(localUp, transform.up);
-            Vector3 perpendicular = Vector3.Cross(localUp, transform.up);
-            transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
-        }
+        float angle = Vector3.Angle(orientationUp, transform.up);
+        Vector3 perpendicular = Vector3.Cross(orientationUp, transform.up);
+        transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
     }
 
     private void PerformMovement(Vector3 vel) {
@@ -179,17 +184,19 @@ public class CarMovement : CarComponent
             else {
                 if (car.Input.AxisVert > 0) Move(vel, stats.maxSpeed, stats.acceleration);
                 else if (car.Input.AxisVert < 0) Reverse(vel);
-                else currSpeed = 0;
+                else currSpeed *= stats.idleDeceleration;
             }
         }
     }
 
     private void Reverse(Vector3 vel) {
-        currSpeed = -Mathf.Lerp(stats.reverseAcceleration, 0, vel.magnitude / stats.maxReverseSpeed) * Time.fixedDeltaTime;
+        float t = vel.magnitude / stats.maxReverseSpeed;
+        currSpeed = -Mathf.Lerp(stats.reverseAcceleration, 0, t * t) * Time.fixedDeltaTime;
     }
 
     private void Move(Vector3 vel, float maxSpeed, float accel) {
-        currSpeed = Mathf.Lerp(accel, 0, vel.magnitude / maxSpeed) * currentForwardFriction * Time.fixedDeltaTime;
+        float t = vel.magnitude / maxSpeed;
+        currSpeed = Mathf.Lerp(accel, 0, t * t) * currentForwardFriction * Time.fixedDeltaTime;
     }
 
     private void Brake(Vector3 vel) {
@@ -234,8 +241,18 @@ public class CarMovement : CarComponent
         for (int i = 0; i < iter; i++) {
             car.RB.velocity = Vector3.zero;
             car.RB.angularVelocity = Vector3.zero;
-            transform.SetPositionAndRotation(pos, rot);
+            car.RB.transform.SetPositionAndRotation(pos, rot);
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = new(.6f, 1, .6f);
+        if (car is not null) {
+            Gizmos.matrix.SetTRS(car.RB.transform.position, car.RB.transform.rotation, car.RB.transform.localScale);
+            Gizmos.DrawWireSphere(car.RB.transform.position, 1);
+            return;
+        }
+        Gizmos.DrawWireSphere(transform.position, 1);
     }
 }

@@ -36,7 +36,7 @@ public class CarDrifting : CarComponent
     private float driftDirection;
     private int driftBoostCount = 0;
     public float DriftDirection => driftDirection;
-    public bool isBoosting => tank > tankDepletionRate;
+    public bool isBoosting => tank > 0;
     public bool isTankEmpty => tank <= 0;
     public float RelativeDriftTimer => driftTimer.Time / driftMaxTime;
     public bool CanDrift => driftBoostCount < 3;
@@ -148,6 +148,12 @@ public class CarDrifting : CarComponent
 
     public override void Init() {
         tank = 0;
+    }
+
+    protected override void Awake() {
+        base.Awake();
+        car.Collider.TriggerEnter += OnTriggerEnter;
+        car.Collider.TriggerStay += OnTriggerStay;
     }
 
     void OnTriggerEnter(Collider other) {

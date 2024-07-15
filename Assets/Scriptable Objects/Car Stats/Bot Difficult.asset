@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d113070afc7f10418e97f35af6d2ebc, type: 3}
   m_Name: Bot Difficult
   m_EditorClassIdentifier: 
-  maxSpeed: 42
+  maxSpeed: 45
   acceleration: 1700
   maxReverseSpeed: 15
-  reverseAcceleration: 200
+  reverseAcceleration: 2000
   brakeForce: 100
   turnAngle: 0.05
-  idleDeceleration: 0.25
+  idleDeceleration: 0.1

@@ -25,6 +25,9 @@ public class CarBotController : CarComponent
     [SerializeField] private float rightRayOriginOffset;
     [SerializeField] private float maxPathHorizontalDeviation;
     [SerializeField] private float wallThreshold = .2f;
+    [Space]
+    [SerializeField] private CarWheelRaycaster[] frontWheels;
+    [SerializeField] private CarWheelRaycaster[] rearWheels;
     private Vector3 ForwardRayOriginOffset => transform.forward * forwardRayOriginOffset + transform.up * .25f;
     private Vector3 BackwardRayOriginOffset => transform.forward * -forwardRayOriginOffset + transform.up * .25f;
     private Vector3 RightRayOriginOffset => ForwardRayOriginOffset + rightRayOriginOffset * transform.right;
@@ -46,6 +49,26 @@ public class CarBotController : CarComponent
                 return iceRayLength;
             }
             return rayLength;
+        }
+    }
+
+    private bool isFrontGrounded {
+        get {
+            bool result = false;
+            foreach (var w in frontWheels) {
+                result |= w.isGrounded;
+            }
+            return result;
+        }
+    }
+
+    private bool isRearGrounded {
+        get {
+            bool result = false;
+            foreach (var w in rearWheels) {
+                result |= w.isGrounded;
+            }
+            return result;
         }
     }
 
@@ -88,21 +111,21 @@ public class CarBotController : CarComponent
 
 
 
-        if (isStuck)
-        {
-            Ray backward = new Ray(BackwardRayOriginOffset + transform.position, -transform.forward);
-            vert = -1;
-            horiz = dir * -1;
-            if (Physics.Raycast(backward, RayLength / 3, checkLayers)) {
-                vert = 1;
-                horiz *= -1;
-            }
-            if (Vector3.Dot((car.Path.GetNextPoint() - transform.position).normalized, transform.forward) >= .85f) {
-                isStuck = false;
-            }
-            car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
-            return;
-        }
+        // if (isStuck)
+        // {
+        //     Ray backward = new Ray(BackwardRayOriginOffset + transform.position, -transform.forward);
+        //     vert = -1;
+        //     horiz = dir * -1;
+        //     if (Physics.Raycast(backward, RayLength / 3, checkLayers)) {
+        //         vert = 1;
+        //         horiz *= -1;
+        //     }
+        //     if (Vector3.Dot((car.Path.GetNextPoint() - transform.position).normalized, transform.forward) >= .85f) {
+        //         isStuck = false;
+        //     }
+        //     car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
+        //     return;
+        // }
         if (forwardHit && !IsWall(infoForward.normal)) {
             horiz = (transform.InverseTransformDirection(infoForward.normal).x > 0 ? 1 : -1) * GetImportance(infoForward);
             if (infoForward.distance < RayLength / 2) vert = 0;
@@ -127,7 +150,13 @@ public class CarBotController : CarComponent
         else
             horiz = Mathf.Clamp(((Mathf.Abs(nextPoint.x) - angleThreshold) * dir / turnSmoothing) + horiz, -1, 1);
         if (vert < 0) horiz *= -1;
-        car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
+
+        // if front not grounded and rear grounded, jump
+        float jumpAxis = 0;
+        if (!isFrontGrounded && isRearGrounded) {
+            jumpAxis = 1;
+        }
+        car.Input.SetAxes(vert, horiz, jumpAxis, 0f, 0f);
     }
 
     void OnDrawGizmos() {

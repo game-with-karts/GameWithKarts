@@ -105,6 +105,11 @@ public class CarInput : CarComponent
         this.jump1 = jump1;
         this.jump2 = jump2;
         this.item = item;
+
+        AxisJump1ThisFrame = jump1 - jump1Prev == 1;
+        AxisJump2ThisFrame = jump2 - jump2Prev == 1;
+        jump1Prev = jump1;
+        jump2Prev = jump2;
     }
 
     public void AddToHorizontal(float amount) {

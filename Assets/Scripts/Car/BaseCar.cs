@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CarMovement))]
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CarCamera))]
 [RequireComponent(typeof(CarDrifting))]
 [RequireComponent(typeof(CarInput))]
@@ -24,6 +23,7 @@ public class BaseCar : MonoBehaviour
     [SerializeField] private CarBotController botController;
     [SerializeField] private CarLapTimer timer;
     [SerializeField] private CarAudio audio;
+    [SerializeField] private CarCollider collider;
     public CarMovement Movement => movement;
     public Rigidbody RB => rb;
     public CarCamera Camera => camera;
@@ -34,6 +34,7 @@ public class BaseCar : MonoBehaviour
     public CarBotController BotController => botController;
     public CarLapTimer Timer => timer;
     public CarAudio Audio => audio;
+    public CarCollider Collider => collider;
     [SerializeField] private bool isBot;
     public bool IsBot => isBot;
     public bool playerControlled => !startingIsBot;
@@ -56,6 +57,7 @@ public class BaseCar : MonoBehaviour
     }
 
     public void Init(bool isBot, bool startOnAntigrav) {
+        rb.transform.parent = null;
         components = new();
         movement.startingPosition = transform.position;
         movement.startingRotation = transform.rotation;

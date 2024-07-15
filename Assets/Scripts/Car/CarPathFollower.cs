@@ -110,6 +110,7 @@ public class CarPathFollower : CarComponent
 
     private void Start() {
         timeCalcCurrentPoint = GetClosestIndex();
+        car.Collider.TriggerEnter += OnTriggerEnter;
     }
 
     private int GetClosestIndex(int startFrom = 0, bool loopAround = false, bool ignoreMaxDeltaCheck = true) {

@@ -39,7 +39,7 @@ public class CarRespawn : CarComponent
         float s = 0;
         while (s < respawnDuration) {
             s += Time.deltaTime;
-            transform.position -= car.Movement.LocalUp * respawnSpeed * Time.deltaTime;
+            car.RB.transform.position -= car.Movement.LocalUp * respawnSpeed * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
@@ -48,5 +48,8 @@ public class CarRespawn : CarComponent
     }
     public override void Init() {
         StopCoroutine(nameof(Respawn));
+    }
+    void Start() {
+        car.Collider.TriggerEnter += OnTriggerEnter;
     }
 }
