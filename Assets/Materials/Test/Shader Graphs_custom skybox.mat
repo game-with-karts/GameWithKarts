@@ -51,13 +51,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amount: 0.929
-    - _Density: 0.858
-    - _Fade: 0.104
+    - _Amount: 1
+    - _Density: 1
+    - _Fade: 0
     - _Nadir_Blend_Power: 0.233
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Softness: 0.294
+    - _Softness: 0.617
     - _Zenith_Blend_Power: 0.64
     m_Colors:
     - _Horizon_Colour: {r: 0.8417141, g: 0.90756816, b: 0.9150943, a: 0}
