@@ -153,7 +153,7 @@ namespace GWK.Kart {
             ApplySidewaysFriction(currentSidewaysFriction, localVel, vel.normalized);
 
             // downforce
-            car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed));
+            car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed) * (isAntigrav ? 2.5f : 1));
 
             // gravity
             if (IsAffectedByGravity) car.RB.AddForce(-gravity * localUp, ForceMode.Acceleration);

@@ -25,6 +25,7 @@ namespace GWK.Kart {
         [SerializeField] private Gradient fireNormalBoost;
         [SerializeField] private Gradient fireSuperBoost;
         [SerializeField] private Gradient fireUltraBoost;
+        [SerializeField] private Gradient fireUltimateBoost;
         [Space]
         [SerializeField] private AnimationCurve chromaticAberrationCurve;
         private float caAmount;
@@ -78,10 +79,11 @@ namespace GWK.Kart {
                 }
                 fireExhausts.ForEach(c => {
                     c.Play();
-                    c.SetGradient("Colour Gradient", (int)car.Drifting.BoostTier switch {
+                    c.SetGradient("Colour Gradient", car.Drifting.BoostTier.tier switch {
                         1 => fireNormalBoost,
                         2 => fireSuperBoost,
                         3 => fireUltraBoost,
+                        4 => fireUltimateBoost,
                         _ => fireNormalBoost
                     });
                 });
