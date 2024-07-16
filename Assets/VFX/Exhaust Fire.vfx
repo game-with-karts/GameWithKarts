@@ -70,7 +70,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":2.670156955718994,"b":2.3027994632720949,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":0.44419440627098086,"b":3.5648696422576906,"a":1.0},"time":0.9945678114891052}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":2.0,"g":1.4932034015655518,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":2.0,"g":0.0,"b":0.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -288,7 +288,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614650}
   m_ExposedName: Colour Gradient
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 0
   m_Category: 
   m_Min:
     m_Type:
@@ -335,7 +335,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":2.670156955718994,"b":2.3027994632720949,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":0.44419440627098086,"b":3.5648696422576906,"a":1.0},"time":0.9945678114891052}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":2.0,"g":1.4932034015655518,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":2.0,"g":0.0,"b":0.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
     m_Space: -1
   m_Property:
     name: o
@@ -1090,7 +1090,7 @@ MonoBehaviour:
       slotIndex: 0
   m_OutputFlowSlot:
   - link: []
-  blendMode: 1
+  blendMode: 0
   cullMode: 0
   zWriteMode: 0
   zTestMode: 0
@@ -2258,8 +2258,8 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":30.0,"y":30.0,"z":30.0}}'
-    m_Space: 1
+      m_SerializableObject: '{"vector":{"x":10.0,"y":10.0,"z":-40.0}}'
+    m_Space: 0
   m_Property:
     name: Velocity
     m_serializedType:
@@ -2886,7 +2886,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614792}
   m_ExposedName: Trail Texture
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -4007,7 +4007,7 @@ MonoBehaviour:
       slotIndex: 0
   m_OutputFlowSlot:
   - link: []
-  blendMode: 1
+  blendMode: 0
   cullMode: 0
   zWriteMode: 0
   zTestMode: 0

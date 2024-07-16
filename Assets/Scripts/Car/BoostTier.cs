@@ -20,10 +20,20 @@ namespace GWK.Kart {
         public static explicit operator float(BoostTier tier) => tier.tier switch {
             0 => 0f,
             1 => 1f,
-            2 => 1.125f,
-            3 => 1.25f,
+            2 => 1.1f,
+            3 => 1.2f,
             _ => 1f
         };
+
+        public override string ToString() => tier switch {
+            0 => "None",
+            1 => "Normal",
+            2 => "Super",
+            3 => "Ultra",
+            _ => string.Empty,
+        };
+
+        public static explicit operator int(BoostTier tier) => tier.tier;
 
         public static bool operator > (BoostTier lhs, BoostTier rhs) => lhs.tier > rhs.tier;
         public static bool operator < (BoostTier lhs, BoostTier rhs) => lhs.tier < rhs.tier;

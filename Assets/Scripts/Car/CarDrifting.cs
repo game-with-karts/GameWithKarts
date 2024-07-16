@@ -156,7 +156,6 @@ namespace GWK.Kart {
                 this.tier = tier;
             }
             tank += boostAmount;
-            this.tier = tier;
         }
         public void ResetBoostTank() {
             tank = 0;

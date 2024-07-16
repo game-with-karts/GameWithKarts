@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.VFX;
+using System.Collections.Generic;
 
 namespace GWK.Kart {
     public class CarAppearance : CarComponent {
@@ -18,6 +20,11 @@ namespace GWK.Kart {
         [SerializeField] private TrailRenderer[] skidmarks;
         [SerializeField] private Gradient skidmarkDriftGradient;
         [SerializeField] private Gradient skidmarkIceGradient;
+        [Space]
+        [SerializeField] private List<VisualEffect> fireExhausts;
+        [SerializeField] private Gradient fireNormalBoost;
+        [SerializeField] private Gradient fireSuperBoost;
+        [SerializeField] private Gradient fireUltraBoost;
         [Space]
         [SerializeField] private AnimationCurve chromaticAberrationCurve;
         private float caAmount;
@@ -43,6 +50,8 @@ namespace GWK.Kart {
             }
             
             speedLines.Stop();
+
+            fireExhausts.ForEach(c => c.Stop());
         }
 
         void Update() {
@@ -64,9 +73,24 @@ namespace GWK.Kart {
             }
 
             if (car.Drifting.isBoosting) {
-                if (speedLines.isStopped) speedLines.Play();
+                if (speedLines.isStopped) {
+                    speedLines.Play();
+                }
+                fireExhausts.ForEach(c => {
+                    c.Play();
+                    c.SetGradient("Colour Gradient", (int)car.Drifting.BoostTier switch {
+                        1 => fireNormalBoost,
+                        2 => fireSuperBoost,
+                        3 => fireUltraBoost,
+                        _ => fireNormalBoost
+                    });
+                });
+
             }
-            else speedLines.Stop();
+            else {
+                speedLines.Stop();
+                fireExhausts.ForEach(c => c.Stop());
+            }
 
             SurfaceType surfaceType = car.Movement.GetSurface();
 
