@@ -3,6 +3,8 @@ using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using System;
 using System.Linq;
+using GWK.Kart;
+
 public class RaceManager : MonoBehaviour
 {
     private Action OnRaceReset;

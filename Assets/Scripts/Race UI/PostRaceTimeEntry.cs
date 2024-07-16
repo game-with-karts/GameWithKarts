@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using GWK.Util;
 
 public class PostRaceTimeEntry : MonoBehaviour
 {
@@ -8,6 +9,6 @@ public class PostRaceTimeEntry : MonoBehaviour
 
     public void Display(string lapTitle, int lapTime) {
         lapDisplay.text = lapTitle;
-        timeDisplay.text = CarLapTimer.GetFormattedTime(lapTime);
+        timeDisplay.text = StringsUtil.GetFormattedTime(lapTime);
     }
 }

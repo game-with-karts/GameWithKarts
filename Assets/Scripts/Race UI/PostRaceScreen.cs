@@ -1,11 +1,13 @@
 using UnityEngine;
-using TMPro;
-using static System.Linq.Enumerable;
-using System.Collections.Generic;
-using GWK.UI;
-using System.Linq;
 using UnityEngine.Assertions;
+using TMPro;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using static System.Linq.Enumerable;
+using GWK.UI;
+using GWK.Kart;
+using GWK.Util;
 
 public class PostRaceScreen : MonoBehaviour
 {
@@ -61,8 +63,8 @@ public class PostRaceScreen : MonoBehaviour
             leaderboardEntries[i].Display(raceLeaderboard[i].gameObject.name, i + 1, raceLeaderboard[i].Timer.TotalTime);
         }
 
-        finalPlaceDisplay.text = CarUI.FormatPlace(player.Path.currentPlacement);
-        finalTimeDisplay.text = CarLapTimer.GetFormattedTime(player.Timer.TotalTime);
+        finalPlaceDisplay.text = StringsUtil.FormatPlace(player.Path.currentPlacement);
+        finalTimeDisplay.text = StringsUtil.GetFormattedTime(player.Timer.TotalTime);
 
         if (useAggregates) {
             int best = player.Timer.LapTimes.Min();
