@@ -54,7 +54,7 @@ namespace GWK.Kart {
             skidmarksParent.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
 
             
-            float targetFOV = car.Drifting.isBoosting ? boostFOV : defaultFOV;
+            float targetFOV = car.Drifting.isBoosting ? boostFOV * (float)car.Drifting.BoostTier : defaultFOV;
             car.Camera.FrontFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
             car.Camera.BackFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
             if (usePost) {

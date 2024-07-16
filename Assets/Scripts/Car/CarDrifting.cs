@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 namespace GWK.Kart {
 
     public enum DriftState {
@@ -30,6 +29,7 @@ namespace GWK.Kart {
         public float BoostTank => tank;
 
         private DriftState state = DriftState.Idle;
+        private BoostTier tier = BoostTier.None;
         private Timer jumpTimer = new();
         private Timer driftTimer = new();
 
@@ -42,6 +42,7 @@ namespace GWK.Kart {
         public float RelativeDriftTimer => driftTimer.Time / driftMaxTime;
         public bool CanDrift => driftBoostCount < 3;
         public bool IsDrifting => state == DriftState.Drifting;
+        public BoostTier BoostTier => tier;
         [SerializeField] private float jumpVerticalVelocityThreshold;
 
         private bool hasLeftGround;
@@ -55,8 +56,10 @@ namespace GWK.Kart {
             jumpTimer.Tick(Time.deltaTime);
             driftTimer.Tick(Time.deltaTime);
             tank -= tankDepletionRate * Time.deltaTime;
-            if (tank < 0 || (car.Input.AxisVert < 0 && car.Movement.IsGrounded))
+            if (tank < 0 || (car.Input.AxisVert < 0 && car.Movement.IsGrounded)) {
                 tank = 0;
+                tier = BoostTier.None;
+            }
             
             switch(state) {
                 default:
@@ -76,7 +79,7 @@ namespace GWK.Kart {
                         jumpTimer.Stop();
                         OnLand?.Invoke();
                         if (jumpTimer.Time >= jumpBoostTime) {
-                            AddBoost(jumpBoostAmount);
+                            AddBoost(jumpBoostAmount, BoostTier.Normal);
                         }
                         jumpTimer.Reset();
                         state = DriftState.Idle;
@@ -129,7 +132,11 @@ namespace GWK.Kart {
                     float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
                     float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
                     OnDriftBoost?.Invoke(boostT, driftBoostCount);
-                    AddBoost(boostAmount);
+                    BoostTier tier = this.tier == BoostTier.None ? BoostTier.Normal : this.tier;
+                    if (driftBoostCount == 3 && RelativeDriftTimer >= .9f) {
+                        tier = tier.OneUp();
+                    }
+                    AddBoost(boostAmount, tier);
 
                     driftTimer.Reset();
                 }
@@ -144,11 +151,21 @@ namespace GWK.Kart {
             }
         }
 
-        public void AddBoost(float boostAmount) => tank += boostAmount;
-        public void ResetBoostTank() => tank = 0;
+        public void AddBoost(float boostAmount, BoostTier tier, bool overrideTier = false) {
+            if (tier > this.tier || overrideTier) {
+                this.tier = tier;
+            }
+            tank += boostAmount;
+            this.tier = tier;
+        }
+        public void ResetBoostTank() {
+            tank = 0;
+            tier = BoostTier.None;
+        }
 
         public override void Init() {
-            tank = 0;
+            state = DriftState.Idle;
+            ResetBoostTank();
         }
 
         protected override void Awake() {
@@ -159,7 +176,7 @@ namespace GWK.Kart {
 
         void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Boost")) {
-                AddBoost(20);
+                AddBoost(20, BoostTier.Super);
             }
         }
 

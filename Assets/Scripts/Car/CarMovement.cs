@@ -175,7 +175,7 @@ namespace GWK.Kart {
 
         private void PerformMovement(Vector3 vel) {
             if (car.Drifting.isBoosting) {
-                Move(vel, boostingSpeed, boostingAcceleration);
+                Move(vel, boostingSpeed * (float)car.Drifting.BoostTier, boostingAcceleration);
             }
             else {
                 if (isBraking) {
