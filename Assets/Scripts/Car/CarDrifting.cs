@@ -134,7 +134,7 @@ namespace GWK.Kart {
                     OnDriftBoost?.Invoke(boostT, driftBoostCount);
                     BoostTier tier = this.tier == BoostTier.None ? BoostTier.Normal : this.tier;
                     if (driftBoostCount == 3 && RelativeDriftTimer >= .9f) {
-                        tier = tier.OneUp();
+                        tier = BoostTierOperations.OneUp(tier);
                     }
                     AddBoost(boostAmount, tier);
 
@@ -174,13 +174,14 @@ namespace GWK.Kart {
         }
 
         void OnTriggerEnter(Collider other) {
-            if (other.gameObject.CompareTag("Boost")) {
-                AddBoost(20, BoostTier.Super);
+            if (other.gameObject.CompareTag("Boost") && car.Movement.IsGrounded) {
+                BoostTier boostPadTier = other.gameObject.GetComponent<BoostPad>().boostTier;
+                AddBoost(20, boostPadTier);
             }
         }
 
         void OnTriggerStay(Collider other) {
-            if (other.gameObject.CompareTag("Boost") && tank < 20) {
+            if (other.gameObject.CompareTag("Boost") && tank < 20 && car.Movement.IsGrounded) {
                 tank = 20;
             }
         }

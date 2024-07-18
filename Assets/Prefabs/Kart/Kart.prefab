@@ -1990,7 +1990,7 @@ MonoBehaviour:
   reverseThreshold: 5
   downforceAmount: 40
   boostingSpeed: 52
-  boostingAcceleration: 4000
+  boostingAcceleration: 4500
   wheels:
   - {fileID: 4253112667898450597}
   - {fileID: 4253112667886288559}

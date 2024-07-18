@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2869001057190573390}
   - component: {fileID: 2713469262605712076}
   m_Layer: 0
-  m_Name: Boost Pad
+  m_Name: Boost Pad Super
   m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decalTransform: {fileID: 5349057653966900628}
+  boostTier: 2
 --- !u!1 &6023887605163307363
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: -876546973899608171, guid: 051fec980aedd9f4d87e45f675bec45d, type: 3}
+  m_Material: {fileID: 2100000, guid: b6b59cc6dc9b4134898ce8242434e2ab, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 1
   m_StartAngleFade: 180

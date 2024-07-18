@@ -64,7 +64,7 @@ namespace GWK.Kart {
             skidmarksParent.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
 
             
-            float targetFOV = car.Drifting.isBoosting ? boostFOV * (float)car.Drifting.BoostTier : defaultFOV;
+            float targetFOV = car.Drifting.isBoosting ? boostFOV * BoostTierOperations.AsFloat(car.Drifting.BoostTier) : defaultFOV;
             car.Camera.FrontFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
             car.Camera.BackFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
             if (usePost) {
@@ -79,13 +79,14 @@ namespace GWK.Kart {
                 }
                 fireExhausts.ForEach(c => {
                     c.Play();
-                    c.SetGradient("Colour Gradient", car.Drifting.BoostTier.tier switch {
-                        1 => fireNormalBoost,
-                        2 => fireSuperBoost,
-                        3 => fireUltraBoost,
-                        4 => fireUltimateBoost,
+                    c.SetGradient("Colour Gradient", car.Drifting.BoostTier switch {
+                        BoostTier.Normal => fireNormalBoost,
+                        BoostTier.Super => fireSuperBoost,
+                        BoostTier.Ultra => fireUltraBoost,
+                        BoostTier.Ultimate => fireUltimateBoost,
                         _ => fireNormalBoost
                     });
+                    c.SetFloat("Spread", ((float)car.Drifting.BoostTier - 1) / 3);
                 });
 
             }
