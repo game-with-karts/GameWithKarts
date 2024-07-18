@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Linq;
 
 namespace GWK.Kart {
     public class CarCollider : MonoBehaviour {

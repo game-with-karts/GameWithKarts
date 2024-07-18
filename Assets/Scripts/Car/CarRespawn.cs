@@ -46,7 +46,7 @@ namespace GWK.Kart {
             car.Movement.SetControllableState(true);
             car.Movement.IsAffectedByGravity = true;
         }
-        public override void Init() {
+        public override void Init(bool _) {
             StopCoroutine(nameof(Respawn));
         }
         void Start() {

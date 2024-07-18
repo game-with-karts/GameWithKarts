@@ -9,7 +9,7 @@ namespace GWK.Kart {
             car = GetComponent<BaseCar>();
         }
 
-        public abstract void Init();
+        public abstract void Init(bool restarting);
         public virtual void StartRace() {}
     }
 }

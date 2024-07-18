@@ -13,7 +13,7 @@ namespace GWK.Kart {
         public int TotalTime => lapTimes.Sum();
         public int ElapsedTime => (int)Math.Round(timer.Elapsed.TotalMilliseconds, MidpointRounding.AwayFromZero);
         public event Action<int> OnLapSaved;
-        public override void Init() {
+        public override void Init(bool restarting) {
             timer.Stop();
             timer.Reset();
             fastestTime = int.MaxValue;

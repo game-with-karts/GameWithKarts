@@ -96,7 +96,7 @@ namespace GWK.Kart {
             }
         }
 
-        public override void Init() {
+        public override void Init(bool _) {
             CurrentLap = 1;
             CurrentPathNumber = 1;
             CurrentPathPoint = GetClosestIndex();

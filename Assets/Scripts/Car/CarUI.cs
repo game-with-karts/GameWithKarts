@@ -55,7 +55,7 @@ namespace GWK.Kart {
             timeDisplay.text = StringsUtil.GetFormattedTime(car.Timer.ElapsedTime);
         }
 
-        public override void Init() {
+        public override void Init(bool restarting) {
             canvas.SetActive(false);
             transform.parent = null;
 

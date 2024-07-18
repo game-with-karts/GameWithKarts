@@ -1917,6 +1917,7 @@ GameObject:
   - component: {fileID: 3945629943473880784}
   - component: {fileID: 228279470013541860}
   - component: {fileID: 4898140581127465034}
+  - component: {fileID: 1426543155734826393}
   m_Layer: 3
   m_Name: Kart
   m_TagString: Untagged
@@ -1973,6 +1974,7 @@ MonoBehaviour:
   timer: {fileID: 228279470013541860}
   audio: {fileID: 3945629943473880784}
   collider: {fileID: 1339149712502369436}
+  item: {fileID: 1426543155734826393}
   isBot: 0
 --- !u!114 &4253112666149923756
 MonoBehaviour:
@@ -2511,6 +2513,18 @@ MonoBehaviour:
   surfaceLayers:
     serializedVersion: 2
     m_Bits: 448
+--- !u!114 &1426543155734826393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253112666149923750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e86fdad4d56cb4c8054986bde31715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4253112666214254335
 GameObject:
   m_ObjectHideFlags: 0

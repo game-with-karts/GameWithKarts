@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.VFX;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.VFX;
 using System.Collections.Generic;
 
 namespace GWK.Kart {
@@ -38,18 +38,19 @@ namespace GWK.Kart {
         private float targetBoostTime = 0;
 
         private bool usePost;
-        public override void Init() {
-            car.Drifting.OnJump += JumpAnimation;
-            car.Drifting.OnLand += LandAnimation;
-            car.Drifting.OnDriftBoost += DriftEffect;
+        public override void Init(bool restarting) {
+            if (!restarting) {
+                car.Drifting.OnJump += JumpAnimation;
+                car.Drifting.OnLand += LandAnimation;
+                car.Drifting.OnDriftBoost += DriftEffect;
 
-            usePost = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
-            if (usePost) {
-                volume = GameObject.FindGameObjectWithTag("Global Volume").GetComponent<Volume>();
-                volume.profile.TryGet(out ca);
-                volume.profile.TryGet(out lens);
+                usePost = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
+                if (usePost) {
+                    volume = GameObject.FindGameObjectWithTag("Global Volume").GetComponent<Volume>();
+                    volume.profile.TryGet(out ca);
+                    volume.profile.TryGet(out lens);
+                }
             }
-            
             speedLines.Stop();
 
             fireExhausts.ForEach(c => c.Stop());

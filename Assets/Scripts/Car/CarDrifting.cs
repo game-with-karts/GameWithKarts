@@ -162,7 +162,7 @@ namespace GWK.Kart {
             tier = BoostTier.None;
         }
 
-        public override void Init() {
+        public override void Init(bool _) {
             state = DriftState.Idle;
             ResetBoostTank();
         }

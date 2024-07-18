@@ -10,7 +10,7 @@ namespace GWK.Kart {
         [Header("Kart Misc")]
         [SerializeField] private AudioSource boostSource;
         [SerializeField] private AudioSource tyreScreechSource;
-        public override void Init() {
+        public override void Init(bool _) {
             Play(false);
         }
 

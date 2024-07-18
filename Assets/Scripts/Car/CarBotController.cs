@@ -185,8 +185,10 @@ namespace GWK.Kart {
         private bool IsWall(Vector3 normal) {
             return Vector3.Dot(normal, transform.up) < wallThreshold;
         }
-        public override void Init() {
-            car.Path.OnRaceEnd += (BaseCar _) => { this.enabled = true; };
+        public override void Init(bool restarting) {
+            if (!restarting) {
+                car.Path.OnRaceEnd += (BaseCar _) => { this.enabled = true; };
+            }
             if (!car.IsBot) this.enabled = false;
         }
 

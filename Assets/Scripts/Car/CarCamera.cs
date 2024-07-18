@@ -28,7 +28,7 @@ namespace GWK.Kart {
             if (IsFollowingPlayer) cameraTransform.SetPositionAndRotation(cameraTarget.position, targetRotation);
         }
 
-        public override void Init() {
+        public override void Init(bool _) {
             cameraTransform.gameObject.SetActive(false);
             cameraTransform.parent = null;
             car.Path.OnRaceEnd += RaceEnd;

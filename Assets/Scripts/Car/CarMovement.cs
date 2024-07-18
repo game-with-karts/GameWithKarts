@@ -104,7 +104,7 @@ namespace GWK.Kart {
         public Vector3 LocalUp => localUp;
         private Vector3 orientationUp = Vector3.up;
 
-        public override void Init() {
+        public override void Init(bool _) {
             controlable = false;
             IsAffectedByGravity = true;
             currSpeed = 0;

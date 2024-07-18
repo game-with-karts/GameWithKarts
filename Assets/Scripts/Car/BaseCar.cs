@@ -25,6 +25,7 @@ namespace GWK.Kart {
         [SerializeField] private CarLapTimer timer;
         [SerializeField] private CarAudio audio;
         [SerializeField] private CarCollider collider;
+        [SerializeField] private CarItemHandler item;
         public CarMovement Movement => movement;
         public Rigidbody RB => rb;
         public CarCamera Camera => camera;
@@ -36,6 +37,7 @@ namespace GWK.Kart {
         public CarLapTimer Timer => timer;
         public CarAudio Audio => audio;
         public CarCollider Collider => collider;
+        public CarItemHandler Item => item;
         [SerializeField] private bool isBot;
         public bool IsBot => isBot;
         public bool playerControlled => !startingIsBot;
@@ -75,7 +77,7 @@ namespace GWK.Kart {
 
         private void InitComponents(bool onInit) {
             foreach (CarComponent c in components) {
-                c.Init();
+                c.Init(!onInit);
                 if (!onInit) {
                     if (c is CarCamera) {
                         (c as CarCamera).ActivateCamera();
