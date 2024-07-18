@@ -23,14 +23,13 @@ public class ItemBox : MonoBehaviour {
         boxEffect.Stop();
         hitEffect.Play();
         IsActive = false;
-        boxEffect.transform.localScale = Vector3.zero;
         targetBoxEffectScale = Vector3.zero;
     }
 
     void Update() {
         timer.Tick(Time.deltaTime);
         targetBoxEffectScale = IsActive ? Vector3.one : Vector3.zero;
-        boxEffect.transform.localScale = Vector3.Lerp(boxEffect.transform.localScale, targetBoxEffectScale, 30 * Time.deltaTime);
+        boxEffect.transform.localScale = Vector3.Lerp(boxEffect.transform.localScale, targetBoxEffectScale, 15 * Time.deltaTime);
         if (timer.running && timer.Time >= cooldown) {
             timer.Stop();
             timer.Reset();

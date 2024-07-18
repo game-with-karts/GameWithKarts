@@ -75,7 +75,7 @@ namespace GWK.Kart {
             
             StopAllCoroutines();
             if (!lastLapEventSubscribed) {
-                car.Timer.OnLapSaved += (time) => { StartCoroutine(ShowLastLap(time)); };
+                car.Timer.OnLapSaved += LastLapCoroutine;
                 lastLapEventSubscribed = true;
             }
         }
@@ -85,8 +85,12 @@ namespace GWK.Kart {
         private void RaceEnd(BaseCar _) {
             canvas.SetActive(false);
             car.Path.OnRaceEnd -= RaceEnd;
-            car.Timer.OnLapSaved -= (time) => { StartCoroutine(ShowLastLap(time)); };
+            car.Timer.OnLapSaved -= LastLapCoroutine;
             lastLapEventSubscribed = false;
+        }
+
+        private void LastLapCoroutine(int time) {
+            StartCoroutine(ShowLastLap(time));
         }
 
         private IEnumerator ShowLastLap(int time) {
@@ -94,8 +98,10 @@ namespace GWK.Kart {
             float t;
             lastLapText.text = StringsUtil.GetFormattedTime(time);
             
+            Debug.Log($"time = {time}, bestLap = {bestLap}");
             lastLapDiff.text = "";
             if (bestLap != -1) {
+                Debug.Log("Split time shown");
                 int diff = Math.Abs(time - bestLap);
                 string text = StringsUtil.GetFormattedTime(diff, false);
                 if (diff == 0) {
@@ -112,6 +118,7 @@ namespace GWK.Kart {
                 }
             }
             else {
+                Debug.Log("First lap");
                 bestLap = time;
             }
 

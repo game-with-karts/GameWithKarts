@@ -47,7 +47,14 @@ namespace GWK.Kart {
         public bool AxisJump2ThisFrame { get; private set; }
         public float BackCamera => backCamera;
 
-        public override void Init(bool _) {}
+        public override void Init(bool _) {
+            vert = 0;
+            horiz = 0;
+            jump1 = 0;
+            jump2 = 0;
+            backCamera = 0;
+            item = 0;
+        }
 
         void OnEnable() {
             if (car.IsBot) {
