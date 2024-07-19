@@ -46,9 +46,9 @@ namespace GWK.Kart {
 
                 usePost = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
                 if (usePost) {
-                    volume = GameObject.FindGameObjectWithTag("Global Volume").GetComponent<Volume>();
-                    volume.profile.TryGet(out ca);
-                    volume.profile.TryGet(out lens);
+                    volume = GameObject.FindGameObjectWithTag("Global Volume")?.GetComponent<Volume>();
+                    volume?.profile.TryGet(out ca);
+                    volume?.profile.TryGet(out lens);
                 }
             }
             speedLines.Stop();
@@ -68,7 +68,7 @@ namespace GWK.Kart {
             float targetFOV = car.Drifting.isBoosting ? boostFOV * BoostTierOperations.AsFloat(car.Drifting.BoostTier) : defaultFOV;
             car.Camera.FrontFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
             car.Camera.BackFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);
-            if (usePost) {
+            if (usePost && volume is not null) {
                 ca.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount;
                 lens.intensity.value = chromaticAberrationCurve.Evaluate(caTime) * caAmount * -.75f;
                 caTime += Time.deltaTime;

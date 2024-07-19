@@ -64,8 +64,11 @@ namespace GWK.Kart {
 
             car.Path.OnRaceEnd += RaceEnd;
 
-            positionDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
-            timeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
+            RaceSettings settings = new();
+            settings ??= GameRulesManager.currentTrack?.settings;
+
+            positionDisplay.gameObject.SetActive(!settings.timeAttackMode);
+            timeDisplay.gameObject.SetActive(settings.timeAttackMode);
 
             lastLapAnchoredPos = lastLapTransform.anchoredPosition;
             lastLapAnchoredPos.x = -lastLapTransform.rect.width;
