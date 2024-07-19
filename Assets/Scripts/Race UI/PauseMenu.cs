@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using GWK.Kart;
 
 public class PauseMenu : MonoBehaviour
 {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using PathCreation;
+using GWK.Kart;
 
 public class CarBuilder {
     private BaseCar car;

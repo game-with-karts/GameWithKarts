@@ -1,6 +1,7 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
+using GWK.Util;
 
 public class PostRaceLeaderboardEntry : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class PostRaceLeaderboardEntry : MonoBehaviour
     private float colorMult = .5f;
 
     public void Display(string name, int position, int raceTime) {
-        positionDisplay.text = CarUI.FormatPlace(position);
+        positionDisplay.text = StringsUtil.FormatPlace(position);
         nameDisplay.text = name;
-        raceTimeDisplay.text = CarLapTimer.GetFormattedTime(raceTime);
+        raceTimeDisplay.text = StringsUtil.GetFormattedTime(raceTime);
         Position = position;
         switch (position) {
             case 1:
