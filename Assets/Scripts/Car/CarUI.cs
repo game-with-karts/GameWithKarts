@@ -102,11 +102,9 @@ namespace GWK.Kart {
             float elapsed = 0;
             float t;
             lastLapText.text = StringsUtil.GetFormattedTime(time);
-            
-            Debug.Log($"time = {time}, bestLap = {bestLap}");
             lastLapDiff.text = "";
+
             if (bestLap != -1) {
-                Debug.Log("Split time shown");
                 int diff = Math.Abs(time - bestLap);
                 string text = StringsUtil.GetFormattedTime(diff, false);
                 if (diff == 0) {
@@ -123,7 +121,6 @@ namespace GWK.Kart {
                 }
             }
             else {
-                Debug.Log("First lap");
                 bestLap = time;
             }
 
