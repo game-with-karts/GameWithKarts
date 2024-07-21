@@ -19,6 +19,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private PostRaceScreen postRaceScreen;
     [SerializeField] private CountdownScreen countdownScreen;
     [SerializeField] private SettingsMenu settingsMenu;
+    [SerializeField] private GameObject itemBoxParent;
     [Header("Per-Track settings")]
     [SerializeField] private Transform track;
     [SerializeField] private MinimapTransform minimapTransform;
@@ -42,6 +43,8 @@ public class RaceManager : MonoBehaviour
         numPlayers = cars.Count(c => c.playerControlled);
 
         postRaceScreen.Init(GameRulesManager.currentTrack.settings.numberOfLaps, cars.Length);
+
+        itemBoxParent.SetActive(GameRulesManager.currentTrack.settings.useItems);
 
         foreach (var car in cars) {
             OnRaceReset += () => car.ResetCar(false);

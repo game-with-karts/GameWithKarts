@@ -245,11 +245,11 @@ MonoBehaviour:
   - Hill
   - Mountains
   trackThumbnails:
-  - {fileID: 21300000, guid: bc29fa6ff74ccdc429bc3960f10c04a8, type: 3}
-  - {fileID: 21300000, guid: 3e22de0d1787b6f4b9d24c71ba0aed25, type: 3}
-  - {fileID: 21300000, guid: 22dd81b93a79f464e88d001d6fce94ee, type: 3}
-  - {fileID: 21300000, guid: e00a627220719f54f8678de641809e29, type: 3}
-  - {fileID: 21300000, guid: 22dd81b93a79f464e88d001d6fce94ee, type: 3}
+  - {fileID: 21300000, guid: cf6b2081d88f7b34099dc4cd00b5ce51, type: 3}
+  - {fileID: 21300000, guid: 28ce05594b08747498b0180212fae3fe, type: 3}
+  - {fileID: 21300000, guid: e0d25b59de9fdf8439941040a2a5c748, type: 3}
+  - {fileID: 21300000, guid: 78aca7c80d00ec04a9973855cb37ed85, type: 3}
+  - {fileID: 21300000, guid: 6bfa52134bed4e245afffc85b4456df1, type: 3}
   emptyText: {fileID: 994861175812916447}
   emptyColorSelected: {r: 0.3726415, g: 0.68431675, b: 1, a: 0.5176471}
   emptyColorDeselected: {r: 0, g: 0, b: 0, a: 0.5176471}
