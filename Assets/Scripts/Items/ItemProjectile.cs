@@ -25,9 +25,8 @@ public abstract class ItemProjectile : MonoBehaviour, ISelfDestructable {
         rb.AddForce(-localUp * 20f, ForceMode.Acceleration);
     }
 
-    public virtual void SelfDestruct(bool removeFromList) {
-        if (removeFromList) {
-            RaceManager.allItems.Remove(this);
-        }
+    public virtual void SelfDestruct() {}
+    protected virtual void OnDestroy() {
+        RaceManager.allItems.Remove(this);
     }
 }

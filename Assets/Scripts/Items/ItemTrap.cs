@@ -41,10 +41,11 @@ public class ItemTrap : MonoBehaviour, ISelfDestructable {
         }
     }
 
-    public void SelfDestruct(bool removeFromList = true) {
-        if (removeFromList) {
-            RaceManager.allItems.Remove(this);
-        }
+    public void SelfDestruct() {
         Destroy(gameObject);
+    }
+
+    void OnDestroy() {
+        RaceManager.allItems.Remove(this);
     }
 }

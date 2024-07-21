@@ -105,7 +105,7 @@ public class RaceManager : MonoBehaviour
         if (allItems.Count == 0) {
             return;
         }
-        allItems.ForEach(i => i.SelfDestruct(false));
+        allItems.ForEach(i => i.SelfDestruct());
         allItems = new();
 
         foreach (var c in cars.Where(c => c.Finished)) {
@@ -120,14 +120,6 @@ public class RaceManager : MonoBehaviour
     private void StartRace() {
         OnRaceStart?.Invoke();
         SoundManager.PlayMusic();
-    }
-
-    private void OnDisable() {
-        if (allItems.Count == 0) {
-            return;
-        }
-        allItems.ForEach(i => i.SelfDestruct(false));
-        allItems = new();
     }
 
     private void OnDestroy() {

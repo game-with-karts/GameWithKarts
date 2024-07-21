@@ -57,8 +57,8 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
         }
     }
 
-    public override void SelfDestruct(bool removeFromList = true) {
-        base.SelfDestruct(removeFromList);
+    public override void SelfDestruct() {
+        base.SelfDestruct();
         effect.transform.parent = null;
         effect.transform.rotation = Quaternion.identity;
         effect.Play();
