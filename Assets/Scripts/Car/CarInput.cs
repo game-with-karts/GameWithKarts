@@ -39,10 +39,11 @@ namespace GWK.Kart {
         public void GetBackCamera(InputAction.CallbackContext ctx) {
             if (!car.IsBot)backCamera = Mathf.Round(ctx.ReadValue<float>());
         }
-        public float AxisVert => vert;
-        public float AxisHori => horiz;
-        public float AxisJump1 => jump1;
-        public float AxisJump2 => jump2;
+        public float AxisVert => car.state == CarDrivingState.Idle ? vert : 0;
+        public float AxisHori => car.state == CarDrivingState.Idle ? horiz : 0;
+        public float AxisJump1 => car.state == CarDrivingState.Idle ? jump1 : 0;
+        public float AxisJump2 => car.state == CarDrivingState.Idle ? jump2 : 0;
+        public float AxisItem => car.state == CarDrivingState.Idle ? item : 0;
         public bool AxisJump1ThisFrame { get; private set; }
         public bool AxisJump2ThisFrame { get; private set; }
         public float BackCamera => backCamera;

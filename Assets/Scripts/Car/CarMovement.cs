@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace GWK.Kart {
@@ -129,6 +131,24 @@ namespace GWK.Kart {
             localUp = isAntigrav ? normal : Vector3.up;
             orientationUp = IsGrounded ? normal : localUp;
             Vector3 vel = car.RB.velocity;
+            switch(car.state) {
+                case CarDrivingState.Idle:
+                    MovementIdle(vel);
+                    break;
+                case CarDrivingState.Hit:
+                    MovementHit(vel);
+                    break;
+            }
+
+            // downforce
+            car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed) * (isAntigrav ? 2.5f : 1));
+
+            // gravity
+            if (IsAffectedByGravity) car.RB.AddForce(-gravity * localUp, ForceMode.Acceleration);
+            transform.position = car.RB.transform.position;
+        }
+
+        void MovementIdle(Vector3 vel) {
             Vector3 localVel = transform.InverseTransformDirection(car.RB.velocity);
             isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
             isBraking = Vector3.Dot(vel.normalized, transform.forward * car.Input.AxisVert) < 0;
@@ -151,13 +171,31 @@ namespace GWK.Kart {
             }
 
             ApplySidewaysFriction(currentSidewaysFriction, localVel, vel.normalized);
+        }
 
-            // downforce
-            car.RB.AddForce(-transform.up * downforceAmount * (vel.magnitude / stats.maxSpeed) * (isAntigrav ? 2.5f : 1));
+        void MovementHit(Vector3 vel) {
+            Vector3 localVel = transform.InverseTransformDirection(car.RB.velocity);
+            isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
+            isBraking = true;
 
-            // gravity
-            if (IsAffectedByGravity) car.RB.AddForce(-gravity * localUp, ForceMode.Acceleration);
-            transform.position = car.RB.transform.position;
+            currentForwardFriction = currentFrictionSettings.forwardFriction;
+            currentSidewaysFriction = currentFrictionSettings.sidewaysFriction;
+            UpdateCurrentGrip();
+
+            // CorrectVelocityVector(currentForwardFriction);
+            if (controlable) {
+                float brake = stats.brakeForce * (vel.magnitude / stats.maxSpeed) * Mathf.Sign(localVel.z);
+                currSpeed -= brake * Time.fixedDeltaTime;
+            }
+            // car.RB.velocity += currSpeed * transform.forward;
+            car.RB.AddForce(currSpeed * transform.forward, ForceMode.Force);
+            //car.RB.velocity -= car.RB.velocity * stats.idleDeceleration * currentFrictionSettings.groundResistance * Time.fixedDeltaTime;
+            Vector3 horizVel = transform.TransformDirection(new(localVel.x, 0, localVel.z));
+            if (car.Input.AxisVert == 0 || car.Drifting.isBoosting){
+                car.RB.AddForce(-horizVel * stats.idleDeceleration * currentFrictionSettings.groundResistance, ForceMode.Acceleration);
+            }
+
+            ApplySidewaysFriction(currentSidewaysFriction, localVel, vel.normalized);
         }
 
         private void Turn(Vector3 localVel) {

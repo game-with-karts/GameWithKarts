@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.InputSystem;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using GWK.Kart;
 
 public class RaceManager : MonoBehaviour
@@ -28,6 +28,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private AudioClip music;
     [SerializeField] private bool startOnAntigrav = false;
     private int numPlayers;
+    public static List<ISelfDestructable> allItems = new();
 
     private void Awake() {
         track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
@@ -100,6 +101,13 @@ public class RaceManager : MonoBehaviour
         SoundManager.StopMusic();
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
+
+        if (allItems.Count == 0) {
+            return;
+        }
+        allItems.ForEach(i => i.SelfDestruct(false));
+        allItems = new();
+
         foreach (var c in cars.Where(c => c.Finished)) {
             c.Path.OnRaceEnd += OnCarFinished;
         }
@@ -112,6 +120,14 @@ public class RaceManager : MonoBehaviour
     private void StartRace() {
         OnRaceStart?.Invoke();
         SoundManager.PlayMusic();
+    }
+
+    private void OnDisable() {
+        if (allItems.Count == 0) {
+            return;
+        }
+        allItems.ForEach(i => i.SelfDestruct(false));
+        allItems = new();
     }
 
     private void OnDestroy() {

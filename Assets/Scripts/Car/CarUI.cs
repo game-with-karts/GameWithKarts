@@ -36,6 +36,8 @@ namespace GWK.Kart {
         [SerializeField] private TMP_ColorGradient gradientSlower;
         [SerializeField] private float lastLapDuration = 5;
         [SerializeField] private AnimationCurve lastLapCurve;
+        [Header("Item")]
+        [SerializeField] private Image itemImage;
         private Vector2 lastLapAnchoredPos;
         private int numCars;
         private bool lastLapEventSubscribed = false;
@@ -64,7 +66,7 @@ namespace GWK.Kart {
 
             car.Path.OnRaceEnd += RaceEnd;
 
-            RaceSettings settings = new();
+            RaceSettings settings = ScriptableObject.CreateInstance<RaceSettings>();
             settings ??= GameRulesManager.currentTrack?.settings;
 
             positionDisplay.gameObject.SetActive(!settings.timeAttackMode);
@@ -137,5 +139,14 @@ namespace GWK.Kart {
         }
 
         public void SetNumberOfCars(int num) => numCars = num;
+
+        public void SetItemImage(ItemEntry? entry) {
+            if (entry is null) {
+                itemImage.enabled = false;
+                return;
+            }
+            itemImage.enabled = true;
+            itemImage.sprite = entry?.image;
+        }
     }
 }

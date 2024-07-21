@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace GWK.Kart {
@@ -26,6 +27,7 @@ namespace GWK.Kart {
         [SerializeField] private CarAudio audio;
         [SerializeField] private CarCollider collider;
         [SerializeField] private CarItemHandler item;
+        [SerializeField] private CarAppearance appearance;
         public CarMovement Movement => movement;
         public Rigidbody RB => rb;
         public CarCamera Camera => camera;
@@ -38,7 +40,9 @@ namespace GWK.Kart {
         public CarAudio Audio => audio;
         public CarCollider Collider => collider;
         public CarItemHandler Item => item;
+        public CarAppearance Appearance => appearance;
         [SerializeField] private bool isBot;
+        public CarDrivingState state = CarDrivingState.Idle;
         public bool IsBot => isBot;
         public bool playerControlled => !startingIsBot;
         public bool isEleminated { get; private set; }
@@ -49,6 +53,7 @@ namespace GWK.Kart {
         void Awake() {}
 
         public void ResetCar(bool onInit) {
+            state = CarDrivingState.Idle;
             Finished = false;
             isEleminated = false;
             isBot = startingIsBot;
@@ -69,6 +74,7 @@ namespace GWK.Kart {
             Finished = false;
 
             CarComponent[] comps = GetComponents<CarComponent>();
+            collider?.SetBaseCar(this);
             foreach (var comp in comps) {
                 components.Add(comp);
             }

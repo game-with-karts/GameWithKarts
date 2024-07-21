@@ -9,7 +9,9 @@ namespace GWK.Kart {
         [SerializeField] private float pitchResolution;
         [Header("Kart Misc")]
         [SerializeField] private AudioSource boostSource;
+        [SerializeField] private AudioSource itemRollingSource;
         [SerializeField] private AudioSource tyreScreechSource;
+        public AudioSource ItemRollingSource => itemRollingSource;
         public override void Init(bool _) {
             Play(false);
         }
@@ -21,6 +23,10 @@ namespace GWK.Kart {
             else {
                 engineSource.Pause();
             }
+        }
+
+        public void PlayOneShot(AudioSource source) {
+            source.PlayOneShot(source.clip);
         }
 
         public void Update() {

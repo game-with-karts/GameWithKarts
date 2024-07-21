@@ -60,6 +60,12 @@ namespace GWK.Kart {
                 tank = 0;
                 tier = BoostTier.None;
             }
+
+            if (car.state != CarDrivingState.Idle) {
+                ResetBoostTank();
+                state = DriftState.Idle;
+                return;
+            }
             
             switch(state) {
                 default:

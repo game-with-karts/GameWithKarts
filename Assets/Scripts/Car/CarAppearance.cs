@@ -30,12 +30,22 @@ namespace GWK.Kart {
         [SerializeField] private AnimationCurve chromaticAberrationCurve;
         private float caAmount;
         private float caTime;
-        
+
         private readonly Vector3 defaultScale = new(1, 1, 1);
         private readonly Vector3 rotationCorrect = new(0, 360, 0);
         private Quaternion currentRot = Quaternion.Euler(0, 90, 0);
 
         private float targetBoostTime = 0;
+
+        public const float HIT_ANIMATION_LENGTH = 3;
+        private float hitAnimTime = 0;
+        private Quaternion hitRotation = Quaternion.identity;
+        private Vector3 hitPosition = Vector3.zero;
+        private readonly Vector3 localPos = new(0, -.75f, 0);
+
+        public const float SPIN_ANIMATION_LENGTH = 1.5f;
+        private float spinAnimTime = 0;
+        private Quaternion spinRotation = Quaternion.identity;
 
         private bool usePost;
         public override void Init(bool restarting) {
@@ -56,12 +66,46 @@ namespace GWK.Kart {
             fireExhausts.ForEach(c => c.Stop());
         }
 
+        public void PlayHitAnimation() {
+            hitAnimTime = 0;
+            hitRotation = Quaternion.identity;
+        }
+
+        public void PlaySpinAnimation() {
+            spinAnimTime = 0;
+        }
+
         void Update() {
             model.localScale += (defaultScale - model.localScale) * animationSpeed * Time.deltaTime;
 
             Vector3 rotDelta = new Vector3(0, 30 * car.Drifting.DriftDirection + 90, 0) - currentRot.eulerAngles;
+
+            if (car.state == CarDrivingState.Hit) {
+                hitAnimTime = Mathf.Clamp(hitAnimTime + Time.deltaTime, 0, HIT_ANIMATION_LENGTH);
+                float hitAnimStep = Mathf.Ceil(3 - hitAnimTime);
+
+                float hitRotDelta = -80 * (hitAnimTime - HIT_ANIMATION_LENGTH) * (hitAnimTime - HIT_ANIMATION_LENGTH);
+                float hitPosDelta = -2 * hitAnimTime + 6;
+                hitRotation = Quaternion.Euler(Vector3.forward * hitRotDelta);
+                hitPosition = Mathf.Abs(Mathf.Sin((-hitAnimTime - 5.2f) * (-hitAnimTime - 5.2f) / 9f * Mathf.PI)) * Vector3.up * hitPosDelta;
+            }
+            else {
+                hitRotation = Quaternion.identity;
+                hitPosition = Vector3.zero;
+            }
+
+            if (car.state == CarDrivingState.Spinning) {
+                spinAnimTime = Mathf.Clamp(spinAnimTime + Time.deltaTime, 0, SPIN_ANIMATION_LENGTH);
+                spinRotation = Quaternion.Euler(Vector3.up * 720 * spinAnimTime);
+            }
+            else {
+                spinRotation = Quaternion.identity;
+            }
+
             currentRot *= Quaternion.Euler(rotDelta * animationSpeed * Time.deltaTime);
-            model.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
+            
+            model.localRotation = currentRot * Quaternion.Euler(0, -90, 0) * hitRotation * spinRotation;
+            model.localPosition = localPos + hitPosition;
             skidmarksParent.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
 
             
