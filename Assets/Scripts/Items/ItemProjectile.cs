@@ -1,6 +1,4 @@
 using UnityEngine;
-using GWK.Kart;
-using UnityEngine.Rendering;
 
 public abstract class ItemProjectile : MonoBehaviour, ISelfDestructable {
     [SerializeField] private Rigidbody rb;

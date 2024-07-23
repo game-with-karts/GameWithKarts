@@ -1,23 +1,32 @@
-using System.Collections.Generic;
-using System.Data;
+using System.Reflection.Emit;
 using GWK.Kart;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
+public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
     private BaseCar _parentCar;
     public BaseCar parentCar => _parentCar;
+    [SerializeField] private LayerMask collideWith;
     [SerializeField] private Transform model;
     [SerializeField] private VisualEffect effect;
-    public void SetParentCar(BaseCar car) => _parentCar = car;
+    [Space]
+    [SerializeField] private float speed = 60;
+    [SerializeField] private float rotateSpeed = 95;
     private Quaternion modelRot = Quaternion.identity;
     private float lifetime = 10;
+    private ITargetable target;
+    public void SetParentCar(BaseCar car) { 
+        _parentCar = car;
+        model.rotation = car.transform.rotation;
+    }
     
     public void OnItemBox() {
         parentCar.Item.RollItem();
     }
 
     void OnCollisionEnter(Collision collision) {
+        int layer = 1 << (collision.gameObject.layer);
+
         if (collision.gameObject.TryGetComponent<CarCollider>(out var carCollider)) {
             carCollider.Hit();
             SelfDestruct();
@@ -28,6 +37,11 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
             SelfDestruct();
             return;
         }
+    }
+
+    public void SetTarget(ITargetable target) {
+        this.target = target;
+        target?.MarkAsTarget(this);
     }
 
     void OnTriggerEnter(Collider other) {
@@ -42,6 +56,16 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
         }
     }
 
+    protected override void FixedUpdate() {
+        if (target is null) {
+            return;
+        }
+        Vector3 direction = (target.Position - transform.position).normalized * speed;
+        RB.AddForce((direction - RB.velocity) * 10, ForceMode.Acceleration);
+        
+        base.FixedUpdate();
+    }
+
     public override void SelfDestruct() {
         base.SelfDestruct();
         effect.transform.parent = null;
@@ -52,8 +76,7 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
     }
 
     void Update() {
-        modelRot *= Quaternion.Euler(0, 720 * Time.deltaTime, 0);
-        model.rotation = modelRot * Quaternion.Euler(70, 0, 0);
+        model.forward = RB.velocity.normalized;
         lifetime -= Time.deltaTime;
         if (lifetime <= 0) {
             SelfDestruct();

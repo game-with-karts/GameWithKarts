@@ -13,24 +13,51 @@ namespace GWK.Kart {
             get => _currentItem;
             set {
                 _currentItem = value;
-                car.UI?.SetItemImage(value);
             }
         }
+        public ItemEntry? CurrentItem => currentItem;
         private static System.Random random = new();
-        private bool isRolling = false;
+        public bool IsRolling { get; private set; }
+        public BaseCar target { get; private set; }
+
+        private bool lookingBackwards;
+        public bool LookingBackwards => lookingBackwards;
+        private void SetBackwards(bool v) => lookingBackwards = v;
+        protected override void SubscribeProviderEvents() {
+            InputProvider.Item += UseItem;
+            InputProvider.BackCamera += SetBackwards;
+        }
+
+        protected override void UnsubscribeProviderEvents() {
+            InputProvider.Item -= UseItem;
+            InputProvider.BackCamera -= SetBackwards;
+        }
 
         public override void Init(bool restarting) {
             StopAllCoroutines();
-            isRolling = false;
+            IsRolling = false;
             currentItem = null;
 
             if (!eventSubscribed) {
                 car.Collider.TriggerEnter += OnTriggerEnter;
                 eventSubscribed = true;
             }
-            car.UI.SetItemImage(null);
+        }
 
-            
+        void UseItem() {
+            if (currentItem is null) {
+                return;
+            }
+            IItem item = currentItem?.type switch {
+                ItemType.BoostTank => new BoostTankItem(),
+                ItemType.LaserDisc => new LaserDiscItem(),
+                ItemType.SpikeTrap => new ItemTrapItem(),
+                ItemType.Missile => new MissileItem(),
+                _ => null,
+            };
+            item?.Use(car, currentItem?.prefab);
+            currentItem = null;
+            target = null;
         }
 
         void OnTriggerEnter(Collider other) {
@@ -52,16 +79,16 @@ namespace GWK.Kart {
             if (currentItem is not null) {
                 return;
             }
-            if (isRolling) {
+            if (IsRolling) {
                 return;
             }
-            isRolling = true;
+            IsRolling = true;
             StartCoroutine(RollItemCoroutine(duration));
         }
 
         public void ForceRollItem(float duration = 3) {
             StopAllCoroutines();
-            isRolling = true;
+            IsRolling = true;
             StartCoroutine(RollItemCoroutine(duration));
         }
 
@@ -72,7 +99,6 @@ namespace GWK.Kart {
             while (time < duration) {
                 ItemEntry itemEntry = entries[i];
                 i = (i + 1) % entries.Count;
-                car.UI.SetItemImage(itemEntry);
                 if (!car.IsBot) {
                     car.Audio.PlayOneShot(car.Audio.ItemRollingSource);
                 }
@@ -89,27 +115,29 @@ namespace GWK.Kart {
                 }
             }
             currentItem = entries[i];
-            isRolling = false;
+            IsRolling = false;
             if (car.IsBot) {
                 car.BotController.SetupItem();
             }
         }
 
         void Update() {
-            if (car.Input.AxisItem == 0) {
-                return;
+            if (currentItem?.type == ItemType.Missile) {
+                IEnumerable<BaseCar> targetables = RaceManager.instance.GetTargetables()
+                    .Where(c => Vector3.Dot(transform.forward, c.transform.position - transform.position) > 0)
+                    .Where(c => (c.transform.position - transform.position).magnitude < 75f)
+                    .Where(c => c != car);
+                if (!targetables.Any()) {
+                    target = null;
+                }
+                else {
+                    target = targetables.OrderBy(c => (c.transform.position - transform.position).magnitude).First();
+                }
             }
-            if (currentItem is null) {
-                return;
-            }
-            IItem item = currentItem?.type switch {
-                ItemType.BoostTank => new BoostTankItem(),
-                ItemType.LaserDisc => new LaserDiscItem(),
-                ItemType.SpikeTrap => new ItemTrapItem(),
-                _ => null,
-            };
-            item?.Use(car, currentItem?.prefab);
-            currentItem = null;
+        }
+
+        public IEnumerable<Sprite> GetItemSprites() {
+            return entries.Select(e => e.image);
         }
     }
 

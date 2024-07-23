@@ -20,7 +20,12 @@ public class CarQuickStarter : MonoBehaviour {
         player.Init(false, false);
         player.Camera.ActivateCamera();
         player.UI.ActivateCanvas();
-        bots.ForEach(b => b.Init(true, false));
+        bots.ForEach(b => {
+            b.Init(true, false);
+            RaceManager.instance.AddCarManually(b);
+        });
+
+        RaceManager.instance.AddCarManually(player);
 
         player.StartRace();
     }

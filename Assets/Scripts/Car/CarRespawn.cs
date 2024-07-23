@@ -49,6 +49,7 @@ namespace GWK.Kart {
         public override void Init(bool _) {
             StopCoroutine(nameof(Respawn));
         }
+        
         void Start() {
             car.Collider.TriggerEnter += OnTriggerEnter;
         }

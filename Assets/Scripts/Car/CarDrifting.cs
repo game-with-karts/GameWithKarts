@@ -33,7 +33,7 @@ namespace GWK.Kart {
         private Timer jumpTimer = new();
         private Timer driftTimer = new();
 
-        private float driftKey;
+        private int driftKey = 0;
         private float driftDirection;
         private int driftBoostCount = 0;
         public float DriftDirection => driftDirection;
@@ -52,13 +52,67 @@ namespace GWK.Kart {
             }
         }
 
+        private float axisV;
+        private float axisH;
+
+        private bool jump1;
+        private bool jump2;
+        private void SetAxisV(float a) => axisV = a;
+        private void SetAxisH(float a) => axisH = a;
+
+        private Action<bool> jump1Delegate;
+        private Action<bool> jump2Delegate;
+        protected override void SubscribeProviderEvents() {
+            jump1Delegate = v => HandleJumpBtn(v, 1);
+            jump2Delegate = v => HandleJumpBtn(v, 2);
+
+            InputProvider.VerticalPerformed += SetAxisV;
+            InputProvider.HorizontalPerformed += SetAxisH;
+            InputProvider.Jump1 += jump1Delegate;
+            InputProvider.Jump2 += jump2Delegate;
+        }
+
+        protected override void UnsubscribeProviderEvents() {
+            InputProvider.VerticalPerformed -= SetAxisV;
+            InputProvider.HorizontalPerformed -= SetAxisH;
+            InputProvider.Jump1 -= jump1Delegate;
+            InputProvider.Jump2 -= jump2Delegate;
+        }
+
+        private void HandleJumpBtn(bool pressed, int button) {
+            jump1 = button == 1 ? pressed : jump1;
+            jump2 = button == 2 ? pressed : jump2;
+            switch(state) {
+                default:
+                    break;
+
+                case DriftState.Idle:
+                    if (pressed && car.Movement.IsGrounded && car.Movement.IsControlable) {
+                        Jump(1.05f);
+                    }
+                    break;
+
+                case DriftState.Drifting:
+                    if (button == driftKey) {
+                        if (!pressed) {
+                            driftTimer.Stop();
+                            driftTimer.Reset();
+                            state = DriftState.Idle;
+                        }
+                        break;
+                    }
+                    CheckDriftCondition(pressed);
+                    break;
+            }
+        }
+
         void Update() {
             jumpTimer.Tick(Time.deltaTime);
             driftTimer.Tick(Time.deltaTime);
             tank -= tankDepletionRate * Time.deltaTime;
-            if (tank < 0 || (car.Input.AxisVert < 0 && car.Movement.IsGrounded)) {
+            if (tank < 0 || (axisV < 0 && car.Movement.IsGrounded)) {
+                tier = BoostTier.Normal;
                 tank = 0;
-                tier = BoostTier.None;
             }
 
             if (car.state != CarDrivingState.Idle) {
@@ -73,15 +127,10 @@ namespace GWK.Kart {
 
                 case DriftState.Idle:
                     driftDirection = 0;
-                    if ((car.Input.AxisJump1ThisFrame || car.Input.AxisJump2ThisFrame)
-                    && car.Movement.IsGrounded && car.Movement.IsControlable) {
-                        Jump(1.05f);
-                    }
                     break;
 
                 case DriftState.Jumping:
-                    if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold
-                    && hasLeftGround) {
+                    if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && hasLeftGround) {
                         jumpTimer.Stop();
                         OnLand?.Invoke();
                         if (jumpTimer.Time >= jumpBoostTime) {
@@ -89,30 +138,21 @@ namespace GWK.Kart {
                         }
                         jumpTimer.Reset();
                         state = DriftState.Idle;
-                        if ((car.Input.AxisJump1 != 0 || car.Input.AxisJump2 != 0) 
-                        && car.Input.AxisHori != 0 && car.RB.velocity.magnitude > 5 
-                        && !car.Movement.IsReversing) {
+                        if ((jump1 || jump2) && axisH != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) {
                             state = DriftState.Drifting;
                             driftBoostCount = 0;
-                            driftKey = car.Input.AxisJump1 == 1 ? 1 : (car.Input.AxisJump2 == 1 ? -1 : 0);
-                            driftDirection = Mathf.Sign(car.Input.AxisHori);
+                            driftKey = jump1 ? 1 : (jump2 ? 2 : 0);
+                            driftDirection = Mathf.Sign(axisH);
                             driftTimer.Start();
                         }
                     }
-                    else if (!car.Movement.IsGrounded) hasLeftGround = true;
-                    else if (localVel.y < jumpVerticalVelocityThreshold && Time.timeScale > 0) {
-                        // experimental solution
-                        Jump(0.4f);
-                        //jumpTimer.Stop();
-                        //jumpTimer.Reset();
-                        //state = DriftState.Idle;
+                    else if (!car.Movement.IsGrounded) {
+                        hasLeftGround = true;
                     }
-                    break;
-
-                case DriftState.Drifting:
-                    if      (driftKey > 0)  CheckDriftCondition(car.Input.AxisJump1, car.Input.AxisJump2);
-                    else if (driftKey < 0)  CheckDriftCondition(car.Input.AxisJump2, car.Input.AxisJump1);
-                    else state = DriftState.Idle;
+                    else if (localVel.y < jumpVerticalVelocityThreshold && Time.timeScale > 0) {
+                        // TODO: something with this shite
+                        Jump(0.4f);
+                    }
                     break;
             }
         }
@@ -121,39 +161,32 @@ namespace GWK.Kart {
             OnJump?.Invoke();
             state = DriftState.Jumping;
             hasLeftGround = false;
-            //transform.position += car.Movement.LocalUp * .25f;
             float dot = Vector3.Dot(transform.up, car.Movement.LocalUp);
             float jumpBoost = boostValue + (1 - Mathf.Abs(dot)) / 2;
             car.RB.AddForce(car.Movement.LocalUp * jumpStrength * jumpBoost * car.RB.mass);
             jumpTimer.Start();
         }
 
-        private bool secondaryPressed = false;
-        private void CheckDriftCondition(float primary, float secondary) {
-            if (primary > 0) {
-                if (driftTimer.Time > driftMaxTime) driftBoostCount = 3;
-                if (secondary > 0 && driftBoostCount < 3 && !secondaryPressed) {
-                    driftBoostCount++;
-                    secondaryPressed = true;
-                    float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
-                    float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
-                    OnDriftBoost?.Invoke(boostT, driftBoostCount);
-                    BoostTier tier = this.tier == BoostTier.None ? BoostTier.Normal : this.tier;
-                    if (driftBoostCount == 3 && RelativeDriftTimer >= .9f) {
-                        tier = BoostTierOperations.OneUp(tier);
-                    }
-                    AddBoost(boostAmount, tier);
-
-                    driftTimer.Reset();
-                }
-                else if (secondary == 0 && secondaryPressed) {
-                    secondaryPressed = false;
-                }
+        private void CheckDriftCondition(bool secondary) {
+            if (driftTimer.Time > driftMaxTime) {
+                driftBoostCount = 3;
             }
-            else {
-                driftTimer.Stop();
+            if (secondary && driftBoostCount < 3) {
+                driftBoostCount++;
+
+                float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
+                float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
+
+                OnDriftBoost?.Invoke(boostT, driftBoostCount);
+
+                BoostTier tier = this.tier == BoostTier.None ? BoostTier.Normal : this.tier;
+
+                if (driftBoostCount == 3 && RelativeDriftTimer >= .9f) {
+                    tier = BoostTierOperations.OneUp(tier);
+                }
+                AddBoost(boostAmount, tier);
+
                 driftTimer.Reset();
-                state = DriftState.Idle;
             }
         }
 
@@ -191,5 +224,7 @@ namespace GWK.Kart {
                 tank = 20;
             }
         }
+
+        
     }
 }

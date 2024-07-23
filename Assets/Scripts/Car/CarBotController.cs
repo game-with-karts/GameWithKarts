@@ -5,7 +5,7 @@ using Rnd = UnityEngine.Random;
 
 namespace GWK.Kart {
 
-    public class CarBotController : CarComponent {
+    public class CarBotController : CarComponent, IInputProvider {
         [Tooltip("An angle from the car's forward direction to the next point at which the car will start to turn")]
         [Min(0f)]
         [SerializeField] private float angleThreshold = 3;
@@ -77,6 +77,43 @@ namespace GWK.Kart {
         private float itemTimer = 0f;
         private float targetItemTimer = -1f;
 
+        private event Action<float> horizontal;
+        private event Action<float> vertical;
+        private event Action<bool> jump1;
+        private event Action<bool> jump2;
+        private event Action item;
+        private event Action<bool> backCam;
+
+        event Action<float> IInputProvider.HorizontalPerformed {
+            add => horizontal += value;
+            remove => horizontal -= value;
+        }
+
+        event Action<float> IInputProvider.VerticalPerformed {
+            add => vertical += value;
+            remove => vertical -= value;
+        }
+
+        event Action<bool> IInputProvider.Jump1 {
+            add => jump1 += value;
+            remove => jump1 -= value;
+        }
+
+        event Action<bool> IInputProvider.Jump2 {
+            add => jump2 += value;
+            remove => jump2 -= value;
+        }
+
+        event Action IInputProvider.Item {
+            add => item += value;
+            remove => item -= value;
+        }
+
+        event Action<bool> IInputProvider.BackCamera {
+            add => backCam += value;
+            remove => backCam -= value;
+        }
+
         private bool isVectorNaN(Vector3 v) => float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
 
         private void FixedUpdate() {
@@ -137,22 +174,21 @@ namespace GWK.Kart {
             if (vert < 0) horiz *= -1;
 
             // if front not grounded and rear grounded, jump
-            float jumpAxis = 0;
-            if (!isFrontGrounded && isRearGrounded) {
-                jumpAxis = 1;
-            }
+            bool jumpAxis = !isFrontGrounded && isRearGrounded;
 
-            float itemAxis = 0;
             if (targetItemTimer != -1) {
                 itemTimer += Time.fixedDeltaTime;
                 if (itemTimer >= targetItemTimer) {
-                    itemAxis = 1;
+                    item?.Invoke();
                     targetItemTimer = -1;
                     itemTimer = 0;
                 }
             }
 
-            car.Input.SetAxes(vert, horiz, jumpAxis, 0f, itemAxis);
+            //car.Input.SetAxes(vert, horiz, jumpAxis, 0f, itemAxis);
+            vertical?.Invoke(vert);
+            horizontal?.Invoke(horiz);
+            jump1?.Invoke(jumpAxis);
         }
 
         public void SetupItem(bool cancel = false) {
