@@ -52,6 +52,7 @@ namespace GWK.Kart {
                 ItemType.BoostTank => new BoostTankItem(),
                 ItemType.LaserDisc => new LaserDiscItem(),
                 ItemType.SpikeTrap => new ItemTrapItem(),
+                ItemType.Freezer => new ItemTrapItem(),
                 ItemType.Missile => new MissileItem(),
                 _ => null,
             };

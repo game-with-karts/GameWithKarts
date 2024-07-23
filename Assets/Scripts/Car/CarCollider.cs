@@ -69,6 +69,12 @@ namespace GWK.Kart {
             car.state = CarDrivingState.Idle;
         }
 
+        private IEnumerator FreezeCoroutine() {
+            car.Movement.SetSurfaceOverride(SurfaceType.Ice);
+            yield return new WaitForSeconds(5);
+            car.Movement.SetSurfaceOverride(null);
+        }
+        
         public void ItemTrapHit(ItemType type) {
             switch (type) {
                 case ItemType.SpikeTrap:
@@ -78,6 +84,17 @@ namespace GWK.Kart {
                     car.state = CarDrivingState.Spinning;
                     car.Appearance.PlaySpinAnimation();
                     StartCoroutine(SpinCoroutine());
+                    break;
+                case ItemType.Freezer:
+                    if (car.state == CarDrivingState.Hit) {
+                        break;
+                    }
+                    if (car.state != CarDrivingState.Spinning) {
+                        car.state = CarDrivingState.Spinning;
+                        car.Appearance.PlaySpinAnimation();
+                        StartCoroutine(SpinCoroutine());
+                    }
+                    StartCoroutine(FreezeCoroutine());
                     break;
                 default:
                     break;

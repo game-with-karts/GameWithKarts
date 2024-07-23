@@ -108,6 +108,7 @@ namespace GWK.Kart {
             currSpeed = 0;
             StartCoroutine(StopAllMotion(startingPosition, startingRotation, 5));
             transform.rotation = startingRotation;
+            surfaceOverride = null;
         }
 
         public override void StartRace() {
@@ -233,15 +234,14 @@ namespace GWK.Kart {
         public SurfaceType GetSurface() {
             if (surfaceOverride is not null) return (SurfaceType)surfaceOverride;
             SurfaceType s = SurfaceType.Ice;
-            foreach(var w in wheels)
-            {
+            foreach(var w in wheels) {
                 if (w.surface > s) s = w.surface;
             }
             return s;
         }
 
         public void SetSurfaceOverride(SurfaceType? surface) => surfaceOverride = surface;
-        public void SetAntigrav(bool antigrav) => this.isAntigrav = antigrav;
+        public void SetAntigrav(bool antigrav) => isAntigrav = antigrav;
         public void SetControllableState(bool state) => controlable = state;
 
         public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot, int iter = 2) {

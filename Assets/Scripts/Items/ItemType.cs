@@ -3,4 +3,5 @@ public enum ItemType {
     LaserDisc,
     SpikeTrap,
     Missile,
+    Freezer,
 }

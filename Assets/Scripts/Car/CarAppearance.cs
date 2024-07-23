@@ -41,7 +41,7 @@ namespace GWK.Kart {
         private float hitAnimTime = 0;
         private Quaternion hitRotation = Quaternion.identity;
         private Vector3 hitPosition = Vector3.zero;
-        private readonly Vector3 localPos = new(0, -.75f, 0);
+        private readonly Vector3 localPos = Vector3.zero;
 
         public const float SPIN_ANIMATION_LENGTH = 1.5f;
         private float spinAnimTime = 0;

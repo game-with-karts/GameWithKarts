@@ -114,8 +114,11 @@ namespace GWK.Kart {
 
             car.Path.OnRaceEnd += RaceEnd;
 
-            RaceSettings settings = ScriptableObject.CreateInstance<RaceSettings>();
-            settings ??= GameRulesManager.currentTrack?.settings;
+            RaceSettings settings = GameRulesManager.currentTrack?.settings;
+
+            if (settings == null) {
+                settings = ScriptableObject.CreateInstance<RaceSettings>();
+            }
 
             positionDisplay.gameObject.SetActive(!settings.timeAttackMode);
             timeDisplay.gameObject.SetActive(settings.timeAttackMode);
