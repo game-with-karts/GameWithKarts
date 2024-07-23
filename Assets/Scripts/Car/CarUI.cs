@@ -43,6 +43,8 @@ namespace GWK.Kart {
         [SerializeField] private Image itemImage;
         [Header("Target Display")]
         [SerializeField] private RectTransform targetDisplayTransform;
+        [Header("Missile Approaching")]
+        [SerializeField] private TMP_Text missileText;
         private Vector2 lastLapAnchoredPos;
         private int numCars;
         private bool lastLapEventSubscribed = false;
@@ -65,7 +67,7 @@ namespace GWK.Kart {
 
             DisplayItem();
             DisplayTarget();
-            
+            DisplayMissileApproaching();
         }
         
         private void DisplayItem() {
@@ -91,6 +93,16 @@ namespace GWK.Kart {
             if (visible) {
                 DisplayTargetAt(car.Item.target.Position);
             }
+        }
+
+        private void DisplayMissileApproaching() {
+            missileText.enabled = car.currentProjectile != null;
+            if (car.currentProjectile == null) {
+                return;
+            }
+
+            missileText.text = $"{(transform.position - car.currentProjectile.transform.position).magnitude:f2} m";
+            missileText.color = Color.Lerp(Color.red, Color.white, Mathf.Sin(6 * Mathf.PI * Time.time) / 2 + .5f);
         }
 
         public override void Init(bool restarting) {

@@ -151,10 +151,11 @@ namespace GWK.Kart {
 
             switch(car.state) {
                 case CarDrivingState.Idle:
-                    MovementIdle(vel, localVel);
+                    MovementIdle(vel, localVel, axisV, axisH);
                     break;
                 case CarDrivingState.Hit:
-                    MovementHit(vel, localVel);
+                case CarDrivingState.Spinning:
+                    MovementIdle(vel, localVel, 0, 0);
                     break;
             }
             car.RB.AddForce(currSpeed * transform.forward, ForceMode.Acceleration);
@@ -171,27 +172,17 @@ namespace GWK.Kart {
             transform.position = car.RB.transform.position;
         }
 
-        void MovementIdle(Vector3 vel, Vector3 localVel) {
+        void MovementIdle(Vector3 vel, Vector3 localVel, float axisV, float axisH) {
             isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
             isBraking = Vector3.Dot(vel.normalized, transform.forward * axisV) < 0;
 
             if (controlable) {
-                PerformMovement(vel);
-                Turn(localVel);
+                PerformMovement(vel, axisV);
+                Turn(localVel, axisH);
             }
         }
 
-        void MovementHit(Vector3 vel, Vector3 localVel) {
-            isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
-            isBraking = true;
-
-            if (controlable) {
-                float brake = stats.brakeForce * (vel.magnitude / stats.maxSpeed) * Mathf.Sign(localVel.z);
-                currSpeed -= brake * Time.fixedDeltaTime;
-            }
-        }
-
-        private void Turn(Vector3 localVel) {
+        private void Turn(Vector3 localVel, float axisH) {
             float turnAmount = Mathf.Clamp(localVel.z, -stats.maxSpeed, stats.maxSpeed);
             if (!IsGrounded) turnAmount = stats.maxSpeed;
             float turnAngle = stats.turnAngle * turnAmount * (axisH + car.Drifting.DriftDirection);
@@ -203,7 +194,7 @@ namespace GWK.Kart {
             transform.RotateAround(transform.position, perpendicular, -angle * 4 * Time.fixedDeltaTime);
         }
 
-        private void PerformMovement(Vector3 vel) {
+        private void PerformMovement(Vector3 vel, float axisV) {
             if (car.Drifting.isBoosting) {
                 Move(vel, boostingSpeed * BoostTierOperations.AsFloat(car.Drifting.BoostTier), boostingAcceleration);
             }

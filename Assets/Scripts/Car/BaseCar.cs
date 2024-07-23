@@ -45,12 +45,12 @@ namespace GWK.Kart {
         public bool playerControlled => !startingIsBot;
         public bool isEleminated { get; private set; }
         public bool Finished { get; private set; }
-        public bool canBeTargeted => renderer.isVisible;
+        public ItemProjectile currentProjectile { get; private set; }
         public Action<BaseCar> OnEliminated;
         private List<CarComponent> components;
-        void Awake() {}
 
         public void ResetCar(bool onInit) {
+            currentProjectile = null;
             state = CarDrivingState.Idle;
             Finished = false;
             isEleminated = false;
@@ -118,7 +118,11 @@ namespace GWK.Kart {
 
         // ITargetable stuff
         public void MarkAsTarget(ItemProjectile projectile) {
-            Debug.Log($"Targeted! Distance: {(projectile.transform.position - transform.position).magnitude}");
+            currentProjectile = projectile;
+        }
+        
+        public void ClearTarget() {
+            currentProjectile = null;
         }
 
         public Vector3 Position => transform.position;

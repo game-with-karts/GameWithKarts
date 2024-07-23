@@ -29,6 +29,7 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
 
         if (collision.gameObject.TryGetComponent<CarCollider>(out var carCollider)) {
             carCollider.Hit();
+            carCollider.parentCar.ClearTarget();
             SelfDestruct();
             return;
         }
@@ -62,7 +63,7 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
         }
         Vector3 direction = (target.Position - transform.position).normalized * speed;
         RB.AddForce((direction - RB.velocity) * 10, ForceMode.Acceleration);
-        
+
         base.FixedUpdate();
     }
 
