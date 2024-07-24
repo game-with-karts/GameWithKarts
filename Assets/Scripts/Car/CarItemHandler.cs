@@ -7,7 +7,9 @@ using System.Linq;
 namespace GWK.Kart {
     public class CarItemHandler : CarComponent {
         private bool eventSubscribed = false;
+        [SerializeField] private Transform itemSpawnpoint;
         [SerializeField] private List<ItemEntry> entries;
+        public Transform ItemSpawnpoint => itemSpawnpoint;
         private ItemEntry? _currentItem = null;
         private ItemEntry? currentItem {
             get => _currentItem;

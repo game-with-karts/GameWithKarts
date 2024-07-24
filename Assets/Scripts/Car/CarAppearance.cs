@@ -10,7 +10,6 @@ namespace GWK.Kart {
         private ChromaticAberration ca;
         private LensDistortion lens;
         [SerializeField] private Transform model;
-        [SerializeField] private Transform skidmarksParent;
         [SerializeField] private float jumpAmount;
         [SerializeField] private float landAmount;
         [SerializeField] private float animationSpeed;
@@ -32,7 +31,6 @@ namespace GWK.Kart {
         private float caTime;
 
         private readonly Vector3 defaultScale = new(1, 1, 1);
-        private readonly Vector3 rotationCorrect = new(0, 360, 0);
         private Quaternion currentRot = Quaternion.Euler(0, 90, 0);
 
         private float targetBoostTime = 0;
@@ -106,8 +104,6 @@ namespace GWK.Kart {
             
             model.localRotation = currentRot * Quaternion.Euler(0, -90, 0) * hitRotation * spinRotation;
             model.localPosition = localPos + hitPosition;
-            skidmarksParent.localRotation = currentRot * Quaternion.Euler(0, -90, 0);
-
             
             float targetFOV = car.Drifting.isBoosting ? boostFOV * BoostTierOperations.AsFloat(car.Drifting.BoostTier) : defaultFOV;
             car.Camera.FrontFacingCamera.fieldOfView = Mathf.Lerp(car.Camera.FrontFacingCamera.fieldOfView, targetFOV, animationSpeed * Time.deltaTime);

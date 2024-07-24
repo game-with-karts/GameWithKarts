@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 
 namespace GWK.Kart {
     public class CarCollider : CarComponent, IItemInteractable {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MissileItem : IItem {
     public void Use(BaseCar parent, GameObject prefab) {
-        GameObject obj = GameObject.Instantiate(prefab, parent.transform.position + parent.transform.forward * 4f, Quaternion.identity);
+        GameObject obj = GameObject.Instantiate(prefab, parent.Item.ItemSpawnpoint.position + parent.transform.forward * 4f, Quaternion.identity);
         MissileProjectile projectile = obj.GetComponent<MissileProjectile>();
         projectile.RB.velocity = 80 * parent.transform.forward;
         projectile.isAntigrav = parent.Movement.IsAntigrav;

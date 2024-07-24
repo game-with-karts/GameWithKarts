@@ -252,15 +252,5 @@ namespace GWK.Kart {
                 yield return new WaitForFixedUpdate();
             }
         }
-
-        void OnDrawGizmos() {
-            Gizmos.color = new(.6f, 1, .6f);
-            if (car is not null) {
-                Gizmos.matrix.SetTRS(car.RB.transform.position, car.RB.transform.rotation, car.RB.transform.localScale);
-                Gizmos.DrawWireSphere(car.RB.transform.position, 1);
-                return;
-            }
-            Gizmos.DrawWireSphere(transform.position, 1);
-        }
     }
 }
