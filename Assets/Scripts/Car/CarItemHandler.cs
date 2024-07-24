@@ -8,6 +8,7 @@ namespace GWK.Kart {
     public class CarItemHandler : CarComponent {
         private bool eventSubscribed = false;
         [SerializeField] private Transform itemSpawnpoint;
+        [SerializeField] private ItemWeights itemWeights;
         [SerializeField] private List<ItemEntry> entries;
         public Transform ItemSpawnpoint => itemSpawnpoint;
         private ItemEntry? _currentItem = null;
@@ -21,6 +22,8 @@ namespace GWK.Kart {
         private static System.Random random = new();
         public bool IsRolling { get; private set; }
         public BaseCar target { get; private set; }
+
+        private List<ItemEntry> entriesActual;
 
         private bool lookingBackwards;
         public bool LookingBackwards => lookingBackwards;
@@ -108,16 +111,31 @@ namespace GWK.Kart {
                 yield return new WaitForSeconds(delta);
                 time += delta;
             }
-            int totalWeight = entries.Sum(i => i.weight);
+
+            int position = car.Path.currentPlacement;
+
+            // refresh actual entries
+            entriesActual = new(entries.Count);
+
+            for (i = 0; i < entries.Count; i++) {
+                ItemEntry temp = entries[i];
+                temp.weight *= itemWeights.records
+                                          .Where(r => r.itemType == entries[i].type)
+                                          .Single()
+                                          .GetPlacementWeight(position);
+                entriesActual.Add(temp);
+            }
+
+            int totalWeight = entriesActual.Sum(i => i.weight);
             int selectedWeight = random.Next(totalWeight);
             i = 0;
             while (selectedWeight >= 0) {
-                selectedWeight -= entries[i].weight;
+                selectedWeight -= entriesActual[i].weight;
                 if (selectedWeight >= 0) {
                     i += 1;
                 }
             }
-            currentItem = entries[i];
+            currentItem = entriesActual[i];
             IsRolling = false;
             if (car.IsBot) {
                 car.BotController.SetupItem();
