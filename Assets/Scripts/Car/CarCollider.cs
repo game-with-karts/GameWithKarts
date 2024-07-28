@@ -74,18 +74,19 @@ namespace GWK.Kart {
             if (car.state == CarDrivingState.Hit) {
                 return;
             }
-            car.state = CarDrivingState.Hit;
             car.Appearance.PlayHitAnimation();
             ChangeCoroutine(hitCoroutine, HitCoroutine());
         }
 
         private IEnumerator HitCoroutine() {
+            car.state = CarDrivingState.Hit;
             yield return new WaitForSeconds(CarAppearance.HIT_ANIMATION_LENGTH);
             car.state = CarDrivingState.Idle;
             hitCoroutine = null;
         }
 
         private IEnumerator SpinCoroutine() {
+            car.state = CarDrivingState.Spinning;
             yield return new WaitForSeconds(CarAppearance.SPIN_ANIMATION_LENGTH);
             car.state = CarDrivingState.Idle;
             hitCoroutine = null;
@@ -104,7 +105,6 @@ namespace GWK.Kart {
                     if (car.state != CarDrivingState.Idle) {
                         break;
                     }
-                    car.state = CarDrivingState.Spinning;
                     car.Appearance.PlaySpinAnimation();
                     ChangeCoroutine(hitCoroutine, SpinCoroutine());
                     break;
@@ -114,7 +114,6 @@ namespace GWK.Kart {
                         break;
                     }
                     if (car.state != CarDrivingState.Spinning) {
-                        car.state = CarDrivingState.Spinning;
                         car.Appearance.PlaySpinAnimation();
                         ChangeCoroutine(hitCoroutine, SpinCoroutine());
                     }
@@ -122,6 +121,14 @@ namespace GWK.Kart {
                 default:
                     break;
             }
+        }
+
+        public void ExplosionHit() {
+            if (car.state == CarDrivingState.Hit) {
+                return;
+            }
+            car.Appearance.PlayHitAnimation();
+            ChangeCoroutine(hitCoroutine, HitCoroutine());
         }
     }
 }

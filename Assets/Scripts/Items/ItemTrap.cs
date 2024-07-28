@@ -41,7 +41,7 @@ public class ItemTrap : MonoBehaviour, ISelfDestructable {
         }
     }
 
-    public void SelfDestruct() {
+    public virtual void SelfDestruct() {
         Destroy(gameObject);
     }
 

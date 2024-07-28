@@ -59,6 +59,7 @@ namespace GWK.Kart {
                 ItemType.SpikeTrap => new ItemTrapItem(),
                 ItemType.Freezer => new ItemTrapItem(),
                 ItemType.Missile => new MissileItem(),
+                ItemType.DynamiteCrate => new ItemTrapItem(),
                 _ => null,
             };
             item?.Use(car, currentItem?.prefab);

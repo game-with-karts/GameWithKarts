@@ -11,17 +11,8 @@ public class ItemWeights : ScriptableObject {
         new(ItemType.LaserDisc),
         new(ItemType.SpikeTrap),
         new(ItemType.Freezer),
+        new(ItemType.DynamiteCrate),
     };
-
-    void Awake() {
-        Debug.Log("ItemWeights Awake");
-        // records = InitList();
-    }
-
-    void OnEnable() {
-        Debug.Log("ItemWeights OnEnable");
-        ReconstructRecordsList(records);
-    }
 
     public List<ItemWeightsRecord> InitList() {
         IEnumerable<ItemType> allTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>();
@@ -49,7 +40,7 @@ public class ItemWeights : ScriptableObject {
 
 [Serializable]
 public class ItemWeightsRecord {
-    public ItemType itemType { get; private set; }
+    public ItemType itemType;
     public int[] placeWeights;
 
     public ItemWeightsRecord(ItemType type) {

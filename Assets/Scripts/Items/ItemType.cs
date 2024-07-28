@@ -4,4 +4,5 @@ public enum ItemType {
     LaserDisc = 102,
     SpikeTrap = 201,
     Freezer = 202,
+    DynamiteCrate = 203,
 }

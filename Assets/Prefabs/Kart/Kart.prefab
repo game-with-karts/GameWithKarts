@@ -2395,7 +2395,6 @@ MonoBehaviour:
   driftMinAmount: 2
   driftMaxTime: 1
   driftMaxAmount: 15
-  jumpVerticalVelocityThreshold: 4.75
 --- !u!114 &4253112666149923744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2887,6 +2886,10 @@ MonoBehaviour:
   - type: 202
     image: {fileID: 21300000, guid: 127c2f1809eca09469ea4a29b07ed761, type: 3}
     prefab: {fileID: 1640194428497866232, guid: 535bd3e64684da7458883e22d00b0345, type: 3}
+    weight: 1
+  - type: 203
+    image: {fileID: 21300000, guid: 8fc7d575fdd6f0645b9544d88caf9d09, type: 3}
+    prefab: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
     weight: 1
 --- !u!1 &4253112666214254335
 GameObject:

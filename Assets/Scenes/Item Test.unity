@@ -312,6 +312,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c84bd812d8ea7749afdfd6f09bc077f, type: 3}
+--- !u!1001 &375488640
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1001 &504934573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -322,22 +379,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 228279470013541860, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1426543155734826393, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
-      propertyPath: entries.Array.data[0].weight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1426543155734826393, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
-      propertyPath: entries.Array.data[1].weight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1426543155734826393, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
-      propertyPath: entries.Array.data[2].weight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1426543155734826393, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
-      propertyPath: entries.Array.data[3].weight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4015841097607922671, guid: 674b4e4a51be4c349a5f5e8fe8f248b1, type: 3}
@@ -473,6 +514,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c84bd812d8ea7749afdfd6f09bc077f, type: 3}
+--- !u!1001 &1300029079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1001 &1370162747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,6 +762,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -34.854, z: 0}
+--- !u!1001 &1424493615
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 25.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1 &1493686197
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +927,120 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1507928675
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+--- !u!1001 &1540362945
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1 &1554861069
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +1158,63 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &1648903707
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1001 &1693640350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -946,6 +1272,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c84bd812d8ea7749afdfd6f09bc077f, type: 3}
+--- !u!1001 &1772335061
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1001 &1831690495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1003,6 +1386,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c84bd812d8ea7749afdfd6f09bc077f, type: 3}
+--- !u!1001 &6567597948746405440
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2849690657882765163, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_Name
+      value: Dynamite Crate
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772103249660820119, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3517691c6b72e947ab42ab423f316ba, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1018,3 +1458,11 @@ SceneRoots:
   - {fileID: 162671823}
   - {fileID: 1831690495}
   - {fileID: 1381572440}
+  - {fileID: 6567597948746405440}
+  - {fileID: 1507928675}
+  - {fileID: 1300029079}
+  - {fileID: 375488640}
+  - {fileID: 1648903707}
+  - {fileID: 1424493615}
+  - {fileID: 1540362945}
+  - {fileID: 1772335061}
