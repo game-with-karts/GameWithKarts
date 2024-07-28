@@ -20,6 +20,8 @@ namespace GWK.Kart {
         void OnCollisionStay(Collision c) => CollisionStay?.Invoke(c);
         void OnCollisionExit(Collision c) => CollisionExit?.Invoke(c);
 
+        IEnumerator hitCoroutine;
+
         void OnDestroy() {
             ClearEvent(TriggerEnter);
             ClearEvent(TriggerExit);
@@ -47,7 +49,20 @@ namespace GWK.Kart {
             car.Item.RollItem();
         }
 
-        public override void Init(bool restarting) {}
+        public override void Init(bool restarting) {
+            if (hitCoroutine is not null) {
+                StopCoroutine(hitCoroutine);
+            }
+            hitCoroutine = null;
+        }
+
+        private void ChangeCoroutine(IEnumerator baseRoutine, IEnumerator newRoutine) {
+            if (baseRoutine is not null) {
+                StopCoroutine(baseRoutine);
+            }
+            baseRoutine = newRoutine;
+            StartCoroutine(baseRoutine);
+        }
 
         public void Hit() {
             if (car.state == CarDrivingState.Hit) {
@@ -55,17 +70,19 @@ namespace GWK.Kart {
             }
             car.state = CarDrivingState.Hit;
             car.Appearance.PlayHitAnimation();
-            StartCoroutine(HitCoroutine());
+            ChangeCoroutine(hitCoroutine, HitCoroutine());
         }
 
         private IEnumerator HitCoroutine() {
             yield return new WaitForSeconds(CarAppearance.HIT_ANIMATION_LENGTH);
             car.state = CarDrivingState.Idle;
+            hitCoroutine = null;
         }
 
         private IEnumerator SpinCoroutine() {
             yield return new WaitForSeconds(CarAppearance.SPIN_ANIMATION_LENGTH);
             car.state = CarDrivingState.Idle;
+            hitCoroutine = null;
         }
 
         private IEnumerator FreezeCoroutine() {
@@ -82,18 +99,18 @@ namespace GWK.Kart {
                     }
                     car.state = CarDrivingState.Spinning;
                     car.Appearance.PlaySpinAnimation();
-                    StartCoroutine(SpinCoroutine());
+                    ChangeCoroutine(hitCoroutine, SpinCoroutine());
                     break;
                 case ItemType.Freezer:
+                    StartCoroutine(FreezeCoroutine());
                     if (car.state == CarDrivingState.Hit) {
                         break;
                     }
                     if (car.state != CarDrivingState.Spinning) {
                         car.state = CarDrivingState.Spinning;
                         car.Appearance.PlaySpinAnimation();
-                        StartCoroutine(SpinCoroutine());
+                        ChangeCoroutine(hitCoroutine, SpinCoroutine());
                     }
-                    StartCoroutine(FreezeCoroutine());
                     break;
                 default:
                     break;
