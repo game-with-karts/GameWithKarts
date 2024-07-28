@@ -43,14 +43,8 @@ namespace GWK.Kart {
         public bool CanDrift => driftBoostCount < 3;
         public bool IsDrifting => state == DriftState.Drifting;
         public BoostTier BoostTier => tier;
-        [SerializeField] private float jumpVerticalVelocityThreshold;
 
         private bool hasLeftGround;
-        private Vector3 localVel {
-            get {
-                return transform.InverseTransformDirection(car.RB.velocity);
-            }
-        }
 
         private float axisV;
         private float axisH;
@@ -130,13 +124,14 @@ namespace GWK.Kart {
                     break;
 
                 case DriftState.Jumping:
-                    if (car.Movement.IsGrounded && localVel.y < jumpVerticalVelocityThreshold && hasLeftGround) {
+                    if (car.Movement.IsGrounded && hasLeftGround) {
                         jumpTimer.Stop();
                         OnLand?.Invoke();
                         if (jumpTimer.Time >= jumpBoostTime) {
                             AddBoost(jumpBoostAmount, BoostTier.Normal);
                         }
                         jumpTimer.Reset();
+                        
                         state = DriftState.Idle;
                         if ((jump1 || jump2) && axisH != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) {
                             state = DriftState.Drifting;
@@ -148,10 +143,6 @@ namespace GWK.Kart {
                     }
                     else if (!car.Movement.IsGrounded) {
                         hasLeftGround = true;
-                    }
-                    else if (localVel.y < jumpVerticalVelocityThreshold && Time.timeScale > 0) {
-                        // TODO: something with this shite
-                        Jump(0.4f);
                     }
                     break;
             }
