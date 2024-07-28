@@ -215,14 +215,14 @@ namespace GWK.Kart {
         void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Boost") && car.Movement.IsGrounded) {
                 BoostTier boostPadTier = other.gameObject.GetComponent<BoostPad>().boostTier;
-                AddBoost(20, boostPadTier);
+                AddBoost(15, boostPadTier);
             }
         }
 
         void OnTriggerStay(Collider other) {
-            if (other.gameObject.CompareTag("Boost") && tank < 20 && car.Movement.IsGrounded) {
+            if (other.gameObject.CompareTag("Boost") && tank < 15 && car.Movement.IsGrounded) {
                 tier = other.gameObject.GetComponent<BoostPad>().boostTier;
-                tank = 20;
+                tank = 15;
             }
         }
 

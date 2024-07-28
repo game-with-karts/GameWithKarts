@@ -2327,7 +2327,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 869bbf151c368ab44bbf859a06e20f35, type: 2}
   reverseThreshold: 5
   downforceAmount: 40
-  boostingSpeed: 52
+  boostingSpeed: 49
   boostingAcceleration: 4500
   wheels:
   - {fileID: 4253112667898450597}
@@ -2394,7 +2394,7 @@ MonoBehaviour:
   driftMinTime: 0.5
   driftMinAmount: 2
   driftMaxTime: 1
-  driftMaxAmount: 16.5
+  driftMaxAmount: 15
   jumpVerticalVelocityThreshold: 4.75
 --- !u!114 &4253112666149923744
 MonoBehaviour:

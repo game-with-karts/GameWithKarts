@@ -21,6 +21,7 @@ namespace GWK.Kart {
         void OnCollisionExit(Collision c) => CollisionExit?.Invoke(c);
 
         IEnumerator hitCoroutine;
+        IEnumerator freezeCoroutine;
 
         void OnDestroy() {
             ClearEvent(TriggerEnter);
@@ -54,6 +55,11 @@ namespace GWK.Kart {
                 StopCoroutine(hitCoroutine);
             }
             hitCoroutine = null;
+
+            if (freezeCoroutine is not null) {
+                StopCoroutine(freezeCoroutine);
+            }
+            freezeCoroutine = null;
         }
 
         private void ChangeCoroutine(IEnumerator baseRoutine, IEnumerator newRoutine) {
@@ -89,6 +95,7 @@ namespace GWK.Kart {
             car.Movement.SetSurfaceOverride(SurfaceType.Ice);
             yield return new WaitForSeconds(5);
             car.Movement.SetSurfaceOverride(null);
+            freezeCoroutine = null;
         }
         
         public void ItemTrapHit(ItemType type) {
@@ -102,7 +109,7 @@ namespace GWK.Kart {
                     ChangeCoroutine(hitCoroutine, SpinCoroutine());
                     break;
                 case ItemType.Freezer:
-                    StartCoroutine(FreezeCoroutine());
+                    ChangeCoroutine(freezeCoroutine, FreezeCoroutine());
                     if (car.state == CarDrivingState.Hit) {
                         break;
                     }
