@@ -27,20 +27,19 @@ public class ItemWeightsEditor : Editor {
 
         DrawUILine(Color.black);
 
-        for (int i = 0; i < weights.records.Length; i++) {
-            ItemWeightsRecord r = weights.records[i];
+        for (int i = 0; i < weights.records.Count; i++) {
+            ItemWeightsRecord record = weights.records[i];
             EditorGUILayout.BeginHorizontal(); {
-                GUILayout.Label(r.Name, GUILayout.ExpandWidth(true));
-                r.firstPlace = EditorGUILayout.IntField(r.firstPlace, option);
-                r.secondPlace = EditorGUILayout.IntField(r.secondPlace, option);
-                r.thirdPlace = EditorGUILayout.IntField(r.thirdPlace, option);
-                r.fourthPlace = EditorGUILayout.IntField(r.fourthPlace, option);
-                r.fifthPlace = EditorGUILayout.IntField(r.fifthPlace, option);
-                r.sixthPlace = EditorGUILayout.IntField(r.sixthPlace, option);
-                r.seventhPlace = EditorGUILayout.IntField(r.seventhPlace, option);
-                r.eighthPlace = EditorGUILayout.IntField(r.eighthPlace, option);
+                GUILayout.Label(record.Name, GUILayout.ExpandWidth(true));
+                for (int j = 0; j < record.placeWeights.Length; j++) {
+                    record.placeWeights[j] = EditorGUILayout.IntField(record.placeWeights[j], option);
+                }
             }
             EditorGUILayout.EndHorizontal();
+        }
+
+        if (GUILayout.Button("Refresh")) {
+            weights.ReconstructRecordsList(weights.records);
         }
 
         EditorUtility.SetDirty(weights);

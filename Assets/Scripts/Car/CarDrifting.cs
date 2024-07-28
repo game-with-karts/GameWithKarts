@@ -221,6 +221,7 @@ namespace GWK.Kart {
 
         void OnTriggerStay(Collider other) {
             if (other.gameObject.CompareTag("Boost") && tank < 20 && car.Movement.IsGrounded) {
+                tier = other.gameObject.GetComponent<BoostPad>().boostTier;
                 tank = 20;
             }
         }

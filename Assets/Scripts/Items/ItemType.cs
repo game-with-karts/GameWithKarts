@@ -1,7 +1,7 @@
 public enum ItemType {
-    BoostTank,
-    LaserDisc,
-    SpikeTrap,
-    Missile,
-    Freezer,
+    BoostTank = 1,
+    Missile = 101,
+    LaserDisc = 102,
+    SpikeTrap = 201,
+    Freezer = 202,
 }

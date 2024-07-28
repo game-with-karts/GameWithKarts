@@ -13,43 +13,8 @@ MonoBehaviour:
   m_Name: Item Weights
   m_EditorClassIdentifier: 
   records:
-  - firstPlace: 0
-    secondPlace: 0
-    thirdPlace: 0
-    fourthPlace: 0
-    fifthPlace: 0
-    sixthPlace: 0
-    seventhPlace: 0
-    eighthPlace: 0
-  - firstPlace: 0
-    secondPlace: 0
-    thirdPlace: 0
-    fourthPlace: 0
-    fifthPlace: 0
-    sixthPlace: 0
-    seventhPlace: 0
-    eighthPlace: 0
-  - firstPlace: 0
-    secondPlace: 0
-    thirdPlace: 0
-    fourthPlace: 0
-    fifthPlace: 0
-    sixthPlace: 0
-    seventhPlace: 0
-    eighthPlace: 0
-  - firstPlace: 0
-    secondPlace: 0
-    thirdPlace: 0
-    fourthPlace: 0
-    fifthPlace: 0
-    sixthPlace: 0
-    seventhPlace: 0
-    eighthPlace: 0
-  - firstPlace: 0
-    secondPlace: 0
-    thirdPlace: 0
-    fourthPlace: 0
-    fifthPlace: 0
-    sixthPlace: 0
-    seventhPlace: 0
-    eighthPlace: 0
+  - placeWeights: 0000000000000000000000000100000002000000050000000a00000014000000
+  - placeWeights: 050000000a0000000f0000000500000004000000040000000400000004000000
+  - placeWeights: 0a0000000a0000000a0000000500000002000000010000000100000001000000
+  - placeWeights: 0500000005000000050000000300000003000000030000000000000000000000
+  - placeWeights: 0500000005000000050000000300000003000000030000000000000000000000

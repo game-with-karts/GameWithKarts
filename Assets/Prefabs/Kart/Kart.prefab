@@ -2868,23 +2868,23 @@ MonoBehaviour:
   itemSpawnpoint: {fileID: 2507141363840634469}
   itemWeights: {fileID: 11400000, guid: 0318e4f9a5ee56c4895a17ab2498ec1d, type: 2}
   entries:
-  - type: 0
+  - type: 1
     image: {fileID: 21300000, guid: b54a44fff4031c34aa0fa1a75a415e03, type: 3}
     prefab: {fileID: 0}
     weight: 1
-  - type: 1
+  - type: 102
     image: {fileID: 21300000, guid: 8785de70de4511f40b4009a7e1b5d69b, type: 3}
     prefab: {fileID: 8627794099794335744, guid: 98511719f2ebfdb469180a21cb6ac15a, type: 3}
     weight: 1
-  - type: 2
+  - type: 201
     image: {fileID: 21300000, guid: 09dbeb92c430d4340a682b8561935865, type: 3}
     prefab: {fileID: 3990721843723873585, guid: 3863aff83f88ca0478f1e0a5e79540f8, type: 3}
     weight: 1
-  - type: 3
+  - type: 101
     image: {fileID: 21300000, guid: 0699306be18542342a07516c9042a467, type: 3}
     prefab: {fileID: 5775863053455571678, guid: b75477bbb6d29254cbcf6e4a358b0247, type: 3}
     weight: 1
-  - type: 4
+  - type: 202
     image: {fileID: 21300000, guid: 127c2f1809eca09469ea4a29b07ed761, type: 3}
     prefab: {fileID: 1640194428497866232, guid: 535bd3e64684da7458883e22d00b0345, type: 3}
     weight: 1
