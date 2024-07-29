@@ -40,7 +40,7 @@ namespace GWK.Kart {
         public bool isBoosting => tank > 0;
         public bool isTankEmpty => tank <= 0;
         public float RelativeDriftTimer => driftTimer.Time / driftMaxTime;
-        public bool CanDrift => driftBoostCount < 3;
+        public bool CanDrift => driftBoostCount < 3 || RelativeDriftTimer < 1;
         public bool IsDrifting => state == DriftState.Drifting;
         public BoostTier BoostTier => tier;
 
@@ -76,7 +76,7 @@ namespace GWK.Kart {
         private void HandleJumpBtn(bool pressed, int button) {
             jump1 = button == 1 ? pressed : jump1;
             jump2 = button == 2 ? pressed : jump2;
-            switch(state) {
+            switch (state) {
                 default:
                     break;
 
@@ -89,9 +89,7 @@ namespace GWK.Kart {
                 case DriftState.Drifting:
                     if (button == driftKey) {
                         if (!pressed) {
-                            driftTimer.Stop();
-                            driftTimer.Reset();
-                            state = DriftState.Idle;
+                            EndDrift();
                         }
                         break;
                     }
@@ -111,7 +109,7 @@ namespace GWK.Kart {
 
             if (car.state != CarDrivingState.Idle) {
                 ResetBoostTank();
-                state = DriftState.Idle;
+                EndDrift();
                 return;
             }
             
@@ -192,8 +190,16 @@ namespace GWK.Kart {
             tier = BoostTier.None;
         }
 
-        public override void Init(bool _) {
+        public void EndDrift() {
+            driftDirection = 0;
+            driftBoostCount = 0;
+            driftTimer.Stop();
+            driftTimer.Reset();
             state = DriftState.Idle;
+        }
+
+        public override void Init(bool _) {
+            EndDrift();
             ResetBoostTank();
         }
 
