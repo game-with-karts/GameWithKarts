@@ -19,7 +19,6 @@ public class Explosion : MonoBehaviour {
     void Update() {
         time += Time.deltaTime;
         collider.enabled = time <= triggerActiveDuration;
-        Debug.Log(collider.enabled);
         if (time > effectDuration) {
             Destroy(gameObject);
         }

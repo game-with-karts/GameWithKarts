@@ -34,14 +34,17 @@ namespace GWK.Kart {
 
             car.Camera.IsFollowingPlayer = true;
             car.Movement.IsAffectedByGravity = false;
-            StartCoroutine(car.Movement.StopAllMotion(respawnPosition, respawnRotation, 10));
+            car.RB.isKinematic = true;
+            car.RB.transform.position = respawnPosition;
+            transform.rotation = respawnRotation;
 
             float s = 0;
             while (s < respawnDuration) {
                 s += Time.deltaTime;
-                car.RB.transform.position -= car.Movement.LocalUp * respawnSpeed * Time.deltaTime;
+                car.RB.transform.position -= respawnSpeed * Time.deltaTime * car.Movement.LocalUp;
                 yield return new WaitForEndOfFrame();
             }
+            car.RB.isKinematic = false;
 
             car.Movement.SetControllableState(true);
             car.Movement.IsAffectedByGravity = true;

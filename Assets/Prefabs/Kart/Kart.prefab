@@ -2938,7 +2938,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 448
-  rayLength: 1.25
+  rayLength: 1.205
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112666557309520
 GameObject:
@@ -3501,7 +3501,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 448
-  rayLength: 1.25
+  rayLength: 1.205
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112667886288558
 GameObject:
@@ -3550,7 +3550,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 448
-  rayLength: 1.25
+  rayLength: 1.205
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4253112667898450596
 GameObject:
@@ -3599,7 +3599,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 448
-  rayLength: 1.25
+  rayLength: 1.205
   localUp: {x: 0, y: 1, z: 0}
 --- !u!1 &4284557848751054430
 GameObject:
