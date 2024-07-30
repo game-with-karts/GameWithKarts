@@ -8,10 +8,7 @@ public class Timer {
 
     float time = 0;
     public float Time => time;
-    public bool running { 
-        get; 
-        private set; 
-    }
+    public bool running { get; private set; }
 
     public Timer() {
         running = false;
@@ -43,7 +40,7 @@ public class Timer {
     }
 
     public TimedEvent AddEvent(float timestamp, Action action) {
-        TimedEvent timedEvent = new TimedEvent(action, timestamp);
+        TimedEvent timedEvent = new(action, timestamp);
         timedEvents.Add(timedEvent);
         return timedEvent;
     }
