@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
 using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using GWK.Util;
 
 namespace GWK.Kart {
     public class CarUI : CarComponent {
-        [SerializeField] private GameObject canvas;
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private CanvasScaler canvasScaler;
         [Header("Boost Gauge")]
         [SerializeField] private Slider gauge;
         [SerializeField] private Image gaugeFill;
@@ -36,10 +39,18 @@ namespace GWK.Kart {
         [SerializeField] private TMP_ColorGradient gradientSlower;
         [SerializeField] private float lastLapDuration = 5;
         [SerializeField] private AnimationCurve lastLapCurve;
+        [Header("Item")]
+        [SerializeField] private Image itemImage;
+        [Header("Target Display")]
+        [SerializeField] private RectTransform targetDisplayTransform;
+        [Header("Missile Approaching")]
+        [SerializeField] private TMP_Text missileText;
         private Vector2 lastLapAnchoredPos;
         private int numCars;
         private bool lastLapEventSubscribed = false;
         private int bestLap = -1;
+
+        private readonly System.Random rnd = new();
         void Update() {
             gauge.gameObject.SetActive(car.Drifting.IsDrifting && car.Drifting.CanDrift);
             gauge.value = car.Drifting.RelativeDriftTimer;
@@ -53,10 +64,49 @@ namespace GWK.Kart {
             positionDisplay.text = StringsUtil.FormatPlace(place);
 
             timeDisplay.text = StringsUtil.GetFormattedTime(car.Timer.ElapsedTime);
+
+            DisplayItem();
+            DisplayTarget();
+            DisplayMissileApproaching();
+        }
+        
+        private void DisplayItem() {
+            if (car.Item == null) {
+                return;
+            }
+            itemImage.enabled = car.Item.CurrentItem != null || car.Item.IsRolling;
+            if (car.Item.IsRolling) {
+                IEnumerable<Sprite> sprites = car.Item.GetItemSprites();
+                itemImage.sprite = sprites.ElementAt(rnd.Next(sprites.Count()));
+                return;
+            }
+            itemImage.sprite = car.Item.CurrentItem?.image;
+        }
+
+        private void DisplayTarget() {
+            if (car.Item == null) {
+                targetDisplayTransform.gameObject.SetActive(false);
+                return;
+            }
+            bool visible = !(car.Item.target == null || car.Item.CurrentItem == null);
+            targetDisplayTransform.gameObject.SetActive(visible);
+            if (visible) {
+                DisplayTargetAt(car.Item.target.Position);
+            }
+        }
+
+        private void DisplayMissileApproaching() {
+            missileText.enabled = car.currentProjectile != null;
+            if (car.currentProjectile == null) {
+                return;
+            }
+
+            missileText.text = $"{(transform.position - car.currentProjectile.transform.position).magnitude:f2} m";
+            missileText.color = Color.Lerp(Color.red, Color.white, Mathf.Sin(6 * Mathf.PI * Time.time) / 2 + .5f);
         }
 
         public override void Init(bool restarting) {
-            canvas.SetActive(false);
+            canvas.gameObject.SetActive(false);
             transform.parent = null;
 
             lapCounter.text = "Lap -/-";
@@ -64,8 +114,14 @@ namespace GWK.Kart {
 
             car.Path.OnRaceEnd += RaceEnd;
 
-            positionDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
-            timeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
+            RaceSettings settings = GameRulesManager.currentTrack?.settings;
+
+            if (settings == null) {
+                settings = ScriptableObject.CreateInstance<RaceSettings>();
+            }
+
+            positionDisplay.gameObject.SetActive(!settings.timeAttackMode);
+            timeDisplay.gameObject.SetActive(settings.timeAttackMode);
 
             lastLapAnchoredPos = lastLapTransform.anchoredPosition;
             lastLapAnchoredPos.x = -lastLapTransform.rect.width;
@@ -80,10 +136,10 @@ namespace GWK.Kart {
             }
         }
 
-        public void ActivateCanvas() => canvas.SetActive(!car.IsBot);
+        public void ActivateCanvas() => canvas.gameObject.SetActive(!car.IsBot);
 
         private void RaceEnd(BaseCar _) {
-            canvas.SetActive(false);
+            canvas.gameObject.SetActive(false);
             car.Path.OnRaceEnd -= RaceEnd;
             car.Timer.OnLapSaved -= LastLapCoroutine;
             lastLapEventSubscribed = false;
@@ -97,11 +153,9 @@ namespace GWK.Kart {
             float elapsed = 0;
             float t;
             lastLapText.text = StringsUtil.GetFormattedTime(time);
-            
-            Debug.Log($"time = {time}, bestLap = {bestLap}");
             lastLapDiff.text = "";
+
             if (bestLap != -1) {
-                Debug.Log("Split time shown");
                 int diff = Math.Abs(time - bestLap);
                 string text = StringsUtil.GetFormattedTime(diff, false);
                 if (diff == 0) {
@@ -118,7 +172,6 @@ namespace GWK.Kart {
                 }
             }
             else {
-                Debug.Log("First lap");
                 bestLap = time;
             }
 
@@ -134,5 +187,12 @@ namespace GWK.Kart {
         }
 
         public void SetNumberOfCars(int num) => numCars = num;
+
+        public void DisplayTargetAt(Vector3 worldPos) {
+            Vector2 screenPos = car.Camera.FrontFacingCamera.WorldToViewportPoint(worldPos);
+            screenPos.x *= (canvas.transform as RectTransform).sizeDelta.x;
+            screenPos.y *= canvasScaler.referenceResolution.y;
+            targetDisplayTransform.anchoredPosition = screenPos;
+        }
     }
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.InputSystem;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using GWK.Kart;
 
 public class RaceManager : MonoBehaviour
@@ -10,6 +10,7 @@ public class RaceManager : MonoBehaviour
     private Action OnRaceReset;
     private Action OnRaceStart;
     private BaseCar[] cars;
+    [SerializeField] private bool testMode;
     [Header("Initialisation")]
     [Tooltip("1st place is at index 0, 2nd place at index 1, etc.")]
     [SerializeField] private StartFinish startFinish;
@@ -19,6 +20,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private PostRaceScreen postRaceScreen;
     [SerializeField] private CountdownScreen countdownScreen;
     [SerializeField] private SettingsMenu settingsMenu;
+    [SerializeField] private GameObject itemBoxParent;
     [Header("Per-Track settings")]
     [SerializeField] private Transform track;
     [SerializeField] private MinimapTransform minimapTransform;
@@ -29,7 +31,20 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private bool startOnAntigrav = false;
     private int numPlayers;
 
+    public static RaceManager instance { get; private set; }
+    public static List<ISelfDestructable> allItems = new();
+
     private void Awake() {
+        if (instance is not null) {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        if (testMode) {
+            cars = new BaseCar[0];
+            return;
+        }
+
         track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
 
@@ -41,6 +56,8 @@ public class RaceManager : MonoBehaviour
         numPlayers = cars.Count(c => c.playerControlled);
 
         postRaceScreen.Init(GameRulesManager.currentTrack.settings.numberOfLaps, cars.Length);
+
+        itemBoxParent.SetActive(GameRulesManager.currentTrack.settings.useItems);
 
         foreach (var car in cars) {
             OnRaceReset += () => car.ResetCar(false);
@@ -77,6 +94,18 @@ public class RaceManager : MonoBehaviour
         };
     }
 
+    public IEnumerable<BaseCar> GetTargetables() {
+        return cars;
+    }
+
+    /// <summary>
+    /// ONLY FOR TESTING - DO NOT USE OUTSIDE OF TESTING!!!!!
+    /// </summary>
+    /// <param name="car"></param>
+    public void AddCarManually(BaseCar car) {
+        cars = cars.Append(car).ToArray();
+    }
+
     private void OnCarFinished(BaseCar car) {
         car.Path.OnRaceEnd -= OnCarFinished;
         if (!car.playerControlled) {
@@ -92,6 +121,9 @@ public class RaceManager : MonoBehaviour
     }
 
     private void Start() {
+        if (testMode) {
+            return;
+        }
         pauseMenu.gameObject.SetActive(false);
         sequence.StartSequence();
     }
@@ -100,6 +132,13 @@ public class RaceManager : MonoBehaviour
         SoundManager.StopMusic();
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
+
+        if (allItems.Count == 0) {
+            return;
+        }
+        allItems.ForEach(i => i.SelfDestruct());
+        allItems = new();
+
         foreach (var c in cars.Where(c => c.Finished)) {
             c.Path.OnRaceEnd += OnCarFinished;
         }
@@ -117,5 +156,6 @@ public class RaceManager : MonoBehaviour
     private void OnDestroy() {
         OnRaceReset = null;
         OnRaceStart = null;
+        instance = null;
     }
 }

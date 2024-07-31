@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 12.7 12.7"
+   version="1.1"
+   id="svg8991"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="itemless mode.svg"
+   inkscape:export-filename="itemless mode.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8993"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="12.186869"
+     inkscape:cx="25.765437"
+     inkscape:cy="13.457107"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs8988">
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect9950"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Jeśli po konwersji przycięcia na ścieżki nie zostanie spłaszczony wynik, użyj reguły wypełniania w oknie dialogowym &lt;b&gt;wypełnienie i obrys&lt;/b&gt; ." />
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect9942"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Jeśli po konwersji przycięcia na ścieżki nie zostanie spłaszczony wynik, użyj reguły wypełniania w oknie dialogowym &lt;b&gt;wypełnienie i obrys&lt;/b&gt; ." />
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect9932"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Jeśli po konwersji przycięcia na ścieżki nie zostanie spłaszczony wynik, użyj reguły wypełniania w oknie dialogowym &lt;b&gt;wypełnienie i obrys&lt;/b&gt; ." />
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect9922"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Jeśli po konwersji przycięcia na ścieżki nie zostanie spłaszczony wynik, użyj reguły wypełniania w oknie dialogowym &lt;b&gt;wypełnienie i obrys&lt;/b&gt; ." />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9918">
+      <path
+         style="color:#000000;display:none;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         d="M 10.107422,1.78125 1.828125,10.097656 2.9531249,11.21875 11.232422,2.9003905 Z"
+         id="path9920" />
+      <path
+         id="lpe_path-effect9922"
+         style="color:#000000;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         class="powerclip"
+         d="M 1.1523437,-1.2597656 H 15.472656 V 11.693359 H 1.1523437 Z M 10.107422,1.78125 1.828125,10.097656 2.9531249,11.21875 11.232422,2.9003905 Z" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9928">
+      <path
+         style="color:#000000;display:none;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         d="m 10.125977,1.9746092 -8.2792974,8.3164058 1.125,1.121095 8.2792974,-8.3183601 z"
+         id="path9930" />
+      <path
+         id="lpe_path-effect9932"
+         style="color:#000000;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         class="powerclip"
+         d="M -2.7714844,-1.2597656 H 11.548828 V 11.693359 H -2.7714844 Z m 12.8974614,3.2343748 -8.2792974,8.3164058 1.125,1.121095 8.2792974,-8.3183601 z" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9938">
+      <path
+         style="color:#000000;display:none;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         d="M 10.107559,1.7804645 1.8282624,10.09687 2.9532625,11.217965 11.232559,2.899605 Z"
+         id="path9940" />
+      <path
+         id="lpe_path-effect9942"
+         style="color:#000000;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         class="powerclip"
+         d="M 0.953125,1.3496094 H 11.746094 V 15.88089 H 0.953125 Z m 9.154434,0.4308551 -8.2792966,8.3164055 1.1250001,1.121095 8.2792965,-8.31836 z" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9946">
+      <path
+         style="color:#000000;display:none;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         d="M 10.323242,1.630859 2.0439452,9.9472647 3.1689453,11.06836 11.448242,2.7499995 Z"
+         id="path9948" />
+      <path
+         id="lpe_path-effect9950"
+         style="color:#000000;fill:#000000;stroke-width:0.999998;-inkscape-stroke:none;paint-order:markers fill stroke"
+         class="powerclip"
+         d="M -2.9707031,-3.6386719 H 15.669922 V 16.339844 H -2.9707031 Z M 10.323242,1.630859 2.0439452,9.9472647 3.1689453,11.06836 11.448242,2.7499995 Z" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g9966"
+       transform="matrix(0.88497864,0,0,0.88497864,0.73038562,0.73038562)"
+       style="stroke-width:1.12997">
+      <path
+         style="color:#000000;fill:#000000;stroke-width:1.12997;paint-order:markers fill stroke"
+         d="M 6.3496094,1.3613281 2.0292969,3.8554688 V 8.84375 L 6.3496094,11.339844 10.669922,8.84375 V 8.6152344 3.8554688 Z m 0,0.9160157 3.5273437,2.0371093 V 8.3867188 L 6.3496094,10.421875 2.8222656,8.3867188 V 4.3144531 Z"
+         id="path9222"
+         clip-path="url(#clipPath9946)"
+         inkscape:path-effect="#path-effect9950"
+         inkscape:original-d="M 6.3496094,1.3613281 2.0292969,3.8554688 V 8.84375 L 6.3496094,11.339844 10.669922,8.84375 V 8.6152344 3.8554688 Z m 0,0.9160157 3.5273437,2.0371093 V 8.3867188 L 6.3496094,10.421875 2.8222656,8.3867188 V 4.3144531 Z" />
+      <g
+         id="path9641"
+         clip-path="url(#clipPath9928)"
+         inkscape:path-effect="#path-effect9932"
+         style="stroke-width:1.12997">
+        <path
+           style="color:#000000;fill:#bebebe;stroke-width:0.896914;paint-order:markers fill stroke"
+           d="m 2.4261342,4.0845549 3.9238657,2.265445"
+           id="path9882"
+           inkscape:original-d="m 2.4261342,4.0845549 3.9238657,2.265445" />
+        <path
+           style="color:#000000;fill:#000000;stroke-width:1.12997;paint-order:markers fill stroke"
+           d="m 2.625,3.7402344 -0.3964844,0.6875 3.9238281,2.265625 0.3964844,-0.6875 z"
+           id="path9884"
+           inkscape:original-d="m 2.625,3.7402344 -0.3964844,0.6875 3.9238281,2.265625 0.3964844,-0.6875 z" />
+      </g>
+      <g
+         id="path9643"
+         style="stroke-width:1.12997">
+        <path
+           style="color:#000000;fill:#bebebe;stroke-width:0.896914;paint-order:markers fill stroke"
+           d="M 10.273866,4.0845551 6.3499999,6.3499999"
+           id="path9888" />
+        <path
+           style="color:#000000;fill:#000000;stroke-width:1.12997;paint-order:markers fill stroke"
+           d="m 10.076172,3.7402344 -3.9238283,2.265625 0.3964844,0.6875 3.9238279,-2.265625 z"
+           id="path9916"
+           clip-path="url(#clipPath9918)"
+           inkscape:path-effect="#path-effect9922"
+           inkscape:original-d="m 10.076172,3.7402344 -3.9238283,2.265625 0.3964844,0.6875 3.9238279,-2.265625 z" />
+      </g>
+      <g
+         id="path9645"
+         clip-path="url(#clipPath9938)"
+         inkscape:path-effect="#path-effect9942"
+         style="stroke-width:1.12997">
+        <path
+           style="color:#000000;fill:#bebebe;stroke-width:0.896914;paint-order:markers fill stroke"
+           d="m 6.35,10.88089 -10e-8,-4.5308901"
+           id="path9894"
+           inkscape:original-d="m 6.35,10.88089 -10e-8,-4.5308901" />
+        <path
+           style="color:#000000;fill:#000000;stroke-width:1.12997;paint-order:markers fill stroke"
+           d="M 5.953125,6.3496094 V 10.880859 H 6.7460937 V 6.3496094 Z"
+           id="path9896"
+           inkscape:original-d="M 5.953125,6.3496094 V 10.880859 H 6.7460937 V 6.3496094 Z" />
+      </g>
+      <circle
+         style="fill:none;stroke:#000000;stroke-width:0.896914;stroke-dasharray:none;paint-order:markers fill stroke"
+         id="path9699"
+         cx="6.3499999"
+         cy="6.3499999"
+         r="5.851316" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.896914;stroke-dasharray:none;paint-order:markers fill stroke"
+         d="M 10.670741,2.3406539 2.3900808,10.657776"
+         id="path9764"
+         sodipodi:nodetypes="cc" />
+    </g>
+  </g>
+</svg>

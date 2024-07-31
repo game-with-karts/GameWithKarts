@@ -18,10 +18,20 @@ namespace GWK.Kart {
 
         private Quaternion offset = Quaternion.identity;
         public bool IsFollowingPlayer { get; set; }
+        protected override void SubscribeProviderEvents() {
+            InputProvider.BackCamera += SetCameras;
+        }
+
+        protected override void UnsubscribeProviderEvents() {
+            InputProvider.BackCamera -= SetCameras;
+        }
+
+        void SetCameras(bool backCamOn) {
+            frontFacingCamera.gameObject.SetActive(!backCamOn || car.IsBot);
+            backFacingCamera.gameObject.SetActive(backCamOn && !car.IsBot);
+        }
 
         private void Update() {
-            frontFacingCamera.gameObject.SetActive(car.Input.BackCamera == 0 || car.IsBot);
-            backFacingCamera.gameObject.SetActive(car.Input.BackCamera == 1 && !car.IsBot);
             Vector3 targetEuler = transform.eulerAngles;
             if (!car.Movement.IsAntigrav) targetEuler.z = 0;
             Quaternion targetRotation = Quaternion.Lerp(cameraTransform.rotation, Quaternion.Euler(targetEuler) * offset, Time.deltaTime * smoothingAmount );
@@ -46,5 +56,7 @@ namespace GWK.Kart {
             yield return new WaitForSeconds(cameraAnimationDelay);
             offset = Quaternion.Euler(cameraAnimationEulerAngles);
         }
+
+        
     }
 }

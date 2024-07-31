@@ -37,6 +37,9 @@ namespace GWK.Kart {
         }
 
         public Vector3 GetNextPoint() {
+            if (currentPath is null) {
+                return Vector3.zero;
+            }
             if (CurrentPathPoint + 1 >= currentPath.NumPoints) 
                 return currentPath.GetPoint(currentPath.NumPoints - 1);
             return currentPath.GetPoint(CurrentPathPoint + 1);
@@ -99,11 +102,11 @@ namespace GWK.Kart {
         public override void Init(bool _) {
             CurrentLap = 1;
             CurrentPathNumber = 1;
-            CurrentPathPoint = GetClosestIndex();
             CurrentPathTime = 0;
             finalPlacement = -1;
             justChanged = false;
             if (currentPath is not null) {
+                CurrentPathPoint = GetClosestIndex();
                 timeCalcCurrentPoint = GetClosestIndex();
             }
         }
@@ -114,6 +117,9 @@ namespace GWK.Kart {
         }
 
         private int GetClosestIndex(int startFrom = 0, bool loopAround = false, bool ignoreMaxDeltaCheck = true) {
+            if (currentPath is null) {
+                return 0;
+            }
             float maxDistanceDelta = 10;
             Vector3 closestPoint = currentPath.GetPoint(startFrom);
             int i = loopAround ? 0 : startFrom;
@@ -144,6 +150,9 @@ namespace GWK.Kart {
         }
 
         public override void StartRace() {
+            if (currentPath is null) {
+                return;
+            }
             StartCoroutine(nameof(UpdatePoint));
         }
 
@@ -166,6 +175,9 @@ namespace GWK.Kart {
         }
 
         private void OnDestroy() {
+            if (currentPath is null) {
+                return;
+            }
             StopCoroutine(nameof(UpdatePoint));
         }
 

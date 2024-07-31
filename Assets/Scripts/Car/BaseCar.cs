@@ -7,10 +7,7 @@ namespace GWK.Kart {
     [RequireComponent(typeof(CarCamera))]
     [RequireComponent(typeof(CarDrifting))]
     [RequireComponent(typeof(CarInput))]
-    public class BaseCar : MonoBehaviour
-    {
-        private Vector3 startingPosition;
-        private Quaternion startingRotation;
+    public class BaseCar : MonoBehaviour, ITargetable {
         private bool startingIsBot;
         private bool startOnAntigrav;
 
@@ -26,6 +23,8 @@ namespace GWK.Kart {
         [SerializeField] private CarAudio audio;
         [SerializeField] private CarCollider collider;
         [SerializeField] private CarItemHandler item;
+        [SerializeField] private CarAppearance appearance;
+        [SerializeField] private Renderer renderer;
         public CarMovement Movement => movement;
         public Rigidbody RB => rb;
         public CarCamera Camera => camera;
@@ -38,17 +37,20 @@ namespace GWK.Kart {
         public CarAudio Audio => audio;
         public CarCollider Collider => collider;
         public CarItemHandler Item => item;
+        public CarAppearance Appearance => appearance;
         [SerializeField] private bool isBot;
+        public CarDrivingState state = CarDrivingState.Idle;
         public bool IsBot => isBot;
         public bool playerControlled => !startingIsBot;
         public bool isEleminated { get; private set; }
         public bool Finished { get; private set; }
+        public ItemProjectile currentProjectile { get; private set; }
         public Action<BaseCar> OnEliminated;
         private List<CarComponent> components;
 
-        void Awake() {}
-
         public void ResetCar(bool onInit) {
+            currentProjectile = null;
+            state = CarDrivingState.Idle;
             Finished = false;
             isEleminated = false;
             isBot = startingIsBot;
@@ -69,6 +71,7 @@ namespace GWK.Kart {
             Finished = false;
 
             CarComponent[] comps = GetComponents<CarComponent>();
+            collider?.SetBaseCar(this);
             foreach (var comp in comps) {
                 components.Add(comp);
             }
@@ -78,6 +81,7 @@ namespace GWK.Kart {
         private void InitComponents(bool onInit) {
             foreach (CarComponent c in components) {
                 c.Init(!onInit);
+                c.InputProvider = isBot ? BotController : Input;
                 if (!onInit) {
                     if (c is CarCamera) {
                         (c as CarCamera).ActivateCamera();
@@ -93,10 +97,15 @@ namespace GWK.Kart {
             isBot = true;
             Finished = true;
             path.OnRaceEnd -= TurnIntoBot;
+            components.ForEach(c => c.InputProvider = BotController);
         }
 
         public void StartRace() {
             components.ForEach(x => x.StartRace());
+        }
+
+        void OnDisable() {
+            components.ForEach(c => c.InputProvider = null);
         }
 
         public void Eliminate() {
@@ -106,6 +115,16 @@ namespace GWK.Kart {
 
         public void EndRace() => path.EndRace();
 
+        // ITargetable stuff
+        public void MarkAsTarget(ItemProjectile projectile) {
+            currentProjectile = projectile;
+        }
+        
+        public void ClearTarget() {
+            currentProjectile = null;
+        }
+
+        public Vector3 Position => transform.position;
     }
 
 }

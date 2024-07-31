@@ -1,8 +1,9 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 namespace GWK.Kart {
-    public class CarCollider : MonoBehaviour {
+    public class CarCollider : CarComponent, IItemInteractable {
         public event Action<Collider> TriggerEnter;
         public event Action<Collider> TriggerStay;
         public event Action<Collider> TriggerExit;
@@ -18,6 +19,9 @@ namespace GWK.Kart {
         void OnCollisionEnter(Collision c) => CollisionEnter?.Invoke(c);
         void OnCollisionStay(Collision c) => CollisionStay?.Invoke(c);
         void OnCollisionExit(Collision c) => CollisionExit?.Invoke(c);
+
+        IEnumerator hitCoroutine;
+        IEnumerator freezeCoroutine;
 
         void OnDestroy() {
             ClearEvent(TriggerEnter);
@@ -36,6 +40,95 @@ namespace GWK.Kart {
             foreach (Delegate d in delegates) {
                 e -= (Action<T>)d;
             }
+        }
+
+        public void SetBaseCar(BaseCar car) => this.car = car;
+
+        public BaseCar parentCar => car;
+
+        public void OnItemBox() {
+            car.Item.RollItem();
+        }
+
+        public override void Init(bool restarting) {
+            if (hitCoroutine is not null) {
+                StopCoroutine(hitCoroutine);
+            }
+            hitCoroutine = null;
+
+            if (freezeCoroutine is not null) {
+                StopCoroutine(freezeCoroutine);
+            }
+            freezeCoroutine = null;
+        }
+
+        private void ChangeCoroutine(IEnumerator baseRoutine, IEnumerator newRoutine) {
+            if (baseRoutine is not null) {
+                StopCoroutine(baseRoutine);
+            }
+            baseRoutine = newRoutine;
+            StartCoroutine(baseRoutine);
+        }
+
+        public void Hit() {
+            if (car.state == CarDrivingState.Hit) {
+                return;
+            }
+            car.Appearance.PlayHitAnimation();
+            ChangeCoroutine(hitCoroutine, HitCoroutine());
+        }
+
+        private IEnumerator HitCoroutine() {
+            car.state = CarDrivingState.Hit;
+            yield return new WaitForSeconds(CarAppearance.HIT_ANIMATION_LENGTH);
+            car.state = CarDrivingState.Idle;
+            hitCoroutine = null;
+        }
+
+        private IEnumerator SpinCoroutine() {
+            car.state = CarDrivingState.Spinning;
+            yield return new WaitForSeconds(CarAppearance.SPIN_ANIMATION_LENGTH);
+            car.state = CarDrivingState.Idle;
+            hitCoroutine = null;
+        }
+
+        private IEnumerator FreezeCoroutine() {
+            car.Movement.SetSurfaceOverride(SurfaceType.Ice);
+            yield return new WaitForSeconds(5);
+            car.Movement.SetSurfaceOverride(null);
+            freezeCoroutine = null;
+        }
+        
+        public void ItemTrapHit(ItemType type) {
+            switch (type) {
+                case ItemType.SpikeTrap:
+                    if (car.state != CarDrivingState.Idle) {
+                        break;
+                    }
+                    car.Appearance.PlaySpinAnimation();
+                    ChangeCoroutine(hitCoroutine, SpinCoroutine());
+                    break;
+                case ItemType.Freezer:
+                    ChangeCoroutine(freezeCoroutine, FreezeCoroutine());
+                    if (car.state == CarDrivingState.Hit) {
+                        break;
+                    }
+                    if (car.state != CarDrivingState.Spinning) {
+                        car.Appearance.PlaySpinAnimation();
+                        ChangeCoroutine(hitCoroutine, SpinCoroutine());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void ExplosionHit() {
+            if (car.state == CarDrivingState.Hit) {
+                return;
+            }
+            car.Appearance.PlayHitAnimation();
+            ChangeCoroutine(hitCoroutine, HitCoroutine());
         }
     }
 }

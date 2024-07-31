@@ -17,8 +17,7 @@ public class StartFinish : MonoBehaviour
     {
         Gizmos.color = new(0f, .3f, 1);
         foreach(Transform pos in startPositions) {
-            Gizmos.DrawWireCube(pos.position, new(2, 0, 2));
-            Gizmos.DrawWireCube(pos.position, new(1.5f, 0, 1.5f));
+            Gizmos.DrawWireSphere(pos.position, 1.2f);
         }
     }
 }

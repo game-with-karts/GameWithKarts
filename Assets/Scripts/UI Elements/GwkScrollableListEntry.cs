@@ -17,6 +17,7 @@ namespace GWK.UI {
         [SerializeField] private TMP_Text lapCount;
         [SerializeField] private TMP_Text raceMode;
         [SerializeField] private Image mirrorMode;
+        [SerializeField] private Image itemless;
 
         public RectTransform rectTransform => transform as RectTransform;
         private Color targetColor;
@@ -34,6 +35,7 @@ namespace GWK.UI {
             lapCount.text = $"{settings.numberOfLaps} lap{(settings.numberOfLaps == 1 ? "" : "s")}";
             raceMode.text = PlaylistEditor.GetRaceModeString(settings.raceMode);
             mirrorMode.enabled = settings.mirrorMode;
+            itemless.enabled = !settings.useItems;
         }
         
         public void SetSelected(bool selected, bool focused) {

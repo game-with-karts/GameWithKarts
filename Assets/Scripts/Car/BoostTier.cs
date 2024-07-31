@@ -7,12 +7,10 @@ namespace GWK.Kart {
         Ultimate = 4,
     }
     public static class BoostTierOperations {
-
-
         public static BoostTier OneUp(BoostTier tier) {
             tier += 1;
-            if (tier > BoostTier.Ultimate) {
-                tier = BoostTier.Ultimate;
+            if (tier > BoostTier.Ultra) {
+                tier = BoostTier.Ultra;
             }
             return tier;
         }

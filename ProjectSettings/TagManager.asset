@@ -9,6 +9,7 @@ TagManager:
   - Respawn Trigger
   - Boost
   - Item Box
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Ice
   - Road
   - Ground
-  - 
+  - Projectile
   - 
   - 
   - 

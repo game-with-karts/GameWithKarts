@@ -1,23 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
-using TMPro;
 using GWK.UI;
-using System.Collections.Generic;
 using System;
 
 public class SettingsMenu : MonoBehaviour
 {
     [Header("General Settings")]
-    [SerializeField] private GWK.UI.Slider masterVolumeSld;
-    [SerializeField] private GWK.UI.Slider musicVolumeSld;
-    [SerializeField] private GWK.UI.Slider sfxVolumeSld;
+    [SerializeField] private Slider masterVolumeSld;
+    [SerializeField] private Slider musicVolumeSld;
+    [SerializeField] private Slider sfxVolumeSld;
     [Space]
     [SerializeField] private AudioMixerGroup masterMixGroup;
     [SerializeField] private AudioMixerGroup musicMixGroup;
     [SerializeField] private AudioMixerGroup sfxMixGroup;
     [Header("Graphics Settings")]
+    [SerializeField] private CheckBox fpsCounterChk;
     [SerializeField] private NumberInputBox targetFrameRateInp;
     [SerializeField] private CheckBox enablePostProcessingChk;
     [Header("Input Settings (soon)")]
@@ -28,6 +26,7 @@ public class SettingsMenu : MonoBehaviour
     public static readonly string MusicVolumeKey = "MUSIC_VOLUME";
     public static readonly string SFXVolumeKey = "SFX_VOLUME";
     public static readonly string BindingOverridesKey = "BINDINGS";
+    public static readonly string FPSCounterKey = "FPS_COUNTER";
 
     public static event Action OnSettingsUpdated;
 
@@ -36,9 +35,11 @@ public class SettingsMenu : MonoBehaviour
     private float masterVolume;
     private float musicVolume;
     private float sfxVolume;
+    private bool showFPSCounter;
     public void SaveSettings() {
         PlayerPrefs.SetInt(TargetFrameRateKey, targetFrameRateInp.Value);
         PlayerPrefs.SetInt(EnablePostProcessingKey, enablePostProcessingChk.Value ? 1 : 0);
+        PlayerPrefs.SetInt(FPSCounterKey, fpsCounterChk.Value ? 1 : 0);
         PlayerPrefs.SetFloat(MasterVolumeKey, masterVolumeSld.Value);
         PlayerPrefs.SetFloat(MusicVolumeKey, musicVolumeSld.Value);
         PlayerPrefs.SetFloat(SFXVolumeKey, sfxVolumeSld.Value);
@@ -52,6 +53,7 @@ public class SettingsMenu : MonoBehaviour
         masterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, .7f);
         musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
         sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        showFPSCounter = PlayerPrefs.GetInt(FPSCounterKey, 0) == 1;
         inputAction.LoadBindingOverridesFromJson(PlayerPrefs.GetString(BindingOverridesKey, ""));
         UpdateSettings();
         UpdateUI();
@@ -64,12 +66,13 @@ public class SettingsMenu : MonoBehaviour
 
         targetFrameRateInp.Value = targetFrameRate;
         enablePostProcessingChk.Value = enablePostProcessing;
+        fpsCounterChk.Value = showFPSCounter;
     }
 
-    public void UpdateKeybinds() {
-        // this doesn't make sense, but it might work
-        string overrides = inputAction.SaveBindingOverridesAsJson();
-    }
+    // public void UpdateKeybinds() {
+    //     // this doesn't make sense, but it might work
+    //     string overrides = inputAction.SaveBindingOverridesAsJson();
+    // }
 
     public void UpdateSettings() {
         SetVolume(masterMixGroup, "MasterVolume", masterVolumeSld.Value);

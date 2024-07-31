@@ -5,7 +5,7 @@ using Rnd = UnityEngine.Random;
 
 namespace GWK.Kart {
 
-    public class CarBotController : CarComponent {
+    public class CarBotController : CarComponent, IInputProvider {
         [Tooltip("An angle from the car's forward direction to the next point at which the car will start to turn")]
         [Min(0f)]
         [SerializeField] private float angleThreshold = 3;
@@ -74,7 +74,45 @@ namespace GWK.Kart {
             }
         }
 
-        private bool isStuck = false;
+        private float itemTimer = 0f;
+        private float targetItemTimer = -1f;
+
+        private event Action<float> horizontal;
+        private event Action<float> vertical;
+        private event Action<bool> jump1;
+        private event Action<bool> jump2;
+        private event Action item;
+        private event Action<bool> backCam;
+
+        event Action<float> IInputProvider.HorizontalPerformed {
+            add => horizontal += value;
+            remove => horizontal -= value;
+        }
+
+        event Action<float> IInputProvider.VerticalPerformed {
+            add => vertical += value;
+            remove => vertical -= value;
+        }
+
+        event Action<bool> IInputProvider.Jump1 {
+            add => jump1 += value;
+            remove => jump1 -= value;
+        }
+
+        event Action<bool> IInputProvider.Jump2 {
+            add => jump2 += value;
+            remove => jump2 -= value;
+        }
+
+        event Action IInputProvider.Item {
+            add => item += value;
+            remove => item -= value;
+        }
+
+        event Action<bool> IInputProvider.BackCamera {
+            add => backCam += value;
+            remove => backCam -= value;
+        }
 
         private bool isVectorNaN(Vector3 v) => float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
 
@@ -111,27 +149,9 @@ namespace GWK.Kart {
             leftHit = Physics.Raycast(left, out infoLeft, RayLength, checkLayers);
             forwardHit = Physics.Raycast(forward, out infoForward, RayLength, checkLayers);
 
-
-
-            // if (isStuck)
-            // {
-            //     Ray backward = new Ray(BackwardRayOriginOffset + transform.position, -transform.forward);
-            //     vert = -1;
-            //     horiz = dir * -1;
-            //     if (Physics.Raycast(backward, RayLength / 3, checkLayers)) {
-            //         vert = 1;
-            //         horiz *= -1;
-            //     }
-            //     if (Vector3.Dot((car.Path.GetNextPoint() - transform.position).normalized, transform.forward) >= .85f) {
-            //         isStuck = false;
-            //     }
-            //     car.Input.SetAxes(vert, horiz, 0f, 0f, 0f);
-            //     return;
-            // }
             if (forwardHit && !IsWall(infoForward.normal)) {
                 horiz = (transform.InverseTransformDirection(infoForward.normal).x > 0 ? 1 : -1) * GetImportance(infoForward);
                 if (infoForward.distance < RayLength / 2) vert = 0;
-                if (infoForward.distance < RayLength / 3) isStuck = true;
             }
             if (forwardLeftHit) {
                 horiz += .5f * GetImportance(infoForwardLeft);
@@ -154,11 +174,30 @@ namespace GWK.Kart {
             if (vert < 0) horiz *= -1;
 
             // if front not grounded and rear grounded, jump
-            float jumpAxis = 0;
-            if (!isFrontGrounded && isRearGrounded) {
-                jumpAxis = 1;
+            bool jumpAxis = !isFrontGrounded && isRearGrounded;
+
+            if (targetItemTimer != -1) {
+                itemTimer += Time.fixedDeltaTime;
+                if (itemTimer >= targetItemTimer) {
+                    item?.Invoke();
+                    targetItemTimer = -1;
+                    itemTimer = 0;
+                }
             }
-            car.Input.SetAxes(vert, horiz, jumpAxis, 0f, 0f);
+
+            //car.Input.SetAxes(vert, horiz, jumpAxis, 0f, itemAxis);
+            vertical?.Invoke(vert);
+            horizontal?.Invoke(horiz);
+            jump1?.Invoke(jumpAxis);
+        }
+
+        public void SetupItem(bool cancel = false) {
+            if (cancel) {
+                targetItemTimer = -1;
+                itemTimer = 0;
+                return;
+            }
+            targetItemTimer = Rnd.Range(0, 5);
         }
 
         void OnDrawGizmos() {
