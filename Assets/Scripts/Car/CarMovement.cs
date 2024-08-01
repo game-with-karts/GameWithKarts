@@ -143,8 +143,8 @@ namespace GWK.Kart {
             }
             localUp = isAntigrav ? normal : Vector3.up;
             orientationUp = IsGrounded ? normal : localUp;
-            Vector3 vel = car.RB.velocity;
-            Vector3 localVel = transform.InverseTransformDirection(car.RB.velocity);
+            Vector3 vel = car.RB.linearVelocity;
+            Vector3 localVel = transform.InverseTransformDirection(car.RB.linearVelocity);
 
             currentForwardFriction = currentFrictionSettings.forwardFriction;
             currentSidewaysFriction = currentFrictionSettings.sidewaysFriction;
@@ -174,7 +174,7 @@ namespace GWK.Kart {
         }
 
         void MovementIdle(Vector3 vel, Vector3 localVel, float axisV, float axisH) {
-            isReversing = Vector3.Dot(transform.forward, car.RB.velocity.normalized) < 0 && car.RB.velocity.magnitude > reverseThreshold;
+            isReversing = Vector3.Dot(transform.forward, car.RB.linearVelocity.normalized) < 0 && car.RB.linearVelocity.magnitude > reverseThreshold;
             isBraking = Vector3.Dot(vel.normalized, transform.forward * axisV) < 0;
 
             if (controlable) {
@@ -246,7 +246,7 @@ namespace GWK.Kart {
 
         public IEnumerator StopAllMotion(Vector3 pos, Quaternion rot, int iter = 2) {
             for (int i = 0; i < iter; i++) {
-                car.RB.velocity = Vector3.zero;
+                car.RB.linearVelocity = Vector3.zero;
                 car.RB.angularVelocity = Vector3.zero;
                 car.RB.transform.SetPositionAndRotation(pos, rot);
                 yield return new WaitForFixedUpdate();

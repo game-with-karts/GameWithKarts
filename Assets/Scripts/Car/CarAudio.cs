@@ -30,7 +30,7 @@ namespace GWK.Kart {
         }
 
         public void Update() {
-            engineSource.pitch = car.RB.velocity.magnitude / pitchResolution + 1;
+            engineSource.pitch = car.RB.linearVelocity.magnitude / pitchResolution + 1;
         }
     }
 }

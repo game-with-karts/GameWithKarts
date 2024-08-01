@@ -62,7 +62,7 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
             return;
         }
         Vector3 direction = (target.Position - transform.position).normalized * speed;
-        RB.AddForce((direction - RB.velocity) * 10, ForceMode.Acceleration);
+        RB.AddForce((direction - RB.linearVelocity) * 10, ForceMode.Acceleration);
 
         base.FixedUpdate();
     }
@@ -77,7 +77,7 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
     }
 
     void Update() {
-        model.forward = RB.velocity.normalized;
+        model.forward = RB.linearVelocity.normalized;
         lifetime -= Time.deltaTime;
         if (lifetime <= 0) {
             SelfDestruct();

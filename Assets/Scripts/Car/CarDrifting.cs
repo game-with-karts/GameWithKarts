@@ -40,7 +40,7 @@ namespace GWK.Kart {
         public bool isBoosting => tank > 0;
         public bool isTankEmpty => tank <= 0;
         public float RelativeDriftTimer => driftTimer.Time / driftMaxTime;
-        public bool CanDrift => driftBoostCount < 3 || RelativeDriftTimer < 1;
+        public bool CanDrift => driftBoostCount < 3 && RelativeDriftTimer < 1;
         public bool IsDrifting => state == DriftState.Drifting;
         public BoostTier BoostTier => tier;
 
@@ -131,7 +131,7 @@ namespace GWK.Kart {
                         jumpTimer.Reset();
                         
                         state = DriftState.Idle;
-                        if ((jump1 || jump2) && axisH != 0 && car.RB.velocity.magnitude > 5 && !car.Movement.IsReversing) {
+                        if ((jump1 || jump2) && axisH != 0 && car.RB.linearVelocity.magnitude > 5 && !car.Movement.IsReversing) {
                             state = DriftState.Drifting;
                             driftBoostCount = 0;
                             driftKey = jump1 ? 1 : (jump2 ? 2 : 0);

@@ -8,6 +8,7 @@ using static System.Linq.Enumerable;
 using GWK.UI;
 using GWK.Kart;
 using GWK.Util;
+using UnityEngine.InputSystem;
 
 public class PostRaceScreen : MonoBehaviour
 {
@@ -37,13 +38,17 @@ public class PostRaceScreen : MonoBehaviour
         inputs = new();
     }
 
+    Action<InputAction.CallbackContext> switchScreens;
+
     void OnEnable() {
-        inputs.UI.Confirm.started += _ => SwitchScreens();
+        switchScreens = _ => SwitchScreens();
+        inputs.UI.Confirm.started += switchScreens;
     }
 
     void OnDisable() {
-        inputs.UI.Confirm.started -= _ => SwitchScreens();
+        inputs.UI.Confirm.started -= switchScreens;
         inputs.UI.Confirm.Disable();
+        inputs.UI.Disable();
     }
 
     private void SwitchScreens() {
