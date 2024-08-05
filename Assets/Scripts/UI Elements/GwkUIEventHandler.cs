@@ -1,10 +1,11 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace GWK.UI {
     public delegate void InputCallback(InputAction.CallbackContext ctx);
-    public class UIEventHandler : MonoBehaviour {
+    public static class UIEventHandler {
         public static event InputCallback OnUpDown;
         public static event InputCallback OnLeftRight;
         public static event InputCallback OnConfirm;
@@ -13,23 +14,24 @@ namespace GWK.UI {
         public static event InputCallback OnTabs;
         public static event InputCallback OnScroll;
 
-        public static PlayerInputActions inputs { get; private set; }
-        private readonly bool debugInputs = false;
+        public static readonly PlayerInputActions inputs = new();
+        private static readonly bool debugInputs = false;
 
-        private void UpDown(InputAction.CallbackContext ctx) => OnUpDown?.Invoke(ctx);
-        private void LeftRight(InputAction.CallbackContext ctx) => OnLeftRight?.Invoke(ctx);
-        private void Confirm(InputAction.CallbackContext ctx) => OnConfirm?.Invoke(ctx);
-        private void Cancel(InputAction.CallbackContext ctx) => OnCancel?.Invoke(ctx);
-        private void Alternative(InputAction.CallbackContext ctx) => OnAlternative?.Invoke(ctx);
-        private void Tabs(InputAction.CallbackContext ctx) => OnTabs?.Invoke(ctx);
-        private void Scroll(InputAction.CallbackContext ctx) => OnScroll?.Invoke(ctx);
+        private static void UpDown(InputAction.CallbackContext ctx) => OnUpDown?.Invoke(ctx);
+        private static void LeftRight(InputAction.CallbackContext ctx) => OnLeftRight?.Invoke(ctx);
+        private static void Confirm(InputAction.CallbackContext ctx) => OnConfirm?.Invoke(ctx);
+        private static void Cancel(InputAction.CallbackContext ctx) => OnCancel?.Invoke(ctx);
+        private static void Alternative(InputAction.CallbackContext ctx) => OnAlternative?.Invoke(ctx);
+        private static void Tabs(InputAction.CallbackContext ctx) => OnTabs?.Invoke(ctx);
+        private static void Scroll(InputAction.CallbackContext ctx) => OnScroll?.Invoke(ctx);
 
-        void Awake() {
-            inputs = new();
-            DontDestroyOnLoad(gameObject);
+        static UIEventHandler() {
+            OnEnable();
         }
 
-        void OnEnable() {
+        static readonly Finaliser finaliser = new();
+
+        static void OnEnable() {
             EnableAction(inputs.UI.UpDown, UpDown);
             EnableAction(inputs.UI.LeftRight, LeftRight);
             EnableAction(inputs.UI.Confirm, Confirm);
@@ -49,7 +51,7 @@ namespace GWK.UI {
             }
         }
 
-        void OnDisable() {
+        static void OnDisable() {
             DisableAction(inputs.UI.UpDown, UpDown);
             DisableAction(inputs.UI.LeftRight, LeftRight);
             DisableAction(inputs.UI.Confirm, Confirm);
@@ -69,22 +71,28 @@ namespace GWK.UI {
             }
         }
 
-        private void EnableAction(InputAction action, Action<InputAction.CallbackContext> callback) {
+        private static void EnableAction(InputAction action, Action<InputAction.CallbackContext> callback) {
             action.started += callback;
             action.performed += callback;
             action.canceled += callback;
             action.Enable();
         }
 
-        private void DisableAction(InputAction action, Action<InputAction.CallbackContext> callback) {
+        private static void DisableAction(InputAction action, Action<InputAction.CallbackContext> callback) {
+            action.Disable();
             action.started -= callback;
             action.performed -= callback;
             action.canceled -= callback;
-            action.Disable();
         }
 
-        private void DebugAction(InputAction.CallbackContext ctx) {
+        private static void DebugAction(InputAction.CallbackContext ctx) {
             Debug.Log($"{ctx.action.name} is in phase {ctx.phase} with value of {ctx.ReadValue<float>()}");
+        }
+
+        sealed class Finaliser {
+            ~Finaliser() {
+                OnDisable();
+            }
         }
     }
 }

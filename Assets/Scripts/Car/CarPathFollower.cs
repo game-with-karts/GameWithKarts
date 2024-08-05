@@ -72,7 +72,7 @@ namespace GWK.Kart {
             float timeCalcDistanceToNext = (currentPath.GetPoint(timeCalcNextPoint) - transform.position).magnitude;
             float delta = timeCalcDistanceToNext - timeCalcPrevDistanceToNext;
             Vector3 tangent = currentPath.GetTangent(timeCalcNextPoint);
-            float dot = Vector3.Dot(car.RB.velocity.normalized, tangent);
+            float dot = Vector3.Dot(car.RB.linearVelocity.normalized, tangent);
             if (delta > 0.1f && dot > 0) {
                 if (justChanged) {
                     justChanged = false;

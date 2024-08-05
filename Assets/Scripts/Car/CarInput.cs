@@ -95,13 +95,14 @@ namespace GWK.Kart {
         }
 
 
-        public override void Init(bool _) {}
+        public override void Init(bool _) { }
 
         void OnEnable() {
             if (car.IsBot) {
                 return;
             }
             inputs = new();
+            inputs.UI.Disable();
 
             SettingsMenu.OnSettingsUpdated += UpdateInputOverrides;
         }

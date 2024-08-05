@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
         inputs.UI.Pause.Enable();
     }
 
-    void LateUpdate() {
+    void Update() {
         pauseScreen.SetActive(isPaused);
         Time.timeScale = isPaused ? 0 : 1;
     }
@@ -52,11 +52,11 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         Cursor.visible = true;
         Time.timeScale = 1;
-        inputs.UI.Pause.performed -= TogglePause;
+        inputs.UI.Disable();
         inputs.UI.Pause.Disable();
+        inputs.UI.Pause.performed -= TogglePause;
     }
 }
