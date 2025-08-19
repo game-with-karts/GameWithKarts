@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace GWK.Kart {
     public class CarMovement : CarComponent {
+        const string AG_TRIGGER_TAG = "AG Trigger";
         [SerializeField] private CarStats stats;
         [SerializeField] private float reverseThreshold;
         [SerializeField] private float downforceAmount;
@@ -99,6 +100,19 @@ namespace GWK.Kart {
         private Vector3 localUp = Vector3.up;
         public Vector3 LocalUp => localUp;
 
+        private void OnEnable() {
+            car.Collider.TriggerEnter += SwitchAntigrav;
+        }
+
+        private void OnDisable() {
+            car.Collider.TriggerEnter -= SwitchAntigrav;
+        }
+
+        private void SwitchAntigrav(Collider other) {
+            if (other.gameObject.CompareTag(AG_TRIGGER_TAG)) {
+                isAntigrav = !isAntigrav;
+            }
+        }
 
         private Vector3 orientationUp = Vector3.up;
 

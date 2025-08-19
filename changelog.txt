@@ -1,0 +1,43 @@
+GAME WITH KARTS
+CHANGELOG
+
++--------------------------+
+testbuild-001
+released 14.07.2023
+
+first test build
+- 3 tracks
+- playlist editor
+- race rules editor for single race and playlist editor
+- bots
++--------------------------+
+testbuild-002
+released 28.07.2023
+
+- mirror mode
+- botless mode
+- new menu
+- time trial mode
+- music and audio implementation
++--------------------------+
+testbuild-003
+released 11.07.2024
+
+- new track
+- new music for track 1
+- redesigned a significant portion of ui
+- improved menu navigation
+- changed post-race screen
+- tweaked track 2
+- fixed jump detection
+- fixed time attack timer inaccuracy
+- fixed car respawn after driving off the tracks
++--------------------------+
+testbuild-004 
+released 1.08.2024
+
+- new track
+- new kart physics
+- added first 6 items
+- refreshed the look of moebius
+- fixed time attack timer inaccuracy (again)

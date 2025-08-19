@@ -10,6 +10,7 @@ TagManager:
   - Boost
   - Item Box
   - Item
+  - AG Trigger
   layers:
   - Default
   - TransparentFX

@@ -561,6 +561,12 @@ MonoBehaviour:
   - image: {fileID: 21300000, guid: 6bfa52134bed4e245afffc85b4456df1, type: 3}
     caption: MOUNTAINS
     trackIndex: 5
+  - image: {fileID: 21300000, guid: 676ebc92a4b34285886ecfbd2f63eb50, type: 3}
+    caption: CITY
+    trackIndex: 6
+  - image: {fileID: 21300000, guid: ea7b8dd71088d1b8db268ca2609edf82, type: 3}
+    caption: CANYON
+    trackIndex: 7
 --- !u!114 &6866564882288791775
 MonoBehaviour:
   m_ObjectHideFlags: 0

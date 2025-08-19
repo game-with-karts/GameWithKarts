@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 1280
   height: 720
-  folder: UI\Track Thumbnails
+  folder: UI/Track Thumbnails
   filenamePrefix: screenshot
   ensureTransparentBackground: 0
   fixLinearGamma: 0

@@ -12,6 +12,7 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
     public void SetParentCar(BaseCar car) => _parentCar = car;
     private Quaternion modelRot = Quaternion.identity;
     private float lifetime = 10;
+    private ContactPoint[] contacts = new ContactPoint[256];
     
     public void OnItemBox() {
         parentCar.Item.RollItem();
@@ -28,6 +29,13 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
             SelfDestruct();
             return;
         }
+        collision.GetContacts(contacts);
+        Vector3 postBounceVelocity = RB.linearVelocity;
+        for (int i = 0; i < collision.contactCount; i++) {
+            ContactPoint cp = contacts[i];
+            postBounceVelocity += cp.impulse * 0.8f;
+        }
+        RB.linearVelocity = postBounceVelocity;
     }
 
     void OnTriggerEnter(Collider other) {
