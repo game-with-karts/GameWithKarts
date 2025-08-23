@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
 
@@ -26,8 +27,7 @@ namespace GWK.UI {
         [Min(0)]
         [SerializeField] private float prefabHeight;
         [Space]
-        [SerializeField] private string[] trackNames;
-        [SerializeField] private Sprite[] trackThumbnails;
+        [SerializeField] private TrackThumbnails trackThumbnails;
         [Space]
         [SerializeField] private TMP_Text emptyText;
         [SerializeField] private Color emptyColorSelected;
@@ -41,7 +41,7 @@ namespace GWK.UI {
         // first items on top
         private int topIdx = 0;
         private int bottomIdx = 5;
-        public (string name, Sprite thumbnail) GetAssetsAtIndex(int sceneIdx) => (trackNames[sceneIdx - 1], trackThumbnails[sceneIdx - 1]);
+        public Sprite GetThumbnail(string levelName) => trackThumbnails.thumbnails.Where(t => t.levelName == levelName).SingleOrDefault().thumbnail;
 
         void Awake() {
             targetEmptyColor = emptyColorDeselected;
@@ -78,8 +78,8 @@ namespace GWK.UI {
             (entry.transform as RectTransform).anchoredPosition = new(0, -prefabHeight * entries.Count);
             entries.Add(entry.GetComponent<ScrollableListEntry>());
             entries[^1].Init(this);
-            int sceneIdx = track.sceneIdx - 1; 
-            entries[^1].SetInfo(trackNames[sceneIdx], trackThumbnails[sceneIdx], track.settings);
+            string levelName = track.levelName;
+            entries[^1].SetInfo(levelName, GetThumbnail(levelName), track.settings);
             selectedEntry = entries[^1];
 
             content.sizeDelta = new(0, prefabHeight * entries.Count);
@@ -89,10 +89,10 @@ namespace GWK.UI {
         public void UpdateAllTracks(Playlist playlist) {
             Assert.IsTrue(entries.Count == playlist.Length);
 
-            int sceneIdx;
+            string levelName;
             for (int i = 0; i < playlist.Length; i++) {
-                sceneIdx = playlist[i].sceneIdx - 1;
-                entries[i].SetInfo(trackNames[sceneIdx], trackThumbnails[sceneIdx], playlist[i].settings);
+                levelName = playlist[i].levelName;
+                entries[i].SetInfo(levelName, GetThumbnail(levelName), playlist[i].settings);
             }
         }
 

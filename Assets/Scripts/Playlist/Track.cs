@@ -2,12 +2,12 @@ using System;
 [Serializable]
 public class Track
 {
-    public int sceneIdx = 1;
+    public string levelName = string.Empty;
     public RaceSettings settings;
 
     public Track() {}
-    public Track(int sceneIdx, RaceSettings settings) {
-        this.sceneIdx = sceneIdx;
+    public Track(string levelName, RaceSettings settings) {
+        this.levelName = levelName;
         this.settings = settings;
     }
 

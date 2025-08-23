@@ -32,18 +32,19 @@ public class PlaylistEditor : MonoBehaviour
     private bool isAdding;
     public void SetAddingState(bool isAdding) => this.isAdding = isAdding;
 
-    public void Add(int sceneIdx) {
+    public void Add(string levelName) {
         if (!isAdding) {
-            playlist[selectedItem].sceneIdx = sceneIdx;
+            playlist[selectedItem].levelName = levelName;
             trackEditor.SetDisplayFrom(playlist[selectedItem].settings);
         }
         else {
-            Track track = new(sceneIdx, RaceSettings.CloneSettings(defaultSettings));
+            Track track = new(levelName, RaceSettings.CloneSettings(defaultSettings));
             playlist.AddTrack(track);
             scrollableList.AddTrack(track);
             trackEditor.SetDisplayFrom(track.settings);
         }
-        (ruleEditorTrackName.text, ruleEditorThumbnail.sprite) = scrollableList.GetAssetsAtIndex(sceneIdx);
+        ruleEditorTrackName.text = levelName;
+        ruleEditorThumbnail.sprite = scrollableList.GetThumbnail(levelName);
         trackSelector.SetActive(false);
         rulesEditor.SetActive(true);
         SoundManager.OnConfirmUI();
@@ -97,7 +98,7 @@ public class PlaylistEditor : MonoBehaviour
 
     public void SelectForEditing(int idx) {
         trackList.SetActive(false);
-        (ruleEditorTrackName.text, ruleEditorThumbnail.sprite) = scrollableList.GetAssetsAtIndex(playlist[idx].sceneIdx);
+        (ruleEditorTrackName.text, ruleEditorThumbnail.sprite) = (playlist[idx].levelName, scrollableList.GetThumbnail(playlist[idx].levelName));
         trackEditor.SetDisplayFrom(playlist[idx].settings);
         rulesEditor.SetActive(true);
     }

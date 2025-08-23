@@ -13,12 +13,12 @@ namespace GWK.UI {
         [SerializeField] private TMP_Text mainLabel;
         [SerializeField] private TMP_Text transitionLabel;
         [Space]
-        [SerializeField] private UnityEvent<int> OnSelected;
+        [SerializeField] private UnityEvent<string> OnSelected;
         [Space]
         [SerializeField] private AnimationTarget animationSettings;
         private AnimationTarget mainAnimation, transitionAnimation;
         [Space]
-        [SerializeField] private SlideshowEntry[] entries;
+        [SerializeField] private TrackThumbnails entries;
         private int currentIdx;
         public int CurrentIdx {
             get => currentIdx;
@@ -123,7 +123,8 @@ namespace GWK.UI {
         }
 
         public void SelectTrack() {
-            OnSelected.Invoke(entries[CurrentIdx].trackIndex);
+            Debug.Log($"Slideshow selecting: {entries[CurrentIdx].caption}");
+            OnSelected.Invoke(entries[CurrentIdx].caption);
         }
     }
     [Serializable]

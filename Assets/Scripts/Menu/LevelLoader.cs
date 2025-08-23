@@ -4,7 +4,7 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour
 {
-    private const int menuSceneIdx = 1;
+    private const string menuSceneName = "Menu 1";
     [SerializeField] private bool goToMenu = false;
     public void LoadLevel() {
         StartCoroutine(nameof(LoadLevelCoroutine));
@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
             GameRulesManager.SpawnPlayersForRace();
         }
             
-        var loading = SceneManager.LoadSceneAsync(goToMenu ? menuSceneIdx : t.sceneIdx + menuSceneIdx);
+        var loading = SceneManager.LoadSceneAsync(goToMenu ? menuSceneName : t.levelName);
         if (goToMenu) {
             GameRulesManager.players = null;
         }

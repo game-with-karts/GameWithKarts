@@ -238,22 +238,7 @@ MonoBehaviour:
   content: {fileID: 272009180845249734}
   entryPrefab: {fileID: 6678192619244619533, guid: 1fc663032aa56124e99ba4c5d74f64b4, type: 3}
   prefabHeight: 80
-  trackNames:
-  - Desert
-  - Moebius
-  - Cave
-  - Hill
-  - Mountains
-  - City
-  - Canyon
-  trackThumbnails:
-  - {fileID: 21300000, guid: cf6b2081d88f7b34099dc4cd00b5ce51, type: 3}
-  - {fileID: 21300000, guid: 28ce05594b08747498b0180212fae3fe, type: 3}
-  - {fileID: 21300000, guid: e0d25b59de9fdf8439941040a2a5c748, type: 3}
-  - {fileID: 21300000, guid: 78aca7c80d00ec04a9973855cb37ed85, type: 3}
-  - {fileID: 21300000, guid: 6bfa52134bed4e245afffc85b4456df1, type: 3}
-  - {fileID: 21300000, guid: 676ebc92a4b34285886ecfbd2f63eb50, type: 3}
-  - {fileID: 21300000, guid: ea7b8dd71088d1b8db268ca2609edf82, type: 3}
+  trackThumbnails: {fileID: 11400000, guid: 947d52d5826e410d8a48d9f5a6be581e, type: 2}
   emptyText: {fileID: 994861175812916447}
   emptyColorSelected: {r: 0.3726415, g: 0.68431675, b: 1, a: 0.5176471}
   emptyColorDeselected: {r: 0, g: 0, b: 0, a: 0.5176471}
