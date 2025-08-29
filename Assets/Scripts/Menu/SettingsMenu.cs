@@ -69,6 +69,11 @@ public class SettingsMenu : MonoBehaviour
         fpsCounterChk.Value = showFPSCounter;
     }
 
+    public void ResetInputBindings() {
+        inputAction.RemoveAllBindingOverrides();
+        UpdateSettings();
+    }
+
     // public void UpdateKeybinds() {
     //     // this doesn't make sense, but it might work
     //     string overrides = inputAction.SaveBindingOverridesAsJson();

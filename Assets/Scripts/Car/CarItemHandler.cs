@@ -25,6 +25,15 @@ namespace GWK.Kart {
 
         private List<ItemEntry> entriesActual;
 
+        private Timer shieldTimer = new();
+        public bool IsShieldActive {get; private set;}
+        public event Action<bool> OnShieldEnd;
+        public event Action OnShieldStart;
+
+        private Timer invincTimer = new();
+        public bool IsInvincible {get; private set;}
+        public event Action<bool> OnInvincibility;
+
         private bool lookingBackwards;
         public bool LookingBackwards => lookingBackwards;
         private void SetBackwards(bool v) => lookingBackwards = v;
@@ -38,6 +47,43 @@ namespace GWK.Kart {
             InputProvider.BackCamera -= SetBackwards;
         }
 
+        
+        public void EnableShield() {
+            shieldTimer.Reset();
+            if (!IsShieldActive) {
+                OnShieldStart?.Invoke();
+                shieldTimer.Start();
+            }
+            IsShieldActive = true;
+        }
+
+        public void DisableShield(bool broken) {
+            if (IsShieldActive) {
+                shieldTimer.Stop();
+                shieldTimer.Reset();
+            }
+            OnShieldEnd?.Invoke(broken);
+            IsShieldActive = false;
+        }
+
+        public void EnableInvincibility() {
+            invincTimer.Reset();
+            if (!IsInvincible) {
+                OnInvincibility?.Invoke(true);
+                invincTimer.Start();
+            }
+            IsInvincible = true;
+        }
+
+        public void DisableInvincibility() {
+            if (IsInvincible) {
+                invincTimer.Stop();
+                invincTimer.Reset();            
+            }
+            OnInvincibility?.Invoke(false);
+            IsInvincible = false;
+        }
+
         public override void Init(bool restarting) {
             StopAllCoroutines();
             IsRolling = false;
@@ -47,6 +93,9 @@ namespace GWK.Kart {
                 car.Collider.TriggerEnter += OnTriggerEnter;
                 eventSubscribed = true;
             }
+
+            DisableShield(false);
+            DisableInvincibility();
         }
 
         void UseItem() {
@@ -60,6 +109,9 @@ namespace GWK.Kart {
                 ItemType.Freezer => new ItemTrapItem(),
                 ItemType.Missile => new MissileItem(),
                 ItemType.DynamiteCrate => new ItemTrapItem(),
+                ItemType.Shield => new ShieldItem(),
+                ItemType.Fireball => new FireballItem(),
+                ItemType.Invincibility => new InvincibilityItem(),
                 _ => null,
             };
             item?.Use(car, currentItem?.prefab);
@@ -123,7 +175,7 @@ namespace GWK.Kart {
                 temp.weight *= itemWeights.records
                                           .Where(r => r.itemType == entries[i].type)
                                           .Single()
-                                          .GetPlacementWeight(position);
+                                          .GetPlacementWeight(position < 1 ? 1 : position);
                 entriesActual.Add(temp);
             }
 
@@ -144,6 +196,14 @@ namespace GWK.Kart {
         }
 
         void Update() {
+            shieldTimer.Tick(Time.deltaTime);
+            if (shieldTimer.Time >= 15) {
+                DisableShield(false);
+            }
+            invincTimer.Tick(Time.deltaTime);
+            if (invincTimer.Time >= 10) {
+                DisableInvincibility();
+            }
             if (currentItem?.type == ItemType.Missile) {
                 IEnumerable<BaseCar> targetables = RaceManager.instance.GetTargetables()
                     .Where(c => Vector3.Dot(transform.forward, c.transform.position - transform.position) > 0)

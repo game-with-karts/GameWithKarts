@@ -24,6 +24,7 @@ namespace GWK.Kart {
         [SerializeField] private CarCollider collider;
         [SerializeField] private CarItemHandler item;
         [SerializeField] private CarAppearance appearance;
+        [SerializeField] private CarRespawn respawn;
         [SerializeField] private Renderer renderer;
         public CarMovement Movement => movement;
         public Rigidbody RB => rb;
@@ -38,6 +39,7 @@ namespace GWK.Kart {
         public CarCollider Collider => collider;
         public CarItemHandler Item => item;
         public CarAppearance Appearance => appearance;
+        public CarRespawn Respawn => respawn;
         [SerializeField] private bool isBot;
         public CarDrivingState state = CarDrivingState.Idle;
         public bool IsBot => isBot;
@@ -47,6 +49,7 @@ namespace GWK.Kart {
         public ItemProjectile currentProjectile { get; private set; }
         public Action<BaseCar> OnEliminated;
         private List<CarComponent> components;
+        
 
         public void ResetCar(bool onInit) {
             currentProjectile = null;
@@ -107,6 +110,8 @@ namespace GWK.Kart {
         void OnDisable() {
             components.ForEach(c => c.InputProvider = null);
         }
+
+        
 
         public void Eliminate() {
             isEleminated = true;

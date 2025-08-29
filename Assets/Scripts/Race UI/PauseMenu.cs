@@ -18,6 +18,11 @@ public class PauseMenu : MonoBehaviour
         Init();
         inputs.UI.Pause.performed += TogglePause;
         inputs.UI.Pause.Enable();
+
+        if (instance != null) {
+            Destroy(this);
+        }
+        instance = this;
     }
 
     void Update() {

@@ -30,6 +30,10 @@ namespace GWK.Kart {
         [Header("Minimap")]
         [SerializeField] private MinimapDisplay minimap;
         public MinimapDisplay Minimap => minimap;
+        [Space]
+        [Header("Final lap display")]
+        [SerializeField] private RectTransform finalLapTransform;
+        private IEnumerator finalLapCoroutine;
         [Header("Last Lap display")]
         [SerializeField] private RectTransform lastLapTransform;
         [SerializeField] private TMP_Text lastLapText;
@@ -45,6 +49,7 @@ namespace GWK.Kart {
         [SerializeField] private RectTransform targetDisplayTransform;
         [Header("Missile Approaching")]
         [SerializeField] private TMP_Text missileText;
+        [SerializeField] private AudioSource missileAudio;
         private Vector2 lastLapAnchoredPos;
         private int numCars;
         private bool lastLapEventSubscribed = false;
@@ -68,6 +73,14 @@ namespace GWK.Kart {
             DisplayItem();
             DisplayTarget();
             DisplayMissileApproaching();
+        }
+
+        void OnEnable() {
+            car.Path.OnFinalLap += FinalLap;
+        }
+
+        void OnDisable() {
+            car.Path.OnFinalLap -= FinalLap;
         }
         
         private void DisplayItem() {
@@ -98,9 +111,15 @@ namespace GWK.Kart {
         private void DisplayMissileApproaching() {
             missileText.enabled = car.currentProjectile != null;
             if (car.currentProjectile == null) {
+                if (missileAudio.isPlaying) {
+                    missileAudio.Stop();                
+                }
                 return;
             }
 
+            if (!missileAudio.isPlaying) {
+                missileAudio.Play();
+            }
             missileText.text = $"{(transform.position - car.currentProjectile.transform.position).magnitude:f2} m";
             missileText.color = Color.Lerp(Color.red, Color.white, Mathf.Sin(6 * Mathf.PI * Time.time) / 2 + .5f);
         }
@@ -134,6 +153,14 @@ namespace GWK.Kart {
                 car.Timer.OnLapSaved += LastLapCoroutine;
                 lastLapEventSubscribed = true;
             }
+
+            missileAudio.Stop();
+
+            finalLapTransform.localScale = new(1, 0);
+            if (finalLapCoroutine != null) {
+                StopCoroutine(finalLapCoroutine);
+            }
+            finalLapCoroutine = null;
         }
 
         public void ActivateCanvas() => canvas.gameObject.SetActive(!car.IsBot);
@@ -193,6 +220,32 @@ namespace GWK.Kart {
             screenPos.x *= (canvas.transform as RectTransform).sizeDelta.x;
             screenPos.y *= canvasScaler.referenceResolution.y;
             targetDisplayTransform.anchoredPosition = screenPos;
+        }
+
+        public void FinalLap() {
+            finalLapCoroutine = FinalLapCoroutine();
+            StartCoroutine(finalLapCoroutine);
+        }
+
+        private IEnumerator FinalLapCoroutine() {
+            const float TRANSITION_TIME = .25f;
+            Timer tim = new();
+            tim.Start();
+            while (tim.Time < TRANSITION_TIME) {
+                tim.Tick(Time.deltaTime);
+                finalLapTransform.localScale = new(1, tim.Time / TRANSITION_TIME);
+                yield return null;
+            }
+            finalLapTransform.localScale = new(1, 1);
+            yield return new WaitForSeconds(3);
+            tim.Reset();
+            while (tim.Time < TRANSITION_TIME) {
+                tim.Tick(Time.deltaTime);
+                finalLapTransform.localScale = new(1, 1 - tim.Time / TRANSITION_TIME);
+                yield return null;
+            }
+            finalLapTransform.localScale = new(1, 0);
+            finalLapCoroutine = null;
         }
     }
 }

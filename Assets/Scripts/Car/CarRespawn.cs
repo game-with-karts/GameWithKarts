@@ -38,6 +38,9 @@ namespace GWK.Kart {
             car.RB.transform.position = respawnPosition;
             transform.rotation = respawnRotation;
 
+            car.Item.DisableInvincibility();
+            car.Item.DisableShield(false);
+
             float s = 0;
             while (s < respawnDuration) {
                 s += Time.deltaTime;
@@ -48,6 +51,7 @@ namespace GWK.Kart {
 
             car.Movement.SetControllableState(true);
             car.Movement.IsAffectedByGravity = true;
+            OnRespawn?.Invoke();
         }
         public override void Init(bool _) {
             StopCoroutine(nameof(Respawn));

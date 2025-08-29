@@ -12,6 +12,9 @@ public class ItemWeights : ScriptableObject {
         new(ItemType.SpikeTrap),
         new(ItemType.Freezer),
         new(ItemType.DynamiteCrate),
+        new(ItemType.Shield),
+        new(ItemType.Fireball),
+        new(ItemType.Invincibility),
     };
 
     public List<ItemWeightsRecord> InitList() {

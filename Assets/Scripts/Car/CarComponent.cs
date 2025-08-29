@@ -16,7 +16,8 @@ namespace GWK.Kart {
             }
         }
 
-        protected BaseCar car;
+        [HideInInspector]
+        public BaseCar car;
 
         protected virtual void Awake() {
             car = GetComponent<BaseCar>();

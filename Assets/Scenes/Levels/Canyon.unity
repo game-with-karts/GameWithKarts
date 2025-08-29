@@ -92,7 +92,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: a9dcd1b415fcb3a4890abfbc03b2b591, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: f8d325a0c0f6b7cdbbd030b93583b321, type: 2}
   m_LightingSettings: {fileID: 1173876608}
 --- !u!196 &4
 NavMeshSettings:
@@ -754,14 +754,14 @@ MonoBehaviour:
   editorData:
     _bezierPath:
       points:
-      - {x: -1.2067161, y: -0.008354187, z: -54.937454}
-      - {x: -2.0441868, y: 2.8888915, z: -26.665121}
+      - {x: -1.2067161, y: 2.4837122, z: -54.937454}
+      - {x: -2.0484343, y: 2.9921353, z: -26.521727}
       - {x: -25.14946, y: 0.20818329, z: 13.771111}
       - {x: -65.7029, y: 8.776949, z: 9.780399}
       - {x: -110.35231, y: 18.211174, z: 5.3866205}
-      - {x: -124.35083, y: 44.40642, z: -115.52435}
-      - {x: -200.96242, y: 41.777134, z: -120.20651}
-      - {x: -254.3366, y: 39.945347, z: -123.468506}
+      - {x: -124.562744, y: 39.364723, z: -115.5373}
+      - {x: -200.96242, y: 45.64592, z: -120.20651}
+      - {x: -254.3366, y: 50.034077, z: -123.468506}
       - {x: -401.6371, y: 54.950405, z: 2.0309095}
       - {x: -229.95747, y: 51.72678, z: -8.786308}
       - {x: -103.70979, y: 49.356228, z: -16.740944}
@@ -783,9 +783,9 @@ MonoBehaviour:
       - {x: 106.42492, y: 4.669876, z: 180.6886}
       - {x: 100.66093, y: 3.5226994, z: 99.29967}
       - {x: 94.04466, y: 2.2058992, z: 5.8764267}
-      - {x: 342.03223, y: 28.453884, z: 80.505424}
-      - {x: 270.35394, y: 18.23286, z: -55.520897}
-      - {x: 214.16408, y: 10.220441, z: -162.15433}
+      - {x: 342.1867, y: 20.375046, z: 80.79858}
+      - {x: 270.35394, y: 18.811132, z: -55.520897}
+      - {x: 214.16408, y: 17.58779, z: -162.15433}
       - {x: 155.89558, y: 17.627216, z: -3.4931314}
       - {x: 110.4278, y: 18.429707, z: -2.7787726}
       - {x: 66.16312, y: 19.210957, z: -2.0833158}
@@ -801,10 +801,10 @@ MonoBehaviour:
       - {x: -70.07209, y: 28.99385, z: -199.42609}
       - {x: -38.141563, y: 21.281717, z: -179.94043}
       - {x: -18.339394, y: 16.498928, z: -167.85612}
-      - {x: 2.1042616, y: 1.9426004, z: -151.22496}
-      - {x: 1.3011208, y: -0.07208252, z: -129.8349}
-      - {x: 0.11857951, y: -3.038493, z: -98.34026}
-      - {x: -0.34220123, y: -2.9991593, z: -84.12277}
+      - {x: 2.1077304, y: 2.0644243, z: -151.31735}
+      - {x: 1.3011208, y: 1.7613173, z: -129.8349}
+      - {x: 0.11857951, y: 1.3169432, z: -98.34026}
+      - {x: -0.34220123, y: 1.9615192, z: -84.12277}
       isClosed: 1
       space: 0
       controlMode: 0
@@ -2030,6 +2030,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -7475957244665418267, guid: 25eec44db1494e60fa3c56c6db13574c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3584497630037689987, guid: 25eec44db1494e60fa3c56c6db13574c, type: 3}
       propertyPath: m_CastShadows
       value: 2
@@ -2045,6 +2049,10 @@ PrefabInstance:
     - target: {fileID: 3594243245622329198, guid: 25eec44db1494e60fa3c56c6db13574c, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594243245622329198, guid: 25eec44db1494e60fa3c56c6db13574c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

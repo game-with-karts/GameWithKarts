@@ -9,6 +9,8 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
     public BaseCar parentCar => _parentCar;
     [SerializeField] private Transform model;
     [SerializeField] private VisualEffect effect;
+    [SerializeField] private AudioSource explosionSfx;
+    [SerializeField] private AudioSource flightSfx;
     public void SetParentCar(BaseCar car) => _parentCar = car;
     private Quaternion modelRot = Quaternion.identity;
     private float lifetime = 10;
@@ -16,6 +18,19 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
     
     public void OnItemBox() {
         parentCar.Item.RollItem();
+    }
+
+    void Start() {
+        flightSfx.Play();
+    }
+
+    public override void PlaySound(bool paused) {
+        if (paused) {
+            flightSfx.Pause();
+        }
+        else {
+            flightSfx.Play();
+        }
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -33,7 +48,8 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
         Vector3 postBounceVelocity = RB.linearVelocity;
         for (int i = 0; i < collision.contactCount; i++) {
             ContactPoint cp = contacts[i];
-            postBounceVelocity += cp.impulse * 0.8f;
+            Vector3 impulseDir = (cp.impulse - (Vector3.Dot(localUp, cp.impulse) * localUp)).normalized;
+            postBounceVelocity += impulseDir * cp.impulse.magnitude;
         }
         RB.linearVelocity = postBounceVelocity;
     }
@@ -55,6 +71,7 @@ public sealed class LaserDiscProjectile : ItemProjectile, IItemInteractable {
         effect.transform.parent = null;
         effect.transform.rotation = Quaternion.identity;
         effect.Play();
+        explosionSfx.Play();
         Destroy(effect.gameObject, 3);
         Destroy(gameObject);
     }

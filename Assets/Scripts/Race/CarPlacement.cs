@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections;
 using GWK.Kart;
+using System.Collections.Generic;
 public class CarPlacement : MonoBehaviour
 {
     private BaseCar[] cars;
@@ -42,4 +43,6 @@ public class CarPlacement : MonoBehaviour
         car.Path.finalPlacement = place;
         car.Path.OnRaceEnd -= SendFinalPlacement;
     }
+
+    public IEnumerable<BaseCar> CarsInOrder => cars;
 }

@@ -1,8 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Events;
 using TMPro;
+using GWK.UI;
 
 public class Rebind : MonoBehaviour
 {
@@ -25,7 +26,12 @@ public class Rebind : MonoBehaviour
         }
     }
 
-    private void SetText() {
+    public void ResetBiding() {
+        action.RemoveAllBindingOverrides();
+        SetText();
+    }
+
+    public void SetText() {
         keyDisplay.text = InputControlPath.ToHumanReadableString(action.bindings[bindingNumber].effectivePath,
                                                                  InputControlPath.HumanReadableStringOptions.OmitDevice);
     }
@@ -37,6 +43,7 @@ public class Rebind : MonoBehaviour
                                     .WithControlsExcluding("<Keyboard>/escape")
                                     .WithControlsExcluding("Mouse")
                                     .WithTargetBinding(bindingNumber)
+                                    .WithExpectedControlType<ButtonControl>()
                                     .OnMatchWaitForAnother(.1f)
                                     .OnComplete(op => OnRebind(op))
                                     .Start();

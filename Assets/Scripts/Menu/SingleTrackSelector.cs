@@ -23,7 +23,6 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
 
     public void SetLevel(String name) {
         trackName = name;
-        Debug.Log($"Level set: {trackName}");
     }
 
     public void Select() {

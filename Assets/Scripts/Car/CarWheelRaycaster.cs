@@ -46,8 +46,8 @@ namespace GWK.Kart {
         {
             Vector3 lineEnd = transform.position - transform.up * rayLength;
             Gizmos.color = new(0, 0.7f, 1);
-            Gizmos.DrawLine(transform.position, lineEnd);
             if (isGrounded) Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, lineEnd);
             Gizmos.DrawWireSphere(lineEnd, .15f);
         }
     }

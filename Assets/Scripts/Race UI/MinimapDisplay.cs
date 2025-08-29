@@ -11,7 +11,7 @@ public class MinimapDisplay : MonoBehaviour
     [Space]
     [SerializeField] private float playerDotSize = 2;
     private MinimapTransform minimapTransform;
-    private List<(Transform, RectTransform)> cars = new();
+    private List<(BaseCar, RectTransform)> cars = new();
     public void SetMinimapTransform(MinimapTransform t) {
         minimapTransform = t;
         minimapTransform.SetUISize((transform as RectTransform).sizeDelta.x);
@@ -25,14 +25,15 @@ public class MinimapDisplay : MonoBehaviour
         foreach (var car in cars) {
             rt = Instantiate(carPointPrefab, minimapParent);
             if (!car.IsBot) rt.localScale = new(playerDotSize, playerDotSize, 1);
-            this.cars.Add((car.transform, rt));
+            rt.GetComponent<Image>().color = car.Appearance.CarColor;
+            this.cars.Add((car, rt));
         }
         
     }
     private void Update() {
         Vector3 carPosOnMap;
-        foreach((Transform car, RectTransform dot) in cars) {
-            carPosOnMap = new(car.position.x, car.position.z, -1);
+        foreach((BaseCar car, RectTransform dot) in cars) {
+            carPosOnMap = new(car.Position.x, car.Position.z, -1);
             dot.localPosition = (carPosOnMap - minimapTransform.Offset) / minimapTransform.MinimapScale;
         }
     }

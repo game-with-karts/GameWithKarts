@@ -30,8 +30,8 @@ namespace GWK.Kart {
         [Space]
         [SerializeField] private CarWheelRaycaster[] frontWheels;
         [SerializeField] private CarWheelRaycaster[] rearWheels;
-        private Vector3 ForwardRayOriginOffset => transform.forward * forwardRayOriginOffset + transform.up * .25f;
-        private Vector3 BackwardRayOriginOffset => transform.forward * -forwardRayOriginOffset + transform.up * .25f;
+        private Vector3 ForwardRayOriginOffset => transform.forward * forwardRayOriginOffset;
+        private Vector3 BackwardRayOriginOffset => transform.forward * -forwardRayOriginOffset;
         private Vector3 RightRayOriginOffset => ForwardRayOriginOffset + rightRayOriginOffset * transform.right;
         private Vector3 LeftRayOriginOffset => ForwardRayOriginOffset - rightRayOriginOffset * transform.right;
         private Vector3 RightRayDirection => (transform.forward * narrowness + transform.right).normalized;
@@ -197,7 +197,7 @@ namespace GWK.Kart {
                 itemTimer = 0;
                 return;
             }
-            targetItemTimer = Rnd.Range(0, 5);
+            targetItemTimer = Rnd.Range(0, 10);
         }
 
         void OnDrawGizmos() {

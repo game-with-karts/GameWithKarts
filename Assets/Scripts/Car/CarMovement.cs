@@ -10,6 +10,7 @@ namespace GWK.Kart {
         [SerializeField] private float downforceAmount;
         [SerializeField] private float boostingSpeed = 40;
         [SerializeField] private float boostingAcceleration = 40;
+        [SerializeField] private float invincibilityMaxSpeed = 40 * BoostTierOperations.AsFloat(BoostTier.Ultimate);
         [SerializeField] private CarWheelRaycaster[] wheels;
         [SerializeField] private float gravity;
         [SerializeField] private CarFrictionSettings[] frictionSettings;
@@ -29,6 +30,7 @@ namespace GWK.Kart {
         public bool IsReversing => isReversing;
         public bool IsBraking => isBraking;
         public bool IsAntigrav => isAntigrav;
+        public Vector3 LocalVel {get; private set;}
         public bool IsAffectedByGravity { get; set; }
         public Vector3 startingPosition { get; set; }
         public Quaternion startingRotation { get; set; }
@@ -159,6 +161,7 @@ namespace GWK.Kart {
             orientationUp = IsGrounded ? normal : localUp;
             Vector3 vel = car.RB.linearVelocity;
             Vector3 localVel = transform.InverseTransformDirection(car.RB.linearVelocity);
+            LocalVel = localVel;
 
             currentForwardFriction = currentFrictionSettings.forwardFriction;
             currentSidewaysFriction = currentFrictionSettings.sidewaysFriction;
@@ -210,7 +213,7 @@ namespace GWK.Kart {
         }
 
         private void PerformMovement(Vector3 vel, float axisV) {
-            if (car.Drifting.isBoosting) {
+            if (car.Drifting.isBoosting && !car.Item.IsInvincible) {
                 Move(vel, boostingSpeed * BoostTierOperations.AsFloat(car.Drifting.BoostTier), boostingAcceleration);
             }
             else {
@@ -218,7 +221,8 @@ namespace GWK.Kart {
                     Brake(vel);
                 }
                 else {
-                    if (axisV > 0) Move(vel, stats.maxSpeed, stats.acceleration);
+                    float maxSpeed = car.Item.IsInvincible ? invincibilityMaxSpeed : stats.maxSpeed;
+                    if (axisV > 0) Move(vel, maxSpeed, stats.acceleration);
                     else if (axisV < 0) Reverse(vel);
                     else currSpeed *= stats.idleDeceleration;
                 }

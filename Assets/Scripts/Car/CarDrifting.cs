@@ -6,6 +6,8 @@ namespace GWK.Kart {
     public enum DriftState {
         Idle,
         Jumping,
+        Airbourne,
+        Falling,
         Drifting,
         DriftingAfterBoost
     }
@@ -24,6 +26,8 @@ namespace GWK.Kart {
         public event Action OnJump;
         public event Action OnLand;
         public event Action<float, int> OnDriftBoost;
+        public event Action OnBoost;
+        public event Action OnOverdrift;
 
         private float tank = 0;
         public float BoostTank => tank;
@@ -32,6 +36,8 @@ namespace GWK.Kart {
         private BoostTier tier = BoostTier.None;
         private Timer jumpTimer = new();
         private Timer driftTimer = new();
+
+        public DriftState State => state;
 
         private int driftKey = 0;
         private float driftDirection;
@@ -43,8 +49,6 @@ namespace GWK.Kart {
         public bool CanDrift => driftBoostCount < 3 && RelativeDriftTimer < 1;
         public bool IsDrifting => state == DriftState.Drifting;
         public BoostTier BoostTier => tier;
-
-        private bool hasLeftGround;
 
         private float axisV;
         private float axisH;
@@ -112,44 +116,61 @@ namespace GWK.Kart {
                 EndDrift();
                 return;
             }
-            
             switch(state) {
                 default:
                     break;
 
                 case DriftState.Idle:
                     driftDirection = 0;
+                    if (!car.Movement.IsGrounded) {
+                        state = DriftState.Falling;
+                    }
                     break;
 
                 case DriftState.Jumping:
-                    if (car.Movement.IsGrounded && hasLeftGround) {
-                        jumpTimer.Stop();
-                        OnLand?.Invoke();
-                        if (jumpTimer.Time >= jumpBoostTime) {
-                            AddBoost(jumpBoostAmount, BoostTier.Normal);
-                        }
-                        jumpTimer.Reset();
-                        
-                        state = DriftState.Idle;
-                        if ((jump1 || jump2) && axisH != 0 && car.RB.linearVelocity.magnitude > 5 && !car.Movement.IsReversing) {
-                            state = DriftState.Drifting;
-                            driftBoostCount = 0;
-                            driftKey = jump1 ? 1 : (jump2 ? 2 : 0);
-                            driftDirection = Mathf.Sign(axisH);
-                            driftTimer.Start();
-                        }
-                    }
-                    else if (!car.Movement.IsGrounded) {
-                        hasLeftGround = true;
+                    if (!car.Movement.IsGrounded) {
+                        state = DriftState.Airbourne;
                     }
                     break;
+
+                case DriftState.Airbourne:
+                    if (car.Movement.IsGrounded) {
+                        Land();
+                    }
+                    else if (car.Movement.LocalVel.y < 0) {
+                        state = DriftState.Falling;
+                    }
+                    break;
+
+                case DriftState.Falling:
+                    if (car.Movement.IsGrounded) {
+                        Land();
+                    }
+                    break;
+            }
+        }
+
+        private void Land() {
+            jumpTimer.Stop();
+            OnLand?.Invoke();
+            if (jumpTimer.Time >= jumpBoostTime) {
+                AddBoost(jumpBoostAmount, BoostTier.Normal);
+            }
+            jumpTimer.Reset();
+            
+            state = DriftState.Idle;
+            if ((jump1 || jump2) && axisH != 0 && car.RB.linearVelocity.magnitude > 5 && !car.Movement.IsReversing) {
+                state = DriftState.Drifting;
+                driftBoostCount = 0;
+                driftKey = jump1 ? 1 : (jump2 ? 2 : 0);
+                driftDirection = Mathf.Sign(axisH);
+                driftTimer.Start();
             }
         }
 
         private void Jump(float boostValue) {
             OnJump?.Invoke();
             state = DriftState.Jumping;
-            hasLeftGround = false;
             float dot = Vector3.Dot(transform.up, car.Movement.LocalUp);
             float jumpBoost = boostValue + (1 - Mathf.Abs(dot)) / 2;
             car.RB.AddForce(car.Movement.LocalUp * jumpStrength * jumpBoost * car.RB.mass);
@@ -159,6 +180,7 @@ namespace GWK.Kart {
         private void CheckDriftCondition(bool secondary) {
             if (driftTimer.Time > driftMaxTime) {
                 driftBoostCount = 3;
+                OnOverdrift?.Invoke();
             }
             if (secondary && driftBoostCount < 3) {
                 driftBoostCount++;
@@ -166,14 +188,15 @@ namespace GWK.Kart {
                 float boostT = (driftMaxTime - driftTimer.Time) / (driftMaxTime - driftMinTime);
                 float boostAmount = Mathf.LerpUnclamped(driftMaxAmount, driftMinAmount, boostT);
 
-                OnDriftBoost?.Invoke(boostT, driftBoostCount);
+                OnDriftBoost?.Invoke(RelativeDriftTimer, driftBoostCount);
 
                 BoostTier tier = this.tier == BoostTier.None ? BoostTier.Normal : this.tier;
 
                 if (driftBoostCount == 3 && RelativeDriftTimer >= .9f) {
                     tier = BoostTierOperations.OneUp(tier);
                 }
-                AddBoost(boostAmount, tier);
+                this.tier = tier;
+                tank += boostAmount;
 
                 driftTimer.Reset();
             }
@@ -184,6 +207,7 @@ namespace GWK.Kart {
                 this.tier = tier;
             }
             tank += boostAmount;
+            OnBoost?.Invoke();
         }
         public void ResetBoostTank() {
             tank = 0;
@@ -207,6 +231,18 @@ namespace GWK.Kart {
             base.Awake();
             car.Collider.TriggerEnter += OnTriggerEnter;
             car.Collider.TriggerStay += OnTriggerStay;
+        }
+
+        void OnEnable() {
+            car.Respawn.OnRespawn += Respawn;
+        }
+
+        void OnDisable() {
+            car.Respawn.OnRespawn -= Respawn;
+        }
+
+        void Respawn() {
+            Init(false);
         }
 
         void OnTriggerEnter(Collider other) {

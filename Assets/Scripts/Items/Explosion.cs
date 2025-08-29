@@ -35,7 +35,9 @@ public class Explosion : MonoBehaviour {
         }
 
         if (other.gameObject.TryGetComponent<ISelfDestructable>(out var item)) {
-            item.SelfDestruct();
+            if (item as FireballProjectile == null) {
+                item.SelfDestruct();
+            }
         }
     }
 }

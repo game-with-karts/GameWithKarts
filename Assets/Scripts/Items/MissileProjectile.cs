@@ -9,6 +9,8 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
     [SerializeField] private LayerMask collideWith;
     [SerializeField] private Transform model;
     [SerializeField] private VisualEffect effect;
+    [SerializeField] private AudioSource flightSfx;
+    [SerializeField] private AudioSource explosionSfx;
     [Space]
     [SerializeField] private float speed = 60;
     [SerializeField] private float rotateSpeed = 95;
@@ -22,6 +24,18 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
     
     public void OnItemBox() {
         parentCar.Item.RollItem();
+    }
+    void Start() {
+        flightSfx.Play();
+    }
+
+    public override void PlaySound(bool paused) {
+        if (paused) {
+            flightSfx.Pause();
+        }
+        else {
+            flightSfx.Play();
+        }
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -72,6 +86,7 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
         effect.transform.parent = null;
         effect.transform.rotation = Quaternion.identity;
         effect.Play();
+        explosionSfx.Play();
         Destroy(effect.gameObject, 3);
         Destroy(gameObject);
     }

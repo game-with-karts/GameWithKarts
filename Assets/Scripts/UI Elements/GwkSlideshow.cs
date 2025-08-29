@@ -123,7 +123,6 @@ namespace GWK.UI {
         }
 
         public void SelectTrack() {
-            Debug.Log($"Slideshow selecting: {entries[CurrentIdx].caption}");
             OnSelected.Invoke(entries[CurrentIdx].caption);
         }
     }

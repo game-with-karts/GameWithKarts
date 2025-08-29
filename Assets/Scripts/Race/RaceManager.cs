@@ -33,8 +33,12 @@ public class RaceManager : MonoBehaviour
 
     public static RaceManager instance { get; private set; }
     public static List<ISelfDestructable> allItems = new();
+    public static bool RaceStarted {get; private set;}
+
+    public IEnumerable<BaseCar> CarsInPlacementOrder => carPlacement.CarsInOrder;
 
     private void Awake() {
+        RaceStarted = false;
         if (instance is not null) {
             Destroy(gameObject);
             return;
@@ -129,15 +133,15 @@ public class RaceManager : MonoBehaviour
     }
 
     public void ResetRace() {
+        RaceStarted = false;
         SoundManager.StopMusic();
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
 
-        if (allItems.Count == 0) {
-            return;
+        if (allItems.Count > 0) {
+            allItems.ForEach(i => i.SelfDestruct());
+            allItems = new();
         }
-        allItems.ForEach(i => i.SelfDestruct());
-        allItems = new();
 
         foreach (var c in cars.Where(c => c.Finished)) {
             c.Path.OnRaceEnd += OnCarFinished;
@@ -151,6 +155,7 @@ public class RaceManager : MonoBehaviour
     private void StartRace() {
         OnRaceStart?.Invoke();
         SoundManager.PlayMusic();
+        RaceStarted = true;
     }
 
     private void OnDestroy() {

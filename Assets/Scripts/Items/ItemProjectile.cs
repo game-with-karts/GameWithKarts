@@ -10,6 +10,14 @@ public abstract class ItemProjectile : MonoBehaviour, ISelfDestructable {
         RaceManager.allItems.Add(this);
     }
 
+    void OnEnable() {
+        PauseMenu.instance.OnPause += PlaySound;
+    }
+
+    void OnDisable() {
+        PauseMenu.instance.OnPause -= PlaySound;
+    }
+
     protected virtual void FixedUpdate() {
         if (!isAntigrav) {
             localUp = Vector3.up;
@@ -27,4 +35,5 @@ public abstract class ItemProjectile : MonoBehaviour, ISelfDestructable {
     protected virtual void OnDestroy() {
         RaceManager.allItems.Remove(this);
     }
+    public virtual void PlaySound(bool paused) {}
 }

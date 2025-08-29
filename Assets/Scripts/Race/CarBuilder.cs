@@ -38,6 +38,11 @@ public class CarBuilder {
         return this;
     }
 
+    public CarBuilder SetColor(Color color) {
+        car.Appearance.CarColor = color;
+        return this;
+    }
+
     public BaseCar Build() {
         car.Init(isBot, startOnAntigrav);
         return car;

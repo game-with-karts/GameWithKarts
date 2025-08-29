@@ -10,6 +10,9 @@ public class CountdownScreen : MonoBehaviour
     [SerializeField] private float initialDelay = 2f;
     [SerializeField] private float countingDelay = 1f;
     [SerializeField] private float endingDelay = 1.5f;
+    [SerializeField] private AudioSource countdownSource;
+    [SerializeField] private AudioClip shortClip;
+    [SerializeField] private AudioClip longClip;
 
     public Action OnCountdownOver;
 
@@ -25,9 +28,11 @@ public class CountdownScreen : MonoBehaviour
             image.sprite = countdownImages[i];
             if (i == countdownImages.Length - 1) {
                 OnCountdownOver?.Invoke();
+                countdownSource.PlayOneShot(longClip);
                 yield return new WaitForSeconds(endingDelay);
             }
             else {
+                countdownSource.PlayOneShot(shortClip);
                 yield return new WaitForSeconds(countingDelay);
             }
         }

@@ -29,6 +29,8 @@ public class SoundManager : MonoBehaviour
 
     private static Action OnMusicPlay;
     private static Action OnMusicStop;
+    private static Action OnMusicPause;
+    private static Func<bool> OnIsMusicPlaying;
     private static Action<AudioClip> OnMusicSet;
     private static Action<bool> OnMusicLoop;
 
@@ -44,8 +46,10 @@ public class SoundManager : MonoBehaviour
         OnButtonBack += Back;
         OnMusicPlay += MusicPlay;
         OnMusicStop += MusicStop;
+        OnMusicPause += MusicPause;
         OnMusicSet += MusicSet;
         OnMusicLoop += MusicLoopable;
+        OnIsMusicPlaying += MusicIsPlaying;
     }
 
     void Start() {
@@ -58,8 +62,10 @@ public class SoundManager : MonoBehaviour
 
     public static void PlayMusic() => OnMusicPlay?.Invoke();
     public static void StopMusic() => OnMusicStop?.Invoke();
+    public static void PauseMusic() => OnMusicPause?.Invoke();
     public static void SetMusic(AudioClip music) => OnMusicSet?.Invoke(music);
     public static void SetMusicLooping(bool isLooping) => OnMusicLoop?.Invoke(isLooping);
+    public static bool IsMusicPlaying() => OnIsMusicPlaying.Invoke();
 
     private void Hover() {
         SetAndPlay(hoverSFX);
@@ -87,6 +93,10 @@ public class SoundManager : MonoBehaviour
         musicSource.Stop();
     }
 
+    private void MusicPause() {
+        musicSource.Pause();
+    }
+
     private void MusicSet(AudioClip music) {
         musicSource.clip = music;
     }
@@ -95,13 +105,19 @@ public class SoundManager : MonoBehaviour
         musicSource.loop = loopable;
     }
 
+    private bool MusicIsPlaying() {
+        return musicSource.isPlaying;
+    }
+
     private void OnDestroy() {
         OnButtonHover -= Hover;
         OnButtonConfirm -= Confirm;
         OnButtonBack -= Back;
         OnMusicPlay -= MusicPlay;
         OnMusicStop -= MusicStop;
+        OnMusicPause -= MusicPause;
         OnMusicSet -= MusicSet;
         OnMusicLoop -= MusicLoopable;
+        OnIsMusicPlaying -= MusicIsPlaying;
     }
 }

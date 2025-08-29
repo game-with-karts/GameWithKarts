@@ -63,7 +63,7 @@ namespace GWK.Kart {
             }
             if (lapTimes.Count == 0) {
                 int elapsed = ElapsedTime;
-                float reciprocal = 1 / car.Path.CurrentPathTime;
+                float reciprocal = 1.1f / car.Path.CurrentPathTime;
                 for (int i = 0; i < car.Path.numLaps; i++) {
                     lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, elapsed, reciprocal)));
                 }
@@ -75,7 +75,7 @@ namespace GWK.Kart {
                 lapTimes.Add(averageLapTime);
             }
             else {
-                lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, ElapsedTime - TotalTime, .95f / car.Path.CurrentPathTime)));
+                lapTimes.Add(Mathf.RoundToInt(Mathf.LerpUnclamped(0, ElapsedTime - TotalTime, 1.1f / car.Path.CurrentPathTime)));
             }
             for (int i = 0; i < lapsRemaining; i++) {
                 lapTimes.Add(averageLapTime);

@@ -27,6 +27,15 @@ namespace GWK.Kart {
         [SerializeField] private Gradient fireUltimateBoost;
         [Space]
         [SerializeField] private AnimationCurve chromaticAberrationCurve;
+        [Space]
+        [SerializeField] private Transform shieldTransform;
+        [SerializeField] private MeshRenderer shieldRenderer;
+        [SerializeField] private VisualEffect shieldBreakVfx;
+        [Space]
+        [SerializeField] private Material material;
+        [SerializeField] private List<Renderer> renderers;
+        public Color CarColor {get; set;}
+        
         private float caAmount;
         private float caTime;
 
@@ -45,6 +54,11 @@ namespace GWK.Kart {
         private float spinAnimTime = 0;
         private Quaternion spinRotation = Quaternion.identity;
 
+        private float shieldSize;
+        private float targetShieldSize;
+        private Timer shieldTimer = new();
+        const float SHIELD_BREAKING_DURATION = .75f;
+
         private bool usePost;
         public override void Init(bool restarting) {
             if (!restarting) {
@@ -60,10 +74,31 @@ namespace GWK.Kart {
                 }
             }
             speedLines.Stop();
-
+            
+            foreach (Renderer r in renderers) {
+                r.materials[0] = material;
+                r.material.SetColor("_Base_Color", CarColor);
+                r.material.SetFloat("_Invincible", 0f);
+            }
             fireExhausts.ForEach(c => c.Stop());
+            shieldSize = 0;
+            targetShieldSize = 0;
+            shieldTimer.Stop();
+            shieldTimer.Reset();
+            shieldTransform.SetParent(null);
         }
 
+        void OnEnable() {
+            car.Item.OnShieldStart += EnableShield;
+            car.Item.OnShieldEnd += DisableShield;
+            car.Item.OnInvincibility += Invincibility;
+        }
+
+        void OnDisable() {
+            car.Item.OnShieldStart -= EnableShield;
+            car.Item.OnShieldEnd -= DisableShield;
+            car.Item.OnInvincibility -= Invincibility;
+        }
         public void PlayHitAnimation() {
             hitAnimTime = 0;
             hitRotation = Quaternion.identity;
@@ -142,6 +177,20 @@ namespace GWK.Kart {
                 r.colorGradient = surfaceType == SurfaceType.Ice ? skidmarkIceGradient : skidmarkDriftGradient;
                 r.emitting = car.Drifting.IsDrifting || (surfaceType == SurfaceType.Ice && car.Movement.IsGrounded);
             }
+
+            shieldTimer.Tick(Time.deltaTime);
+            shieldSize = Mathf.Lerp(shieldSize, targetShieldSize, 5 * Time.deltaTime);
+            shieldTransform.eulerAngles = Vector3.one * Time.time * 40;
+            shieldTransform.localScale = Vector3.one * shieldSize * 2;
+            shieldTransform.position = transform.position;
+            if (shieldTimer.running) {
+                shieldRenderer.material.SetFloat("_BreakTime", Mathf.InverseLerp(0, SHIELD_BREAKING_DURATION, shieldTimer.Time));
+                if (shieldTimer.Time >= SHIELD_BREAKING_DURATION) {
+                    targetShieldSize = 0;
+                    shieldTimer.Stop();
+                    shieldTimer.Reset();
+                }
+            }
         }
 
         void JumpAnimation() {
@@ -155,6 +204,26 @@ namespace GWK.Kart {
         void DriftEffect(float relTime, int _)  {
             caAmount = Mathf.Clamp01(1 - relTime);
             caTime = 0;
+        }
+
+        void EnableShield() {
+            targetShieldSize = 1;
+            shieldRenderer.material.SetFloat("_BreakTime", 0);
+        }
+
+        void DisableShield(bool broken) {
+            if (broken) {
+                shieldTimer.Start();
+                shieldBreakVfx.Play();
+                return;
+            }
+            targetShieldSize = 0;
+        }
+
+        void Invincibility(bool invincible) {
+            foreach (Renderer r in renderers) {
+                r.materials[0].SetFloat("_Invincible", invincible ? 1f : 0f);
+            }
         }
     }
 }

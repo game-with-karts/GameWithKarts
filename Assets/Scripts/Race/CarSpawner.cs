@@ -65,6 +65,7 @@ public class CarSpawner : MonoBehaviour
                           .StartOnAntigrav(startOnAntigrav)
                           .SetPath(startFinish.FirstPath)
                           .SetNumberOfLaps(settings.numberOfLaps)
+                          .SetColor(player.Color)
                           .Build();
     }
 }

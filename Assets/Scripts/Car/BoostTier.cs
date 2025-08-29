@@ -20,7 +20,7 @@ namespace GWK.Kart {
             BoostTier.Normal => 1f,
             BoostTier.Super => 1.1f,
             BoostTier.Ultra => 1.2f,
-            BoostTier.Ultimate => 1.25f,
+            BoostTier.Ultimate => 1.3f,
             _ => 1f
         };
 

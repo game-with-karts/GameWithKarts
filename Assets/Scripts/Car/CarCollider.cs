@@ -12,6 +12,8 @@ namespace GWK.Kart {
         public event Action<Collision> CollisionStay;
         public event Action<Collision> CollisionExit;
 
+        public event Action<ItemType> OnItemHit;
+
         void OnTriggerEnter(Collider other) => TriggerEnter?.Invoke(other);
         void OnTriggerStay(Collider other) => TriggerStay?.Invoke(other);
         void OnTriggerExit(Collider other) => TriggerExit?.Invoke(other);
@@ -62,7 +64,7 @@ namespace GWK.Kart {
             freezeCoroutine = null;
         }
 
-        private void ChangeCoroutine(IEnumerator baseRoutine, IEnumerator newRoutine) {
+        private void ChangeCoroutine(ref IEnumerator baseRoutine, IEnumerator newRoutine) {
             if (baseRoutine is not null) {
                 StopCoroutine(baseRoutine);
             }
@@ -71,11 +73,16 @@ namespace GWK.Kart {
         }
 
         public void Hit() {
+            if (car.Item.IsShieldActive) {
+                car.Item.DisableShield(true);
+                return;
+            }
+            if (car.Item.IsInvincible) {return;}            
             if (car.state == CarDrivingState.Hit) {
                 return;
             }
             car.Appearance.PlayHitAnimation();
-            ChangeCoroutine(hitCoroutine, HitCoroutine());
+            ChangeCoroutine(ref hitCoroutine, HitCoroutine());
         }
 
         private IEnumerator HitCoroutine() {
@@ -102,20 +109,32 @@ namespace GWK.Kart {
         public void ItemTrapHit(ItemType type) {
             switch (type) {
                 case ItemType.SpikeTrap:
+                    if (car.Item.IsShieldActive) {
+                        car.Item.DisableShield(true);
+                        return;
+                    }
+                    if (car.Item.IsInvincible) {return;}
+                    OnItemHit?.Invoke(type);
                     if (car.state != CarDrivingState.Idle) {
                         break;
                     }
                     car.Appearance.PlaySpinAnimation();
-                    ChangeCoroutine(hitCoroutine, SpinCoroutine());
+                    ChangeCoroutine(ref hitCoroutine, SpinCoroutine());
                     break;
                 case ItemType.Freezer:
-                    ChangeCoroutine(freezeCoroutine, FreezeCoroutine());
+                    if (car.Item.IsShieldActive) {
+                        car.Item.DisableShield(true);
+                        return;
+                    }
+                    if (car.Item.IsInvincible) {return;}
+                    OnItemHit?.Invoke(type);
+                    ChangeCoroutine(ref freezeCoroutine, FreezeCoroutine());
                     if (car.state == CarDrivingState.Hit) {
                         break;
                     }
                     if (car.state != CarDrivingState.Spinning) {
                         car.Appearance.PlaySpinAnimation();
-                        ChangeCoroutine(hitCoroutine, SpinCoroutine());
+                        ChangeCoroutine(ref hitCoroutine, SpinCoroutine());
                     }
                     break;
                 default:
@@ -124,11 +143,16 @@ namespace GWK.Kart {
         }
 
         public void ExplosionHit() {
+            if (car.Item.IsShieldActive) {
+                car.Item.DisableShield(true);
+                return;
+            }
+            if (car.Item.IsInvincible) {return;}
             if (car.state == CarDrivingState.Hit) {
                 return;
             }
             car.Appearance.PlayHitAnimation();
-            ChangeCoroutine(hitCoroutine, HitCoroutine());
+            ChangeCoroutine(ref hitCoroutine, HitCoroutine());
         }
     }
 }
