@@ -66,11 +66,14 @@ namespace GWK.Kart {
                 car.Drifting.OnLand += LandAnimation;
                 car.Drifting.OnDriftBoost += DriftEffect;
 
+                if (!car.IsBot) {
                 usePost = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
-                if (usePost) {
-                    volume = GameObject.FindGameObjectWithTag("Global Volume")?.GetComponent<Volume>();
-                    volume?.profile.TryGet(out ca);
-                    volume?.profile.TryGet(out lens);
+                    if (usePost) {
+                        volume = GameObject.FindGameObjectWithTag("Global Volume")?.GetComponent<Volume>();
+                        volume?.profile.TryGet(out ca);
+                        volume?.profile.TryGet(out lens);
+                        Debug.Log($"{ca}, {lens}");
+                    }
                 }
             }
             speedLines.Stop();
@@ -202,7 +205,7 @@ namespace GWK.Kart {
         }
 
         void DriftEffect(float relTime, int _)  {
-            caAmount = Mathf.Clamp01(1 - relTime);
+            caAmount = Mathf.Clamp01(relTime);
             caTime = 0;
         }
 

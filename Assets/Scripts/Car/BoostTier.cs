@@ -8,11 +8,13 @@ namespace GWK.Kart {
     }
     public static class BoostTierOperations {
         public static BoostTier OneUp(BoostTier tier) {
-            tier += 1;
-            if (tier > BoostTier.Ultra) {
-                tier = BoostTier.Ultra;
+            switch (tier) {
+                case BoostTier.Ultra:
+                case BoostTier.Ultimate:
+                    return tier;
+                default:
+                    return tier + 1;
             }
-            return tier;
         }
 
         public static float AsFloat(BoostTier tier) => tier switch {
