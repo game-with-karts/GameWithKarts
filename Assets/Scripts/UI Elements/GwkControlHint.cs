@@ -21,20 +21,24 @@ namespace GWK.UI {
 
         void UpdateIcons() {
             string key = "Keyboard";
+            Debug.Log(Gamepad.all[0].GetType());
             if (Gamepad.all.Count > 0) {
                 // bad solution :(
                 Gamepad activePad = Gamepad.all[0];
                 if (activePad is DualShockGamepad) {
                     key = "Dualshock";
                 }
-                if (activePad is XInputController) {
+                else if (activePad is XInputController) {
                     key = "XInput";
                 }
                 #if !UNITY_STANDALONE_LINUX
-                if (activePad is SwitchProControllerHID) {
+                else if (activePad is SwitchProControllerHID) {
                     key = "Switch";
                 }
                 #endif
+                else if (activePad is Gamepad) {
+                    key = "Generic";                
+                }
             }
             confirmHint?.SetSprite(HintDict.instance.GetIcons(key).confirm);
             cancelHint?.SetSprite(HintDict.instance.GetIcons(key).cancel);

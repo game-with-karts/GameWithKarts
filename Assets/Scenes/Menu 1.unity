@@ -1530,6 +1530,14 @@ MonoBehaviour:
     leftRight: {fileID: 21300000, guid: 8ee0071ee3cca4d4ca8dcaa9d9705ee2, type: 3}
     tabsL: {fileID: 21300000, guid: 98dd889b30bf3114c8e63e3e33853eb5, type: 3}
     tabsR: {fileID: 21300000, guid: 7d05ad6e39ba3f149b695bb41917eb9d, type: 3}
+  - key: Generic
+    confirm: {fileID: 21300000, guid: 1bf6d92f628cfd34e97b14920aee5a4e, type: 3}
+    cancel: {fileID: 21300000, guid: 254b74e3b3eedad4a880499e420208ae, type: 3}
+    alternative: {fileID: 21300000, guid: 6d0109df3b75ccb458e133637c4e7b14, type: 3}
+    upDown: {fileID: 21300000, guid: 1a527b2153176bd42955e0428928e5f0, type: 3}
+    leftRight: {fileID: 21300000, guid: df1ef3d646eea774a88c4f2d951cd840, type: 3}
+    tabsL: {fileID: 21300000, guid: 98dd889b30bf3114c8e63e3e33853eb5, type: 3}
+    tabsR: {fileID: 21300000, guid: 7d05ad6e39ba3f149b695bb41917eb9d, type: 3}
 --- !u!4 &268178838
 Transform:
   m_ObjectHideFlags: 0
