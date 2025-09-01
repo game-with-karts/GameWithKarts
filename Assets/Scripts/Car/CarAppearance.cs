@@ -72,7 +72,6 @@ namespace GWK.Kart {
                         volume = GameObject.FindGameObjectWithTag("Global Volume")?.GetComponent<Volume>();
                         volume?.profile.TryGet(out ca);
                         volume?.profile.TryGet(out lens);
-                        Debug.Log($"{ca}, {lens}");
                     }
                 }
             }

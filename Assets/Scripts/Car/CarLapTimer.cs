@@ -13,6 +13,7 @@ namespace GWK.Kart {
         public int TotalTime => lapTimes.Sum();
         public int ElapsedTime => (int)Math.Round(timer.Elapsed.TotalMilliseconds, MidpointRounding.AwayFromZero);
         public event Action<int> OnLapSaved;
+        private string levelName;
         public override void Init(bool restarting) {
             timer.Stop();
             timer.Reset();
@@ -23,6 +24,10 @@ namespace GWK.Kart {
                 car.Path.OnNextLap += SaveLap;
                 car.Path.OnRaceEnd += StopTimer;
             }
+        }
+
+        void OnEnable() {
+            levelName = GameRulesManager.currentTrack.levelName;
         }
 
         public void ToggleTimer(bool paused) {
@@ -48,6 +53,9 @@ namespace GWK.Kart {
             car.Path.OnRaceEnd -= StopTimer;
             eventsSubscribed = false;
             timer.Stop();
+            if (GameRulesManager.currentTrack.settings.timeAttackMode) {
+                UpdateRecords();
+            }
             if (!car.playerControlled) {
                 Extrapolate();
             }
@@ -84,6 +92,39 @@ namespace GWK.Kart {
 
         void OnDestroy() {
             OnLapSaved = null;
+        }
+
+        private void UpdateRecords() {
+            Records records = JsonUtility.FromJson<Records>(PlayerPrefs.GetString("Records"));
+            if (records is null) {
+                records = new() {
+                    user_id = JsonUtility.FromJson<UserData>(PlayerPrefs.GetString("LoginInfo")).id,
+                    records = new()
+                };
+            }
+            TimeRecord rec = records.records.Where(r => r.track == levelName).SingleOrDefault();
+            if (rec is null) {
+                rec = new() {
+                    track = GameRulesManager.currentTrack.levelName,
+                    time = TotalTime,
+                    lap1 = LapTimes[0],
+                    lap2 = LapTimes[1],
+                    lap3 = LapTimes[2],
+                };
+                Leaderboard.SubmitTime(rec);
+                records.records.Add(rec);
+                PlayerPrefs.SetString("Records", JsonUtility.ToJson(records));
+                return;
+            }
+            if (TotalTime < rec.time) {
+                rec.time = TotalTime;
+                rec.lap1 = LapTimes[0];
+                rec.lap2 = LapTimes[1];
+                rec.lap3 = LapTimes[2];
+                Leaderboard.SubmitTime(rec);
+                PlayerPrefs.SetString("Records", JsonUtility.ToJson(records));
+                return;
+            }
         }
     }
 }

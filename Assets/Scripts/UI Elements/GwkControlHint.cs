@@ -21,7 +21,6 @@ namespace GWK.UI {
 
         void UpdateIcons() {
             string key = "Keyboard";
-            Debug.Log(Gamepad.all[0].GetType());
             if (Gamepad.all.Count > 0) {
                 // bad solution :(
                 Gamepad activePad = Gamepad.all[0];

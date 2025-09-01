@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5464185123301264721}
   - component: {fileID: 5464185123301264720}
   - component: {fileID: 5464185123301264719}
+  - component: {fileID: 1463695580659812755}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -46,13 +47,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f700c355b840bb740b6f19659c7118ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testMode: 0
   startFinish: {fileID: 0}
   carSpawner: {fileID: 5464185123301264720}
   carPlacement: {fileID: 5464185123301264719}
   pauseMenu: {fileID: 0}
   postRaceScreen: {fileID: 0}
   countdownScreen: {fileID: 0}
+  settingsMenu: {fileID: 0}
+  itemBoxParent: {fileID: 0}
   track: {fileID: 0}
+  minimapTransform: {fileID: 0}
+  minimapImage: {fileID: 0}
   sequence: {fileID: 0}
   globalVolume: {fileID: 0}
   music: {fileID: 0}
@@ -83,5 +89,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66ee9e2ea10ca1d41a1853bf46d9c680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1463695580659812755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464185123301264723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e29f4918abe44caaeef2dd555e7c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

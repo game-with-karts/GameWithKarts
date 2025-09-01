@@ -14,6 +14,7 @@ namespace GWK.UI {
         [SerializeField] private TMP_Text transitionLabel;
         [Space]
         [SerializeField] private UnityEvent<string> OnSelected;
+        [SerializeField] private UnityEvent<string> OnChanged;
         [Space]
         [SerializeField] private AnimationTarget animationSettings;
         private AnimationTarget mainAnimation, transitionAnimation;
@@ -82,7 +83,7 @@ namespace GWK.UI {
             int delta = (int)d;
             transitionImage.sprite = entries[CurrentIdx].image;
             CurrentIdx = (CurrentIdx + delta) % entries.Length;
-
+            OnChanged.Invoke(entries[CurrentIdx].caption);
             Play(-delta);
         }
 
