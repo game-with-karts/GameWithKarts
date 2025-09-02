@@ -12,6 +12,9 @@ public class GameInit : MonoBehaviour
         SettingsMenu.SetVolume(musicGroup, "MusicVolume", PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, 1));
         SettingsMenu.SetVolume(sfxGroup, "SFXVolume", PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, 1));
 
-        loader.LoadLevel();
+        Leaderboard.OnLogin += _ => loader.LoadLevel();
+
+        LoginRequest req = JsonUtility.FromJson<LoginRequest>(PlayerPrefs.GetString("LoginRequest"));
+        Leaderboard.Login(req.username, req.password);
     }
 }

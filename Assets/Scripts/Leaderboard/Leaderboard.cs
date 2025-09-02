@@ -18,6 +18,8 @@ public class Leaderboard : MonoBehaviour {
 	public static event Action<bool> OnLogin;
 	public static event Action<bool> OnSubmit;
 	public static event Action<bool> OnRetrieve;
+	// updated every time a track or kart physics change
+	const int VERSION_ID = 1;
 	#if UNITY_EDITOR
 	private static readonly string server = "http://127.0.0.1:20577";
 	#else
@@ -29,7 +31,7 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	private IEnumerator RegisterAsync(string username, string password) {
-		string data = JsonUtility.ToJson(new LoginInfo() {username = username, password = password});
+		string data = JsonUtility.ToJson(new LoginRequest() {username = username, password = password});
 		using (UnityWebRequest req = UnityWebRequest.Post(
 					$"{server}/register", 
 					data,
@@ -37,7 +39,10 @@ public class Leaderboard : MonoBehaviour {
 			yield return req.SendWebRequest();
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {
-				PlayerPrefs.SetString("LoginInfo", req.downloadHandler.text);
+				LoginInfo info = JsonUtility.FromJson<LoginInfo>(req.downloadHandler.text);
+				PlayerPrefs.SetString("LoginInfo", info.token);
+				PlayerPrefs.SetString("Username", info.username);
+				PlayerPrefs.SetString("LoginRequest", data);
 			}
 			OnRegister?.Invoke(success);
 		}
@@ -48,14 +53,18 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	private IEnumerator LoginAsync(string username, string password) {
+		string data = JsonUtility.ToJson(new LoginRequest() {username = username, password = password});
 		using (UnityWebRequest req = UnityWebRequest.Post(
 					$"{server}/login", 
-					JsonUtility.ToJson(new LoginInfo() {username = username, password = password}), 
+					data,
 					"application/json")) {
 			yield return req.SendWebRequest();
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {
-				PlayerPrefs.SetString("LoginInfo", req.downloadHandler.text);
+				LoginInfo info = JsonUtility.FromJson<LoginInfo>(req.downloadHandler.text);
+				PlayerPrefs.SetString("LoginInfo", info.token);
+				PlayerPrefs.SetString("Username", info.username);
+				PlayerPrefs.SetString("LoginRequest", data);
 			}
 			OnLogin?.Invoke(success);
 		}
@@ -79,16 +88,17 @@ public class Leaderboard : MonoBehaviour {
 
 	private IEnumerator SubmitTimesAsync(List<TimeRecord> records) {
 		Records recordsObj = new();
-		UserData userData = JsonUtility.FromJson<UserData>(PlayerPrefs.GetString("LoginInfo"));
-		recordsObj.user_id = userData.id;
+		string jwt = PlayerPrefs.GetString("LoginInfo");
 		if (records.Count == 0) {
-			// take from player prefs
 			recordsObj.records = JsonUtility.FromJson<Records>(PlayerPrefs.GetString("Records")).records;
 		}
 		else {
 			recordsObj.records = records;
 		}
-		using (UnityWebRequest req = UnityWebRequest.Post($"{server}/submit", JsonUtility.ToJson(recordsObj), "application/json")) {
+		recordsObj.version = VERSION_ID;
+		string sentData = JsonUtility.ToJson(recordsObj);
+		using (UnityWebRequest req = UnityWebRequest.Post($"{server}/a/submit", sentData, "application/json")) {
+			req.SetRequestHeader("Authorization", $"Bearer {jwt}");
 			yield return req.SendWebRequest();
 			OnSubmit?.Invoke(req.responseCode >= 200 && req.responseCode < 300);
 		}
@@ -102,8 +112,9 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	private IEnumerator RetrieveRecordsAsync() {
-		UserData userData = JsonUtility.FromJson<UserData>(PlayerPrefs.GetString("LoginInfo"));
-		using (UnityWebRequest req = UnityWebRequest.Get($"{server}/records/{userData.id}")) {
+		string jwt = PlayerPrefs.GetString("LoginInfo");
+		using (UnityWebRequest req = UnityWebRequest.Get($"{server}/a/records/{VERSION_ID}")) {
+			req.SetRequestHeader("Authorization", $"Bearer {jwt}");
 			yield return req.SendWebRequest();
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {

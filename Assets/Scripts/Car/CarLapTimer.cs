@@ -98,7 +98,6 @@ namespace GWK.Kart {
             Records records = JsonUtility.FromJson<Records>(PlayerPrefs.GetString("Records"));
             if (records is null) {
                 records = new() {
-                    user_id = JsonUtility.FromJson<UserData>(PlayerPrefs.GetString("LoginInfo")).id,
                     records = new()
                 };
             }
@@ -111,6 +110,9 @@ namespace GWK.Kart {
                     lap2 = LapTimes[1],
                     lap3 = LapTimes[2],
                 };
+                Leaderboard.OnSubmit += OnlineStatus.OnComplete;
+                OnlineStatus.Done = () => Leaderboard.OnSubmit -= OnlineStatus.OnComplete;
+                OnlineStatus.SetStatus("Submitting...");
                 Leaderboard.SubmitTime(rec);
                 records.records.Add(rec);
                 PlayerPrefs.SetString("Records", JsonUtility.ToJson(records));
@@ -121,6 +123,9 @@ namespace GWK.Kart {
                 rec.lap1 = LapTimes[0];
                 rec.lap2 = LapTimes[1];
                 rec.lap3 = LapTimes[2];
+                Leaderboard.OnSubmit += OnlineStatus.OnComplete;
+                OnlineStatus.Done = () => Leaderboard.OnSubmit -= OnlineStatus.OnComplete;
+                OnlineStatus.SetStatus("Submitting...");
                 Leaderboard.SubmitTime(rec);
                 PlayerPrefs.SetString("Records", JsonUtility.ToJson(records));
                 return;

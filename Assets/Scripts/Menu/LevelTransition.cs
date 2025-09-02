@@ -10,16 +10,19 @@ public class LevelTransition : MonoBehaviour
     public UnityEvent OnTransitionEnd => onTransitionEnd;
 
     private bool isAnimated = false;
-    private Material mat;
+    private Material mat => image.material;
     private float startTime;
 
     private const string progressName = "_Progress";
+
+    void Start() {
+        mat.SetFloat(progressName, 0);
+    }
 
     public void StartTransition() {
         gameObject.SetActive(true);
         SoundManager.StopMusic();
         startTime = Time.time;
-        mat = image.material;
         mat.SetFloat(progressName, 0);
         isAnimated = true;
     }

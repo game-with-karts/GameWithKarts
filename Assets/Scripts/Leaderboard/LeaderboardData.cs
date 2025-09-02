@@ -2,9 +2,15 @@ using System.Collections.Generic;
 using System;
 
 [Serializable]
-public sealed class LoginInfo {
+public sealed class LoginRequest {
 	public string username;
 	public string password;
+}
+
+[Serializable]
+public sealed class LoginInfo {
+	public string username;
+	public string token;
 }
 
 [Serializable]
@@ -18,13 +24,7 @@ public sealed class TimeRecord {
 
 [Serializable]
 public sealed class Records {
-	public int user_id;
+	public int version;
 	public List<TimeRecord> records;
 }
 
-[Serializable]
-public sealed class UserData {
-	public string username;
-	public int id;
-	public bool is_admin;
-}

@@ -13,7 +13,7 @@ public sealed class LeaderboardScreen : MonoBehaviour {
 	[Space]
 	[SerializeField] private TMP_Text settingsUsername;
 
-	private string username => JsonUtility.FromJson<UserData>(PlayerPrefs.GetString("LoginInfo")).username;
+	private string username => PlayerPrefs.GetString("Username");
 
 	void OnEnable() {
 		Leaderboard.OnLogin += LoginHandler;
@@ -34,18 +34,39 @@ public sealed class LeaderboardScreen : MonoBehaviour {
 		settingsScreen.SetActive(true);
 	}
 
-	public void Login() => Leaderboard.Login(usernameInput.Text, passwordInput.Text);
+	public void Login() {
+		OnlineStatus.SetStatus("Logging in...");
+		Leaderboard.OnLogin += OnlineStatus.OnComplete;
+		OnlineStatus.Done = () => Leaderboard.OnLogin -= OnlineStatus.OnComplete;
+		Leaderboard.Login(usernameInput.Text, passwordInput.Text);
+	}
 
-	public void Register() => Leaderboard.Register(usernameInput.Text, passwordInput.Text);
+	public void Register() {
+		OnlineStatus.SetStatus("Registering...");
+		Leaderboard.OnRegister += OnlineStatus.OnComplete;
+		OnlineStatus.Done = () => Leaderboard.OnRegister -= OnlineStatus.OnComplete;
+		Leaderboard.Register(usernameInput.Text, passwordInput.Text);
+	}
 
 	public void Clear() => PlayerPrefs.SetString("Records", string.Empty);
 
-	public void SendAll() => Leaderboard.SubmitAllTimes();
+	public void SendAll() {
+		OnlineStatus.SetStatus("Sending...");
+		Leaderboard.OnSubmit += OnlineStatus.OnComplete;
+		OnlineStatus.Done = () => Leaderboard.OnSubmit -= OnlineStatus.OnComplete;
+		Leaderboard.SubmitAllTimes();
+	}
 
-	public void Retrieve() => Leaderboard.RetrieveRecords();
+	public void Retrieve() {
+		OnlineStatus.SetStatus("Retrieving...");
+		Leaderboard.OnRetrieve += OnlineStatus.OnComplete;
+		OnlineStatus.Done = () => Leaderboard.OnRetrieve -= OnlineStatus.OnComplete;
+		Leaderboard.RetrieveRecords();
+	}
 
 	public void Logout() {
 		PlayerPrefs.SetString("LoginInfo", string.Empty);
+		PlayerPrefs.SetString("Username", string.Empty);
 		settingsScreen.SetActive(false);
 		loginScreen.SetActive(true);
 	}
