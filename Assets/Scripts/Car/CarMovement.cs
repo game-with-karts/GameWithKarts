@@ -104,10 +104,12 @@ namespace GWK.Kart {
 
         private void OnEnable() {
             car.Collider.TriggerEnter += SwitchAntigrav;
+            car.Collider.CollisionEnter += CollisionEnter;
         }
 
         private void OnDisable() {
             car.Collider.TriggerEnter -= SwitchAntigrav;
+            car.Collider.CollisionEnter -= CollisionEnter;
         }
 
         private void SwitchAntigrav(Collider other) {
@@ -125,6 +127,7 @@ namespace GWK.Kart {
             StartCoroutine(StopAllMotion(startingPosition, startingRotation, 5));
             transform.rotation = startingRotation;
             surfaceOverride = null;
+            EnableWheels();
         }
 
         public override void StartRace() {
@@ -268,6 +271,24 @@ namespace GWK.Kart {
                 car.RB.angularVelocity = Vector3.zero;
                 car.RB.transform.SetPositionAndRotation(pos, rot);
                 yield return new WaitForFixedUpdate();
+            }
+        }
+
+        public void EnableWheels() {
+            foreach (CarWheelRaycaster w in wheels) {
+                w.gameObject.SetActive(true);
+            }
+        }
+
+        public void DisableWheels() {
+            foreach (CarWheelRaycaster w in wheels) {
+                w.gameObject.SetActive(false);
+            }
+        }
+
+        void CollisionEnter(Collision c) {
+            if ((1 << c.gameObject.layer & LayerMask.GetMask("Road", "Ice", "Ground")) != 0) {
+                EnableWheels();
             }
         }
     }

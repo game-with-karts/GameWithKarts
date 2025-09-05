@@ -174,7 +174,7 @@ namespace GWK.Kart {
             if (vert < 0) horiz *= -1;
 
             // if front not grounded and rear grounded, jump
-            bool jumpAxis = !isFrontGrounded && isRearGrounded;
+            bool jumpAxis = !isFrontGrounded && isRearGrounded && car.Drifting.State == DriftState.Idle;
 
             if (targetItemTimer != -1) {
                 itemTimer += Time.fixedDeltaTime;

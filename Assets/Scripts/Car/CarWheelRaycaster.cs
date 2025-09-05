@@ -16,21 +16,31 @@ namespace GWK.Kart {
         private Vector3 normal = Vector3.up;
         private int hitLayer;
         public Vector3 Normal => normal;
-        public bool isGrounded {get; private set;}
+        private bool _isGrounded;
+        public bool isGrounded {get {
+            if (gameObject.activeInHierarchy) {
+                return _isGrounded;
+            }
+            return false;
+        }}
         public SurfaceType surface => (SurfaceType) hitLayer;
 
         public Vector3 localUp;
 
         private float previousHitDistance;
 
+        void OnEnable() {
+            FixedUpdate();
+        }
+
         void FixedUpdate()
         {
-            isGrounded = false;
+            _isGrounded = false;
             if (Physics.Raycast(transform.position, -transform.up, out var hit, rayLength, layer.value)) 
             {
                 normal = hit.normal;
                 hitLayer = hit.collider.gameObject.layer;
-                isGrounded = Vector3.Dot(localUp, normal) > .7f;
+                _isGrounded = Vector3.Dot(localUp, normal) > .7f;
             }
             // if (isGrounded)
             // {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 namespace GWK.Kart {
 
@@ -124,6 +125,7 @@ namespace GWK.Kart {
                     driftDirection = 0;
                     if (!car.Movement.IsGrounded) {
                         state = DriftState.Falling;
+                        jumpTimer.Start();
                     }
                     break;
 
@@ -152,7 +154,9 @@ namespace GWK.Kart {
 
         private void Land() {
             jumpTimer.Stop();
-            OnLand?.Invoke();
+            if (jumpTimer.Time >= .3f) {
+                OnLand?.Invoke();
+            }
             if (jumpTimer.Time >= jumpBoostTime) {
                 AddBoost(jumpBoostAmount, BoostTier.Normal);
             }
@@ -174,6 +178,7 @@ namespace GWK.Kart {
             float dot = Vector3.Dot(transform.up, car.Movement.LocalUp);
             float jumpBoost = boostValue + (1 - Mathf.Abs(dot)) / 2;
             car.RB.AddForce(car.Movement.LocalUp * jumpStrength * jumpBoost * car.RB.mass);
+            car.Movement.DisableWheels();
             jumpTimer.Start();
         }
 
@@ -212,6 +217,10 @@ namespace GWK.Kart {
         public void ResetBoostTank() {
             tank = 0;
             tier = BoostTier.None;
+            isInBoostPad = false;
+            hasUsedBoostPad = false;
+            jumpTimer.Stop();
+            jumpTimer.Reset();
         }
 
         public void EndDrift() {
@@ -231,6 +240,7 @@ namespace GWK.Kart {
             base.Awake();
             car.Collider.TriggerEnter += OnTriggerEnter;
             car.Collider.TriggerStay += OnTriggerStay;
+            car.Collider.TriggerExit += OnTriggerExit;
         }
 
         void OnEnable() {
@@ -245,17 +255,47 @@ namespace GWK.Kart {
             Init(false);
         }
 
+        IEnumerator OnTriggerEnterDeferred(BoostTier tier) {
+            if (!car.Movement.IsGrounded) {
+                yield return new WaitForEndOfFrame();
+            }
+            if (car.Movement.IsGrounded) {
+                AddBoost(15, tier);
+            }
+        }
+
+        bool hasUsedBoostPad;
+        bool isInBoostPad;
+        BoostTier boostPadTier;
+
         void OnTriggerEnter(Collider other) {
-            if (other.gameObject.CompareTag("Boost") && car.Movement.IsGrounded) {
-                BoostTier boostPadTier = other.gameObject.GetComponent<BoostPad>().boostTier;
-                AddBoost(15, boostPadTier);
+            if (other.gameObject.CompareTag("Boost")) {
+                isInBoostPad = true;
+                hasUsedBoostPad = car.Movement.IsGrounded;
+                boostPadTier = other.gameObject.GetComponent<BoostPad>().boostTier;
+
+                if (hasUsedBoostPad) {
+                    AddBoost(15, boostPadTier);
+                }
             }
         }
 
         void OnTriggerStay(Collider other) {
-            if (other.gameObject.CompareTag("Boost") && tank < 15 && car.Movement.IsGrounded) {
-                tier = other.gameObject.GetComponent<BoostPad>().boostTier;
-                tank = 15;
+            if (other.gameObject.CompareTag("Boost") && car.Movement.IsGrounded && car.state == CarDrivingState.Idle) {
+                if (!hasUsedBoostPad) {
+                    AddBoost(15, boostPadTier);
+                    hasUsedBoostPad = true;
+                }
+                if (tank < 15) {
+                    tank = 15;
+                }
+            }
+        }
+
+        void OnTriggerExit(Collider other) {
+            if (other.gameObject.CompareTag("Boost")) {
+                isInBoostPad = false;
+                boostPadTier = BoostTier.None;
             }
         }
 
