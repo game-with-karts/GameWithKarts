@@ -20,11 +20,7 @@ public class Leaderboard : MonoBehaviour {
 	public static event Action<bool> OnRetrieve;
 	// updated every time a track or kart physics change
 	const int VERSION_ID = 1;
-	#if UNITY_EDITOR
-	private static readonly string server = "http://127.0.0.1:20577";
-	#else
 	private static readonly string server = "http://frog03.mikr.us:20577";
-	#endif
 
 	public static void Register(string username, string password) {
 		instance.StartCoroutine(instance.RegisterAsync(username, password));
