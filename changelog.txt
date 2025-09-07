@@ -41,3 +41,41 @@ released 1.08.2024
 - added first 6 items
 - refreshed the look of moebius
 - fixed time attack timer inaccuracy (again)
++--------------------------+
+testbuild-005
+released 23.08.2025
+
+- 3 new tracks
+- reorganized the track list
+- laser disc is more bouncy
+- changed the materials in moebius and cave
+- changed the default item binding on gamepads
+
++--------------------------+
+testbuild-006
+released 30.08.2025
+
+- added 3 new items
+- added more sfx
+- added final lap screen
+- added "reset bindings to default" button in controls settings
+- added icons for a generic gamepad
+- added different colours for bots
+- added ability to rebind controls using the gamepad
+- tweaked drifting
+- fixed hit animation
+- fixed restarting a time trial
+- fixed placement screen
+
++-------------------------+
+0.0.1a
+released 6.09.2025
+
+- added leaderboard integration
+- fixed landing detection
+
++-------------------------+
+0.0.2a
+released
+
+- 

@@ -13,6 +13,8 @@ public class TrackRulesEditor : MonoBehaviour
     [SerializeField] CheckBox mirrorMode;
     [SerializeField] CheckBox spawnBots;
     [SerializeField] ChoiceBox playerSpawningInput;
+    [Space]
+    [SerializeField] private ItemSettingsScreen itemSettings;
 
     private void NumLapsUpdate(RaceSettings settings, int laps) {
         if (laps >= minLaps && laps <= maxLaps) {
@@ -21,7 +23,6 @@ public class TrackRulesEditor : MonoBehaviour
     }
 
     public void UpdateRaceSettings(RaceSettings settings) {
-
         NumLapsUpdate(settings, lapsInput.Value);
         settings.raceMode = (RaceMode)raceModeInput.Value;
         settings.playerSpawning = (PlayerSpawning)playerSpawningInput.Value;
@@ -30,80 +31,17 @@ public class TrackRulesEditor : MonoBehaviour
         settings.mirrorMode = mirrorMode.Value;
         settings.spawnBots = spawnBots.Value;
         playerSpawningInput.enabled = spawnBots.Value;
+        settings.itemsEnabled = itemSettings.Settings;
     }
 
     public void SetDisplayFrom(RaceSettings settings) {
-        DisableAll();
-        lapsInput.Value = settings.numberOfLaps;
-        raceModeInput.Value = (int)settings.raceMode;
+        lapsInput.Value = settings.NumberOfLaps;
+        raceModeInput.Value = (int)settings.RaceMode;
         useItems.Value = settings.useItems;
         trackFeatures.Value = settings.trackFeatures;
         mirrorMode.Value = settings.mirrorMode;
         spawnBots.Value = settings.spawnBots;
         playerSpawningInput.Value = (int)settings.playerSpawning;
-        EnableAll();
+        itemSettings.Settings = settings.itemsEnabled;
     }
-
-    private void DisableAll() {
-        DisableOnValueChanged(raceModeInput);
-        DisableOnValueChanged(lapsInput);
-        DisableOnValueChanged(useItems);
-        DisableOnValueChanged(trackFeatures);
-        DisableOnValueChanged(mirrorMode);
-        DisableOnValueChanged(spawnBots);
-        DisableOnValueChanged(playerSpawningInput);
-    }
-
-    private void EnableAll() {
-        EnableOnValueChanged(raceModeInput);
-        EnableOnValueChanged(lapsInput);
-        EnableOnValueChanged(useItems);
-        EnableOnValueChanged(trackFeatures);
-        EnableOnValueChanged(mirrorMode);
-        EnableOnValueChanged(spawnBots);
-        EnableOnValueChanged(playerSpawningInput);
-    }
-
-    private void DisableOnValueChanged(CheckBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
-    }
-
-    private void DisableOnValueChanged(NumberInputBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
-    }
-
-    private void DisableOnValueChanged(ChoiceBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.Off);
-    }
-
-    private void EnableOnValueChanged(CheckBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
-    }
-
-    private void EnableOnValueChanged(NumberInputBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
-    }
-
-    private void EnableOnValueChanged(ChoiceBox obj) {
-        if (obj.OnValueChanged.GetPersistentEventCount() == 0) {
-            return;
-        }
-        obj.OnValueChanged.SetPersistentListenerState(0, UnityEventCallState.RuntimeOnly);
-    }
-
 }

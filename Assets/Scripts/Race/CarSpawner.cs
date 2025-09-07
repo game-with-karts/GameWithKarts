@@ -19,7 +19,7 @@ public class CarSpawner : MonoBehaviour
     public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, List<PlayerInfo> players, bool startsOnAntigrav) {
         List<PlayerInfo> playersOnly = players.FindAll(x => x.IsPlayer);
         List<PlayerInfo> botsOnly = players.FindAll(x => !x.IsPlayer);
-        int numCars = GameRulesManager.currentTrack.settings.spawnBots ? players.Count : playersOnly.Count;
+        int numCars = GameRulesManager.instance.currentTrack.settings.spawnBots ? players.Count : playersOnly.Count;
         BaseCar[] cars = new BaseCar[numCars];
         this.settings = settings;
         this.startPositions = startPositions;

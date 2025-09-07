@@ -14,7 +14,7 @@ public class PlaylistEditorSelector : MonoBehaviour, ILevelSelector
         if (editor.Playlist.Length == 0) {
             return;
         }
-        GameRulesManager.playlist = editor.Playlist;
+        GameRulesManager.instance.playlist = editor.Playlist;
         onSelected.Invoke(this);
     }
 }

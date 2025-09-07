@@ -7,7 +7,7 @@ public class BoostPad : MonoBehaviour {
     public BoostTier boostTier = BoostTier.Normal;
 
     void Awake() {
-        if (GameRulesManager.currentTrack.settings.mirrorMode) {
+        if (GameRulesManager.instance.currentTrack.settings.mirrorMode) {
             decalTransform.localScale = new(-1f, 1, 1);
         }
     }

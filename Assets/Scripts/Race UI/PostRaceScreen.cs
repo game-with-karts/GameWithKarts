@@ -87,7 +87,7 @@ public class PostRaceScreen : MonoBehaviour
             }
         }
 
-        bool hasNextTrack = GameRulesManager.playlist.Length > 0;
+        bool hasNextTrack = GameRulesManager.instance.playlist.Length > 0;
         nextRaceBtn.gameObject.SetActive(hasNextTrack);
 
         if (hasNextTrack) {
@@ -125,8 +125,8 @@ public class PostRaceScreen : MonoBehaviour
         inputs.UI.Confirm.Enable();
         activeScreen = 0;
         screens[0].SetActive(true);
-        finalPlaceDisplay.gameObject.SetActive(!GameRulesManager.currentTrack.settings.timeAttackMode);
-        finalTimeDisplay.gameObject.SetActive(GameRulesManager.currentTrack.settings.timeAttackMode);
+        finalPlaceDisplay.gameObject.SetActive(!GameRulesManager.instance.currentTrack.settings.timeAttackMode);
+        finalTimeDisplay.gameObject.SetActive(GameRulesManager.instance.currentTrack.settings.timeAttackMode);
     }
 
     public void RestartRace() {

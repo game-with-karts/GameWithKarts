@@ -12,14 +12,14 @@ public class LevelLoader : MonoBehaviour
 
     private IEnumerator LoadLevelCoroutine() {
         Track t = null;
-        if (GameRulesManager.playlist is not null && !GameRulesManager.isPlaylistEmpty) {
-            t = GameRulesManager.GetNextTrack();
-            GameRulesManager.SpawnPlayersForRace();
+        if (GameRulesManager.instance.playlist is not null && !GameRulesManager.instance.isPlaylistEmpty) {
+            t = GameRulesManager.instance.GetNextTrack();
+            GameRulesManager.instance.SpawnPlayersForRace();
         }
             
         var loading = SceneManager.LoadSceneAsync(goToMenu ? menuSceneName : t.levelName);
         if (goToMenu) {
-            GameRulesManager.players = null;
+            GameRulesManager.instance.players = null;
         }
         while (!loading.isDone) {
             yield return new WaitForEndOfFrame();

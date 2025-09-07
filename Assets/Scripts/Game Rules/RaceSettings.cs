@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 [CreateAssetMenu(fileName = "Race Settings", menuName = "Race Settings")]
 public class RaceSettings : ScriptableObject
@@ -10,9 +13,19 @@ public class RaceSettings : ScriptableObject
     public bool mirrorMode;
     public bool useItems;
     public bool trackFeatures;
-    public ItemWeights itemSettings;
+    public Dictionary<ItemType, bool> itemsEnabled;
+
+    public byte NumberOfLaps => numberOfLaps;
+    public RaceMode RaceMode => raceMode;
 
     public bool timeAttackMode;
+
+    void Awake() {
+        itemsEnabled = new();
+        foreach (ItemType it in Enum.GetValues(typeof(ItemType))) {
+            itemsEnabled[it] = true;
+        }
+    }
 
     public static RaceSettings CloneSettings(RaceSettings from) {
         RaceSettings to = CreateInstance<RaceSettings>();
@@ -23,7 +36,12 @@ public class RaceSettings : ScriptableObject
         to.mirrorMode = from.mirrorMode;
         to.useItems = from.useItems;
         to.trackFeatures = from.trackFeatures;
-        to.itemSettings = from.itemSettings;
+        if (from.itemsEnabled == null) {
+            to.itemsEnabled = new();
+        }
+        else {
+            to.itemsEnabled = from.itemsEnabled.ToDictionary(e => e.Key, e => e.Value);
+        }
         to.timeAttackMode = from.timeAttackMode;
         return to;
     }
@@ -36,7 +54,7 @@ public class RaceSettings : ScriptableObject
         to.mirrorMode = mirrorMode;
         to.useItems = useItems;
         to.trackFeatures = trackFeatures;
-        to.itemSettings = itemSettings;
+        to.itemsEnabled = itemsEnabled.ToDictionary(e => e.Key, e => e.Value);
         to.timeAttackMode = timeAttackMode;
     }
 }

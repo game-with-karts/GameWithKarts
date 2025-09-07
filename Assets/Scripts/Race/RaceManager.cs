@@ -49,19 +49,22 @@ public class RaceManager : MonoBehaviour
             return;
         }
 
-        track.localScale = GameRulesManager.currentTrack.settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
+        RaceSettings settings = GameRulesManager.instance.currentTrack.settings;
+
+        track.localScale = settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
         globalVolume.enabled = PlayerPrefs.GetInt(SettingsMenu.EnablePostProcessingKey) == 1;
 
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
-                                      GameRulesManager.currentTrack.settings, 
-                                      GameRulesManager.players, 
+                                      settings, 
+                                      GameRulesManager.instance.players, 
                                       startOnAntigrav);
 
         numPlayers = cars.Count(c => c.playerControlled);
 
-        postRaceScreen.Init(GameRulesManager.currentTrack.settings.numberOfLaps, cars.Length);
+        postRaceScreen.Init(settings.numberOfLaps, cars.Length);
 
-        itemBoxParent.SetActive(GameRulesManager.currentTrack.settings.useItems);
+        bool useItems = settings.useItems && settings.itemsEnabled.Any(ie => ie.Value);
+        itemBoxParent.SetActive(useItems);
 
         foreach (var car in cars) {
             OnRaceReset += () => car.ResetCar(false);

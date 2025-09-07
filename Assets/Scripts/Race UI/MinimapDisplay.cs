@@ -18,7 +18,7 @@ public class MinimapDisplay : MonoBehaviour
     }
     public void SetMinimapImage(Sprite img) {
         minimapImage.sprite = img;
-        if (GameRulesManager.currentTrack.settings.mirrorMode) minimapImage.transform.localScale = new(-1, 1, 1);
+        if (GameRulesManager.instance.currentTrack.settings.mirrorMode) minimapImage.transform.localScale = new(-1, 1, 1);
     }
     public void AddCars(BaseCar[] cars) {
         RectTransform rt;

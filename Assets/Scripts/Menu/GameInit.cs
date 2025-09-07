@@ -12,10 +12,9 @@ public class GameInit : MonoBehaviour
         SettingsMenu.SetVolume(musicGroup, "MusicVolume", PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, 1));
         SettingsMenu.SetVolume(sfxGroup, "SFXVolume", PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, 1));
 
-        Leaderboard.OnLogin += OnLogin;
-
-        if (PlayerPrefs.HasKey("LoginRequest")) {
-            LoginRequest req = JsonUtility.FromJson<LoginRequest>(PlayerPrefs.GetString("LoginRequest"));
+        if (PlayerPrefs.HasKey(Constants.LOGIN_REQUEST_KEY)) {
+            Leaderboard.OnLogin += OnLogin;
+            LoginRequest req = JsonUtility.FromJson<LoginRequest>(PlayerPrefs.GetString(Constants.LOGIN_REQUEST_KEY));
             Leaderboard.Login(req.username, req.password);
         }
         else {

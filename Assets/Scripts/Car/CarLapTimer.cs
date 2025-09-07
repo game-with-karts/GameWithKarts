@@ -27,7 +27,7 @@ namespace GWK.Kart {
         }
 
         void OnEnable() {
-            levelName = GameRulesManager.currentTrack.levelName;
+            levelName = GameRulesManager.instance.currentTrack.levelName;
         }
 
         public void ToggleTimer(bool paused) {
@@ -53,7 +53,7 @@ namespace GWK.Kart {
             car.Path.OnRaceEnd -= StopTimer;
             eventsSubscribed = false;
             timer.Stop();
-            if (GameRulesManager.currentTrack.settings.timeAttackMode) {
+            if (GameRulesManager.instance.currentTrack.settings.timeAttackMode) {
                 UpdateRecords();
             }
             if (!car.playerControlled) {
@@ -104,7 +104,7 @@ namespace GWK.Kart {
             TimeRecord rec = records.records.Where(r => r.track == levelName).SingleOrDefault();
             if (rec is null) {
                 rec = new() {
-                    track = GameRulesManager.currentTrack.levelName,
+                    track = GameRulesManager.instance.currentTrack.levelName,
                     time = TotalTime,
                     lap1 = LapTimes[0],
                     lap2 = LapTimes[1],

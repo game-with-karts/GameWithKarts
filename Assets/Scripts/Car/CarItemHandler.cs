@@ -167,19 +167,26 @@ namespace GWK.Kart {
 
             int position = car.Path.currentPlacement;
 
-            // refresh actual entries
             entriesActual = new(entries.Count);
 
-            for (i = 0; i < entries.Count; i++) {
-                ItemEntry temp = entries[i];
-                temp.weight *= itemWeights.records
-                                          .Where(r => r.itemType == entries[i].type)
+            foreach (ItemEntry temp in entries) {
+                if (GameRulesManager.instance.currentTrack.settings.itemsEnabled[temp.type]) {
+                temp.weight = itemWeights.records
+                                          .Where(r => r.itemType == temp.type)
                                           .Single()
                                           .GetPlacementWeight(position < 1 ? 1 : position);
                 entriesActual.Add(temp);
+                }
             }
 
             int totalWeight = entriesActual.Sum(i => i.weight);
+            if (totalWeight == 0) {
+                foreach (ItemEntry ie in entriesActual) {
+                    ie.weight = 1;
+                }
+                totalWeight = entriesActual.Sum(i => i.weight);
+            }
+
             int selectedWeight = random.Next(totalWeight);
             i = 0;
             while (selectedWeight >= 0) {
@@ -224,10 +231,10 @@ namespace GWK.Kart {
     }
 
     [Serializable]
-    public struct ItemEntry {
+    public class ItemEntry {
         public ItemType type;
         public Sprite image;
         public GameObject prefab;
-        public int weight;
+        [HideInInspector] public int weight = 1;
     }
 }

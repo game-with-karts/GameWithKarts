@@ -19,5 +19,4 @@ MonoBehaviour:
   mirrorMode: 0
   useItems: 1
   trackFeatures: 1
-  itemSettings: {fileID: 11400000, guid: 0318e4f9a5ee56c4895a17ab2498ec1d, type: 2}
   timeAttackMode: 0

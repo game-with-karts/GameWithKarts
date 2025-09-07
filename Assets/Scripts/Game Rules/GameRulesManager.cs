@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameRulesManager
+public sealed class GameRulesManager
 {
     const int MAX_PLAYERS = 8;
     // TODO: not hard-coded colours
-    private static readonly Color[] colors = new Color[MAX_PLAYERS] {
+    private readonly Color[] colors = new Color[MAX_PLAYERS] {
         new Color(1f, 0f, 0f),
         new Color(1f, 0.4f, 0f),
         new Color(1f, 1f, 0f),
@@ -15,18 +15,29 @@ public static class GameRulesManager
         new Color(0.4f, 0f, 1f),
         new Color(1f, 0f, 1f),
     };
-    public static Playlist playlist = null;
-    public static Track currentTrack = null;
-    private static string playerName = "Player";
-    public static List<PlayerInfo> players;
-    public static bool isPlaylistEmpty => playlist.Length == 0;
 
-    public static Track GetNextTrack() {
+    private static GameRulesManager _instance;
+    public static GameRulesManager instance {
+        get {
+            if (_instance is null) {
+                _instance = new();
+            }
+            return _instance;
+        }
+    }
+
+    public Playlist playlist = null;
+    public Track currentTrack = null;
+    private string playerName = "Player";
+    public List<PlayerInfo> players;
+    public bool isPlaylistEmpty => playlist.Length == 0;
+
+    public Track GetNextTrack() {
         currentTrack = playlist.GetNextTrack();
         return currentTrack;
     }
 
-    public static void SpawnPlayersForRace() {
+    public void SpawnPlayersForRace() {
         if (players is not null) return;
         int numPlayers = 1;
         int numBots = MAX_PLAYERS - numPlayers;
@@ -44,5 +55,5 @@ public static class GameRulesManager
         }
     }
 
-    public static void SetPlayerName(string name) => playerName = name;
+    public void SetPlayerName(string name) => playerName = name;
 }

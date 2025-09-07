@@ -133,7 +133,7 @@ namespace GWK.Kart {
 
             car.Path.OnRaceEnd += RaceEnd;
 
-            RaceSettings settings = GameRulesManager.currentTrack?.settings;
+            RaceSettings settings = GameRulesManager.instance.currentTrack?.settings;
 
             if (settings == null) {
                 settings = ScriptableObject.CreateInstance<RaceSettings>();

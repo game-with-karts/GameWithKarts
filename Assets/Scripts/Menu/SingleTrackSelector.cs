@@ -11,22 +11,19 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
         get => onSelected;
         set => onSelected = value;
     }
-    private Playlist GetTrackAsPlaylist() {
-        Track t = new Track {
-            levelName = trackName,
-            settings = RaceSettings.CloneSettings(settings)
-        };
-        Playlist playlist = ScriptableObject.CreateInstance<Playlist>();
-        playlist.AddTrack(t);
-        return playlist;
-    }
 
     public void SetLevel(String name) {
         trackName = name;
     }
 
     public void Select() {
-        GameRulesManager.playlist = GetTrackAsPlaylist();
+        Track t = new Track {
+            levelName = trackName,
+            settings = RaceSettings.CloneSettings(settings)
+        };
+        Playlist playlist = ScriptableObject.CreateInstance<Playlist>();
+        playlist.AddTrack(t);
+        GameRulesManager.instance.playlist = playlist;
         OnSelected.Invoke(this);
     }
 }
