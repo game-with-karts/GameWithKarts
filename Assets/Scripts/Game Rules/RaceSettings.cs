@@ -9,9 +9,8 @@ public class RaceSettings : ScriptableObject
     public bool spawnBots;
     public bool mirrorMode;
     public bool useItems;
-    public bool survivalMode;
     public bool trackFeatures;
-    public ItemSettings itemSettings;
+    public ItemWeights itemSettings;
 
     public bool timeAttackMode;
 
@@ -23,7 +22,6 @@ public class RaceSettings : ScriptableObject
         to.spawnBots = from.spawnBots;
         to.mirrorMode = from.mirrorMode;
         to.useItems = from.useItems;
-        to.survivalMode = from.survivalMode;
         to.trackFeatures = from.trackFeatures;
         to.itemSettings = from.itemSettings;
         to.timeAttackMode = from.timeAttackMode;
@@ -37,7 +35,6 @@ public class RaceSettings : ScriptableObject
         to.spawnBots = spawnBots;
         to.mirrorMode = mirrorMode;
         to.useItems = useItems;
-        to.survivalMode = survivalMode;
         to.trackFeatures = trackFeatures;
         to.itemSettings = itemSettings;
         to.timeAttackMode = timeAttackMode;

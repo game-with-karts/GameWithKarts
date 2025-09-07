@@ -18,10 +18,6 @@ MonoBehaviour:
   spawnBots: 1
   mirrorMode: 0
   useItems: 1
-  survivalMode: 0
   trackFeatures: 1
-  itemSettings:
-    settings:
-    - id: 0
-      weight: 0
-      power: 0
+  itemSettings: {fileID: 11400000, guid: 0318e4f9a5ee56c4895a17ab2498ec1d, type: 2}
+  timeAttackMode: 0

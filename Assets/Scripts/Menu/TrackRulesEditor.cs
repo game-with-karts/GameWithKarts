@@ -11,7 +11,6 @@ public class TrackRulesEditor : MonoBehaviour
     [SerializeField] CheckBox useItems;
     [SerializeField] CheckBox trackFeatures;
     [SerializeField] CheckBox mirrorMode;
-    [SerializeField] CheckBox survivalMode;
     [SerializeField] CheckBox spawnBots;
     [SerializeField] ChoiceBox playerSpawningInput;
 
@@ -29,7 +28,6 @@ public class TrackRulesEditor : MonoBehaviour
         settings.useItems = useItems.Value;
         settings.trackFeatures = trackFeatures.Value;
         settings.mirrorMode = mirrorMode.Value;
-        settings.survivalMode = survivalMode.Value;
         settings.spawnBots = spawnBots.Value;
         playerSpawningInput.enabled = spawnBots.Value;
     }
@@ -41,7 +39,6 @@ public class TrackRulesEditor : MonoBehaviour
         useItems.Value = settings.useItems;
         trackFeatures.Value = settings.trackFeatures;
         mirrorMode.Value = settings.mirrorMode;
-        survivalMode.Value = settings.survivalMode;
         spawnBots.Value = settings.spawnBots;
         playerSpawningInput.Value = (int)settings.playerSpawning;
         EnableAll();
@@ -53,7 +50,6 @@ public class TrackRulesEditor : MonoBehaviour
         DisableOnValueChanged(useItems);
         DisableOnValueChanged(trackFeatures);
         DisableOnValueChanged(mirrorMode);
-        DisableOnValueChanged(survivalMode);
         DisableOnValueChanged(spawnBots);
         DisableOnValueChanged(playerSpawningInput);
     }
@@ -64,7 +60,6 @@ public class TrackRulesEditor : MonoBehaviour
         EnableOnValueChanged(useItems);
         EnableOnValueChanged(trackFeatures);
         EnableOnValueChanged(mirrorMode);
-        EnableOnValueChanged(survivalMode);
         EnableOnValueChanged(spawnBots);
         EnableOnValueChanged(playerSpawningInput);
     }

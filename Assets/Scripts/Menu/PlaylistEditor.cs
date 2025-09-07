@@ -107,14 +107,12 @@ public class PlaylistEditor : MonoBehaviour
         if (playlist.Length > 0) trackEditor.UpdateRaceSettings(playlist[scrollableList.SelectedIndex].settings);
     }
 
-    public static string GetRaceModeString(RaceMode mode) {
-        return mode switch {
-            RaceMode.Regular => "Regular Race",
-            RaceMode.Arcade => "Arcade",
-            RaceMode.Domination => "Domination",
-            RaceMode.HotPotato => "Hot Potato",
-            RaceMode.LastManStanding => "Last Man Standing",
-            _ => string.Empty
-        };
-    }
+    public static string GetRaceModeString(RaceMode mode) => mode switch {
+        RaceMode.Regular => "Regular Race",
+        RaceMode.Survival => "Survival",
+        RaceMode.Domination => "Domination",
+        RaceMode.HotPotato => "Hot Potato",
+        RaceMode.LastManStanding => "Last Man Standing",
+        _ => string.Empty
+    };
 }
