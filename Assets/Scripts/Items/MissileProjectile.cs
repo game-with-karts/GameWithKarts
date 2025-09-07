@@ -13,7 +13,6 @@ public sealed class MissileProjectile : ItemProjectile, IItemInteractable {
     [SerializeField] private AudioSource explosionSfx;
     [Space]
     [SerializeField] private float speed = 60;
-    [SerializeField] private float rotateSpeed = 95;
     private Quaternion modelRot = Quaternion.identity;
     private float lifetime = 10;
     private ITargetable target;

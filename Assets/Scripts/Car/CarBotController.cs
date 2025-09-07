@@ -82,7 +82,6 @@ namespace GWK.Kart {
         private event Action<bool> jump1;
         private event Action<bool> jump2;
         private event Action item;
-        private event Action<bool> backCam;
 
         event Action<float> IInputProvider.HorizontalPerformed {
             add => horizontal += value;
@@ -110,8 +109,8 @@ namespace GWK.Kart {
         }
 
         event Action<bool> IInputProvider.BackCamera {
-            add => backCam += value;
-            remove => backCam -= value;
+            add {}
+            remove {}
         }
 
         private bool isVectorNaN(Vector3 v) => float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);

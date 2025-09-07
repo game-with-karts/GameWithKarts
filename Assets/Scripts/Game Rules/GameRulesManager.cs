@@ -33,6 +33,10 @@ public static class GameRulesManager
         int colorIdx = 0;
         players = new();
         for (int i = 0; i < numPlayers; i++) {
+            playerName = "Player";
+            if (PlayerPrefs.HasKey(Constants.USERNAME_KEY) && PlayerPrefs.GetString(Constants.USERNAME_KEY) != string.Empty) {
+                playerName = PlayerPrefs.GetString(Constants.USERNAME_KEY);
+            }
             players.Add(new(playerName, true, colors[colorIdx++]));
         }
         for (int i = 0; i < numBots; i++) {

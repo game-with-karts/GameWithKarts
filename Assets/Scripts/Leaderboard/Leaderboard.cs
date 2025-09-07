@@ -36,9 +36,9 @@ public class Leaderboard : MonoBehaviour {
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {
 				LoginInfo info = JsonUtility.FromJson<LoginInfo>(req.downloadHandler.text);
-				PlayerPrefs.SetString("LoginInfo", info.token);
-				PlayerPrefs.SetString("Username", info.username);
-				PlayerPrefs.SetString("LoginRequest", data);
+				PlayerPrefs.SetString(Constants.LOGIN_INFO_KEY, info.token);
+				PlayerPrefs.SetString(Constants.USERNAME_KEY, info.username);
+				PlayerPrefs.SetString(Constants.LOGIN_REQUEST_KEY, data);
 			}
 			OnRegister?.Invoke(success);
 		}
@@ -58,16 +58,16 @@ public class Leaderboard : MonoBehaviour {
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {
 				LoginInfo info = JsonUtility.FromJson<LoginInfo>(req.downloadHandler.text);
-				PlayerPrefs.SetString("LoginInfo", info.token);
-				PlayerPrefs.SetString("Username", info.username);
-				PlayerPrefs.SetString("LoginRequest", data);
+				PlayerPrefs.SetString(Constants.LOGIN_INFO_KEY, info.token);
+				PlayerPrefs.SetString(Constants.USERNAME_KEY, info.username);
+				PlayerPrefs.SetString(Constants.LOGIN_REQUEST_KEY, data);
 			}
 			OnLogin?.Invoke(success);
 		}
 	}
 
 	public static void SubmitTime(TimeRecord record) {
-		if (!PlayerPrefs.HasKey("LoginInfo")) {
+		if (!PlayerPrefs.HasKey(Constants.LOGIN_INFO_KEY)) {
 			return;
 		}
 		List<TimeRecord> ltr = new();
@@ -76,7 +76,7 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	public static void SubmitAllTimes() {
-		if (!PlayerPrefs.HasKey("LoginInfo")) {
+		if (!PlayerPrefs.HasKey(Constants.LOGIN_INFO_KEY)) {
 			return;
 		}
 		instance.StartCoroutine(instance.SubmitTimesAsync(new List<TimeRecord>()));
@@ -84,9 +84,9 @@ public class Leaderboard : MonoBehaviour {
 
 	private IEnumerator SubmitTimesAsync(List<TimeRecord> records) {
 		Records recordsObj = new();
-		string jwt = PlayerPrefs.GetString("LoginInfo");
+		string jwt = PlayerPrefs.GetString(Constants.LOGIN_INFO_KEY);
 		if (records.Count == 0) {
-			recordsObj.records = JsonUtility.FromJson<Records>(PlayerPrefs.GetString("Records")).records;
+			recordsObj.records = JsonUtility.FromJson<Records>(PlayerPrefs.GetString(Constants.RECORDS_KEY)).records;
 		}
 		else {
 			recordsObj.records = records;
@@ -101,20 +101,20 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	public static void RetrieveRecords() {
-		if (!PlayerPrefs.HasKey("LoginInfo")) {
+		if (!PlayerPrefs.HasKey(Constants.LOGIN_INFO_KEY)) {
 			return;
 		}
 		instance.StartCoroutine(instance.RetrieveRecordsAsync());
 	}
 
 	private IEnumerator RetrieveRecordsAsync() {
-		string jwt = PlayerPrefs.GetString("LoginInfo");
+		string jwt = PlayerPrefs.GetString(Constants.LOGIN_INFO_KEY);
 		using (UnityWebRequest req = UnityWebRequest.Get($"{server}/a/records/{VERSION_ID}")) {
 			req.SetRequestHeader("Authorization", $"Bearer {jwt}");
 			yield return req.SendWebRequest();
 			bool success = req.responseCode >= 200 && req.responseCode < 300;
 			if (success) {
-				PlayerPrefs.SetString("Records", req.downloadHandler.text);
+				PlayerPrefs.SetString(Constants.RECORDS_KEY, req.downloadHandler.text);
 			}
 			OnRetrieve?.Invoke(success);
 		}

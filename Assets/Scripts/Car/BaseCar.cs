@@ -13,19 +13,19 @@ namespace GWK.Kart {
 
         [SerializeField] private CarMovement movement;
         [SerializeField] private Rigidbody rb;
-        [SerializeField] private CarCamera camera;
+        [SerializeField] private new CarCamera camera;
         [SerializeField] private CarDrifting drifting;
         [SerializeField] private CarInput input;
         [SerializeField] private CarPathFollower path;
         [SerializeField] private CarUI ui;
         [SerializeField] private CarBotController botController;
         [SerializeField] private CarLapTimer timer;
-        [SerializeField] private CarAudio audio;
-        [SerializeField] private CarCollider collider;
+        [SerializeField] private new CarAudio audio;
+        [SerializeField] private new CarCollider collider;
         [SerializeField] private CarItemHandler item;
         [SerializeField] private CarAppearance appearance;
         [SerializeField] private CarRespawn respawn;
-        [SerializeField] private Renderer renderer;
+        [SerializeField] private new Renderer renderer;
         public CarMovement Movement => movement;
         public Rigidbody RB => rb;
         public CarCamera Camera => camera;

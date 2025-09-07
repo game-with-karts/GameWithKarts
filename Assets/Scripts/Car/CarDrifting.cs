@@ -208,7 +208,6 @@ namespace GWK.Kart {
         public void ResetBoostTank() {
             tank = 0;
             tier = BoostTier.None;
-            isInBoostPad = false;
             hasUsedBoostPad = false;
             jumpTimer.Stop();
             jumpTimer.Reset();
@@ -256,12 +255,10 @@ namespace GWK.Kart {
         }
 
         bool hasUsedBoostPad;
-        bool isInBoostPad;
         BoostTier boostPadTier;
 
         void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Boost")) {
-                isInBoostPad = true;
                 hasUsedBoostPad = car.Movement.IsGrounded;
                 boostPadTier = other.gameObject.GetComponent<BoostPad>().boostTier;
 
@@ -285,7 +282,6 @@ namespace GWK.Kart {
 
         void OnTriggerExit(Collider other) {
             if (other.gameObject.CompareTag("Boost")) {
-                isInBoostPad = false;
                 boostPadTier = BoostTier.None;
             }
         }
