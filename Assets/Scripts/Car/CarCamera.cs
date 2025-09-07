@@ -16,6 +16,8 @@ namespace GWK.Kart {
         public Camera FrontFacingCamera => frontFacingCamera;
         public Camera BackFacingCamera => backFacingCamera;
 
+        private IEnumerator raceEndAnimation;
+
         private Quaternion offset = Quaternion.identity;
         public bool IsFollowingPlayer { get; set; }
         protected override void SubscribeProviderEvents() {
@@ -39,6 +41,10 @@ namespace GWK.Kart {
         }
 
         public override void Init(bool _) {
+            if (raceEndAnimation != null) {
+                StopCoroutine(raceEndAnimation);
+            }
+            raceEndAnimation = null;
             cameraTransform.gameObject.SetActive(false);
             cameraTransform.parent = null;
             car.Path.OnRaceEnd += RaceEnd;
@@ -49,12 +55,14 @@ namespace GWK.Kart {
         public void ActivateCamera() => cameraTransform.gameObject.SetActive(!car.IsBot);
 
         private void RaceEnd(BaseCar _) {
-            StartCoroutine(nameof(RaceEndAnimation));
+            raceEndAnimation = RaceEndAnimation();
+            StartCoroutine(raceEndAnimation);
         }
 
         private IEnumerator RaceEndAnimation() {
             yield return new WaitForSeconds(cameraAnimationDelay);
             offset = Quaternion.Euler(cameraAnimationEulerAngles);
+            raceEndAnimation = null;
         }
 
         

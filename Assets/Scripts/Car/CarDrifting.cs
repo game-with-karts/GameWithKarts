@@ -7,7 +7,6 @@ namespace GWK.Kart {
     public enum DriftState {
         Idle,
         Jumping,
-        Airbourne,
         Falling,
         Drifting,
         DriftingAfterBoost
@@ -129,18 +128,10 @@ namespace GWK.Kart {
                     }
                     break;
 
-                case DriftState.Jumping:
-                    if (!car.Movement.IsGrounded) {
-                        state = DriftState.Airbourne;
-                    }
-                    break;
 
-                case DriftState.Airbourne:
+                case DriftState.Jumping:
                     if (car.Movement.IsGrounded) {
                         Land();
-                    }
-                    else if (car.Movement.LocalVel.y < 0) {
-                        state = DriftState.Falling;
                     }
                     break;
 

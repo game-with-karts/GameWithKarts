@@ -107,13 +107,13 @@ namespace GWK.Kart {
         }
         
         public void ItemTrapHit(ItemType type) {
+            if (car.Item.IsShieldActive) {
+                car.Item.DisableShield(true);
+                return;
+            }
+            if (car.Item.IsInvincible) {return;}
             switch (type) {
                 case ItemType.SpikeTrap:
-                    if (car.Item.IsShieldActive) {
-                        car.Item.DisableShield(true);
-                        return;
-                    }
-                    if (car.Item.IsInvincible) {return;}
                     OnItemHit?.Invoke(type);
                     if (car.state != CarDrivingState.Idle) {
                         break;
@@ -122,11 +122,6 @@ namespace GWK.Kart {
                     ChangeCoroutine(ref hitCoroutine, SpinCoroutine());
                     break;
                 case ItemType.Freezer:
-                    if (car.Item.IsShieldActive) {
-                        car.Item.DisableShield(true);
-                        return;
-                    }
-                    if (car.Item.IsInvincible) {return;}
                     OnItemHit?.Invoke(type);
                     ChangeCoroutine(ref freezeCoroutine, FreezeCoroutine());
                     if (car.state == CarDrivingState.Hit) {
