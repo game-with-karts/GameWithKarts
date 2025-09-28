@@ -48,6 +48,11 @@ namespace GWK.Kart {
 
         public BaseCar parentCar => car;
 
+        protected override void Awake() {
+            base.Awake();
+            TriggerEnter += InternalTriggerEnter;
+        }
+
         public void OnItemBox() {
             car.Item.RollItem();
         }
@@ -142,12 +147,35 @@ namespace GWK.Kart {
                 car.Item.DisableShield(true);
                 return;
             }
-            if (car.Item.IsInvincible) {return;}
+            if (car.Item.IsInvincible) {
+                return;
+            }
             if (car.state == CarDrivingState.Hit) {
                 return;
             }
             car.Appearance.PlayHitAnimation();
             ChangeCoroutine(ref hitCoroutine, HitCoroutine());
+        }
+
+        public void ObstacleSpinHit() {
+            if (car.Item.IsShieldActive) {
+                car.Item.DisableShield(true);
+                return;
+            }
+            if (car.Item.IsInvincible) {
+                return;
+            }
+            if (car.state != CarDrivingState.Idle) {
+                return;
+            }
+            car.Appearance.PlaySpinAnimation();
+            ChangeCoroutine(ref hitCoroutine, SpinCoroutine());
+        }
+
+        private void InternalTriggerEnter(Collider other) {
+            if (other.gameObject.CompareTag("Obstacle Spin")) {
+                ObstacleSpinHit();
+            }
         }
     }
 }

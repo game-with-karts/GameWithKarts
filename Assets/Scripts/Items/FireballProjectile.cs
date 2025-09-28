@@ -30,6 +30,7 @@ public sealed class FireballProjectile : ItemProjectile, IItemInteractable {
     
     void Start() {
         flightSfx.Play();
+        MinimapDisplay.AddFireball(transform);
     }
     public void OnItemBox() {
         parentCar.Item.RollItem();
@@ -97,6 +98,7 @@ public sealed class FireballProjectile : ItemProjectile, IItemInteractable {
 
     public override void SelfDestruct() {
         base.SelfDestruct();
+        MinimapDisplay.RemoveFireball(transform);
         explosion.transform.parent = null;
         explosion.enabled = true;
         explosion.Play();

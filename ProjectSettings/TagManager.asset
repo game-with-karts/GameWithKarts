@@ -11,6 +11,7 @@ TagManager:
   - Item Box
   - Item
   - AG Trigger
+  - Obstacle Spin
   layers:
   - Default
   - TransparentFX

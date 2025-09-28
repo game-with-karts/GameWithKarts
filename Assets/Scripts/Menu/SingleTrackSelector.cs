@@ -2,10 +2,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-public class SingleTrackSelector : MonoBehaviour, ILevelSelector
-{
+public class SingleTrackSelector : MonoBehaviour, ILevelSelector {
     [SerializeField] private string trackName;
-    [SerializeField] private RaceSettings settings;
+    [SerializeField] private RaceSettingsContainer settings;
+    [SerializeField] private PlaylistSettings playlistSettings = new() {
+        playerSpawning = PlayerSpawning.BehindBots,
+        spawnBots = true,
+        cupScoring = false,
+    };
     [SerializeField] private UnityEvent<ILevelSelector> onSelected;
     public UnityEvent<ILevelSelector> OnSelected { 
         get => onSelected;
@@ -17,12 +21,17 @@ public class SingleTrackSelector : MonoBehaviour, ILevelSelector
     }
 
     public void Select() {
-        Track t = new Track {
-            levelName = trackName,
-            settings = RaceSettings.CloneSettings(settings)
-        };
+        Track t = new();
+        t.levelName = trackName;
+        if (settings == null) {
+            t.settings = RaceSettings.CloneSettings(RaceSettings.DefaultRace);
+        }
+        else {
+            t.settings = RaceSettings.CloneSettings(settings.settings);
+        }
         Playlist playlist = ScriptableObject.CreateInstance<Playlist>();
         playlist.AddTrack(t);
+        playlist.settings = playlistSettings;
         GameRulesManager.instance.playlist = playlist;
         OnSelected.Invoke(this);
     }

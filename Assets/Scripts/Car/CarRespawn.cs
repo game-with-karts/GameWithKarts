@@ -12,9 +12,14 @@ namespace GWK.Kart {
         [SerializeField] private float respawnSpeed = 2f;
         [SerializeField] private LayerMask surfaceLayers;
 
+        IEnumerator respawnCoroutine;
+
         private void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag(RESPAWN_TRIGGER_TAG)) {
-                StartCoroutine(nameof(Respawn));
+                if (respawnCoroutine == null) {
+                    respawnCoroutine = Respawn();
+                    StartCoroutine(respawnCoroutine);
+                }
             }
         }
 
@@ -23,12 +28,21 @@ namespace GWK.Kart {
             car.Camera.IsFollowingPlayer = false;
 
             Vector3 respawnPosition = car.Path.GetNextPoint();
-            Quaternion respawnRotation = Quaternion.LookRotation(car.Path.GetDirectionToNextPoint(), car.Movement.LocalUp);
-            Vector3 respawnUpDirection = car.Movement.LocalUp;
+
+            float respawnPathTime = car.Path.CurrentPath.GetClosestTimeOnPath(respawnPosition);
+            Vector3 respawnForward = car.Path.CurrentPath.GetDirection(respawnPathTime);
+            Vector3 respawnRight = car.Path.CurrentPath.GetNormal(respawnPathTime);
+            Vector3 respawnUp = Vector3.Cross(respawnForward, respawnRight);
+            if (GameRulesManager.instance.currentTrack.settings.mirrorMode) {
+                respawnUp *= -1;
+            }
 
             RaycastHit hit;
-            Physics.Raycast(respawnPosition, -respawnUpDirection, out hit, 20f, surfaceLayers);
-            respawnPosition = respawnVerticalPosition * respawnUpDirection + hit.point;
+            if (Physics.Raycast(respawnPosition, -respawnUp, out hit, 20f, surfaceLayers)) {
+                respawnUp = hit.normal;
+            }
+            respawnPosition = respawnVerticalPosition * respawnUp + hit.point;
+            Quaternion respawnRotation = Quaternion.LookRotation(respawnForward, respawnUp);
             car.Drifting?.ResetBoostTank();
             yield return new WaitForSeconds(waitDuration);
 
@@ -44,7 +58,7 @@ namespace GWK.Kart {
             float s = 0;
             while (s < respawnDuration) {
                 s += Time.deltaTime;
-                car.RB.transform.position -= respawnSpeed * Time.deltaTime * car.Movement.LocalUp;
+                car.RB.transform.position -= respawnSpeed * Time.deltaTime * respawnUp;
                 yield return new WaitForEndOfFrame();
             }
             car.RB.isKinematic = false;
@@ -52,9 +66,13 @@ namespace GWK.Kart {
             car.Movement.SetControllableState(true);
             car.Movement.IsAffectedByGravity = true;
             OnRespawn?.Invoke();
+            respawnCoroutine = null;
         }
         public override void Init(bool _) {
-            StopCoroutine(nameof(Respawn));
+            if (respawnCoroutine != null) {
+                StopCoroutine(respawnCoroutine);
+            }
+            respawnCoroutine = null;
         }
         
         void Start() {

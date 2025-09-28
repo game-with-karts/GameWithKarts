@@ -11,13 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d31231e8a0c442845b6fe4f248e75a8a, type: 3}
   m_Name: Time Attack
-  m_EditorClassIdentifier: 
-  numberOfLaps: 3
-  raceMode: 0
-  playerSpawning: 2
-  spawnBots: 0
-  mirrorMode: 0
-  useItems: 0
-  trackFeatures: 1
-  itemSettings: {fileID: 11400000, guid: 0318e4f9a5ee56c4895a17ab2498ec1d, type: 2}
-  timeAttackMode: 1
+  m_EditorClassIdentifier: Assembly-CSharp::RaceSettingsContainer
+  settings:
+    numberOfLaps: 3
+    raceMode: 0
+    mirrorMode: 0
+    useItems: 0
+    trackFeatures: 1
+    timeAttackMode: 1

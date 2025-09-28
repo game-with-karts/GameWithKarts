@@ -7,6 +7,7 @@ public class PlaylistEditor : MonoBehaviour
 {
     [Header("Rules Editor")]
     [SerializeField] private TrackRulesEditor trackEditor;
+    [SerializeField] private PlaylistRulesEditor playlistEditor;
     [SerializeField] private Image ruleEditorThumbnail;
     [SerializeField] private TMP_Text ruleEditorTrackName;
     [Header("UI elements")]
@@ -17,7 +18,7 @@ public class PlaylistEditor : MonoBehaviour
     [SerializeField] private GameObject trackSelector;
     [Header("Defaults")]
     [SerializeField] private Playlist emptyPlaylist;
-    [SerializeField] private RaceSettings defaultSettings;
+    [SerializeField] private RaceSettingsContainer defaultSettings;
 
     private Playlist playlist;
     public Playlist Playlist => playlist;
@@ -26,6 +27,12 @@ public class PlaylistEditor : MonoBehaviour
     private void OnEnable() {
         scrollableList.Clear();
         playlist = ScriptableObject.CreateInstance<Playlist>();
+        playlist.settings = new() {
+            playerSpawning = PlayerSpawning.BehindBots,
+            spawnBots = true,
+            cupScoring = false,
+        };
+        playlistEditor.SetDisplayFrom(playlist.settings);
         trackList.SetActive(true);
     }
 
@@ -38,7 +45,7 @@ public class PlaylistEditor : MonoBehaviour
             trackEditor.SetDisplayFrom(playlist[selectedItem].settings);
         }
         else {
-            Track track = new(levelName, RaceSettings.CloneSettings(defaultSettings));
+            Track track = new(levelName, RaceSettings.CloneSettings(defaultSettings.settings));
             playlist.AddTrack(track);
             scrollableList.AddTrack(track);
             trackEditor.SetDisplayFrom(track.settings);
@@ -84,7 +91,7 @@ public class PlaylistEditor : MonoBehaviour
     }
 
     public void DefaultTrackSettings() {
-        defaultSettings.CopyTo(playlist[selectedItem].settings);
+        defaultSettings.settings.CopyTo(playlist[selectedItem].settings);
     }
 
     public void ApplyToAll() {
@@ -105,6 +112,7 @@ public class PlaylistEditor : MonoBehaviour
 
     public void UpdateSettings() {
         if (playlist.Length > 0) trackEditor.UpdateRaceSettings(playlist[scrollableList.SelectedIndex].settings);
+        playlistEditor.UpdateRaceSettings(playlist.settings);
     }
 
     public static string GetRaceModeString(RaceMode mode) => mode switch {

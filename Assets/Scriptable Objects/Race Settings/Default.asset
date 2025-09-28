@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31231e8a0c442845b6fe4f248e75a8a, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  numberOfLaps: 3
-  raceMode: 0
-  playerSpawning: 1
-  spawnBots: 1
-  mirrorMode: 0
-  useItems: 1
-  trackFeatures: 1
-  timeAttackMode: 0
+  settings:
+    numberOfLaps: 3
+    raceMode: 0
+    mirrorMode: 0
+    useItems: 1
+    trackFeatures: 1
+    timeAttackMode: 0

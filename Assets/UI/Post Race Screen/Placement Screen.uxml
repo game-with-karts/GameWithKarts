@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Post%20Race%20Screen/Post%20Race%20Screen%20Styles.uss?fileID=7433441132597879392&amp;guid=86baf2b878071614ca86cb869f3cbb73&amp;type=3#Post Race Screen Styles" />
+    <engine:VisualElement name="base" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%; padding-top: 0; padding-right: 150px; padding-bottom: 0; padding-left: 150px; justify-content: center;">
+        <engine:VisualElement name="container" style="flex-grow: initial; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-color: rgba(0, 0, 0, 0); height: auto; align-items: stretch; justify-content: center; color: rgba(27, 27, 27, 0);" />
+    </engine:VisualElement>
+</engine:UXML>

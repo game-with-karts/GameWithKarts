@@ -134,7 +134,7 @@ namespace GWK.Kart {
             RollItem();
         }
 
-        public void RollItem(float duration = 3f) {
+        public void RollItem(float duration = 2f) {
             if (currentItem is not null) {
                 return;
             }

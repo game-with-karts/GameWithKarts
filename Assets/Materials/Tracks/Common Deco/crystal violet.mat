@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7900648766326061637
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: crystal violet
+  m_Shader: {fileID: -6465566751694194690, guid: e0c670fe4670c9a2ab77b3d43e77f535, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: e0c670fe4670c9a2ab77b3d43e77f535, type: 3}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _Fresnel_Power: 2
+    - _Fresnel_Strength: 2
+    - _Glow: 1.1
+    - _Opacity: 0.25
+    - _QueueControl: 0
+    - _Refraction_Strength: 2
+    m_Colors:
+    - _Color_Bright: {r: 0.9424795, g: 0.67700005, b: 1, a: 1}
+    - _Color_Dark: {r: 0.7897053, g: 0.25279725, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

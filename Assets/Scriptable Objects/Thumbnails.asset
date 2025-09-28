@@ -18,14 +18,16 @@ MonoBehaviour:
   - levelName: Islands
     thumbnail: {fileID: 21300000, guid: 6428ff6701aba2c64a32ecbb13c6f57b, type: 3}
   - levelName: Desert
-    thumbnail: {fileID: 21300000, guid: cf6b2081d88f7b34099dc4cd00b5ce51, type: 3}
+    thumbnail: {fileID: 21300000, guid: 6222ae6e26e3cc307b9e724fbdbcaf8c, type: 3}
   - levelName: Canyon
-    thumbnail: {fileID: 21300000, guid: e5b92caf9caf6c3f8835b230371e7fa2, type: 3}
+    thumbnail: {fileID: 21300000, guid: 0e09783f24a8466d4b1a5954ad8eba63, type: 3}
   - levelName: Cave
     thumbnail: {fileID: 21300000, guid: 8e6d7e6e697c933bfb9f5ca5021a2f58, type: 3}
   - levelName: Mountains
     thumbnail: {fileID: 21300000, guid: 6bfa52134bed4e245afffc85b4456df1, type: 3}
   - levelName: Moebius
     thumbnail: {fileID: 21300000, guid: b7a8d474eca6ef8999b2463a1fb65d28, type: 3}
+  - levelName: Factory
+    thumbnail: {fileID: 21300000, guid: f7e7469fb8dc0ab0a8752d3e29e965a8, type: 3}
   - levelName: City
     thumbnail: {fileID: 21300000, guid: 676ebc92a4b34285886ecfbd2f63eb50, type: 3}

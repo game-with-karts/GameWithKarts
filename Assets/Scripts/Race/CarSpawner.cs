@@ -13,22 +13,29 @@ public class CarSpawner : MonoBehaviour
     [SerializeField] private CarStats playerStats;
     [SerializeField] private CarStats botStats;
 
-    private RaceSettings settings;
+    private PlaylistSettings playlistSettings;
+    private RaceSettings raceSettings;
     private CarBuilder carBuilder;
     private Transform[] startPositions;
-    public BaseCar[] SpawnRandom(Transform[] startPositions, RaceSettings settings, List<PlayerInfo> players, bool startsOnAntigrav) {
+    public BaseCar[] SpawnRandom(
+      Transform[] startPositions, 
+      RaceSettings raceSettings, 
+      PlaylistSettings playlistSettings, 
+      List<PlayerInfo> players, 
+      bool startsOnAntigrav) {
+        this.raceSettings = raceSettings;
+        this.playlistSettings = playlistSettings;
         List<PlayerInfo> playersOnly = players.FindAll(x => x.IsPlayer);
         List<PlayerInfo> botsOnly = players.FindAll(x => !x.IsPlayer);
-        int numCars = GameRulesManager.instance.currentTrack.settings.spawnBots ? players.Count : playersOnly.Count;
+        int numCars = playlistSettings.spawnBots ? players.Count : playersOnly.Count;
         BaseCar[] cars = new BaseCar[numCars];
-        this.settings = settings;
         this.startPositions = startPositions;
         int i = 0;
-        if (!settings.spawnBots) {
+        if (!playlistSettings.spawnBots) {
             PickRandom(playersOnly, cars, startsOnAntigrav, ref i);
             return cars;
         }
-        switch (settings.playerSpawning) {
+        switch (playlistSettings.playerSpawning) {
             case PlayerSpawning.Randomly:
                 PickRandom(players, cars, startsOnAntigrav, ref i);
                 break;
@@ -64,7 +71,7 @@ public class CarSpawner : MonoBehaviour
                           .SetStats(isBot ? botStats : playerStats)
                           .StartOnAntigrav(startOnAntigrav)
                           .SetPath(startFinish.FirstPath)
-                          .SetNumberOfLaps(settings.numberOfLaps)
+                          .SetNumberOfLaps(raceSettings.numberOfLaps)
                           .SetColor(player.Color)
                           .Build();
     }

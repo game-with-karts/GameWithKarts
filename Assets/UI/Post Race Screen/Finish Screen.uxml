@@ -1,0 +1,4 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Post%20Race%20Screen/Post%20Race%20Screen%20Styles.uss?fileID=7433441132597879392&amp;guid=86baf2b878071614ca86cb869f3cbb73&amp;type=3#Post Race Screen Styles" />
+    <engine:Label text="&lt;gradient=&quot;Default&quot;&gt;FINISH&lt;/gradient&gt;" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Akashi/akashi.ttf?fileID=12800000&amp;guid=0afca054188a60d47bb31b33a223c490&amp;type=3#akashi&quot;); font-size: 100%; -unity-font-style: italic; -unity-text-align: middle-center; width: 100%; height: 100%; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 2px;" />
+</engine:UXML>

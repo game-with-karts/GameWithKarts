@@ -553,6 +553,10 @@ PrefabInstance:
       propertyPath: OnChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6866564882288791775, guid: 06f05427c7714e040bf581f0241c5af0, type: 3}
+      propertyPath: settings
+      value: 
+      objectReference: {fileID: 11400000, guid: 913b5b119b2312d469c17c9c2aebafa1, type: 2}
     - target: {fileID: 7595791332483155660, guid: 06f05427c7714e040bf581f0241c5af0, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542

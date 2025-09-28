@@ -87,10 +87,14 @@ namespace GWK.Kart {
             if (car.Item == null) {
                 return;
             }
+            Sprite s;
             itemImage.enabled = car.Item.CurrentItem != null || car.Item.IsRolling;
             if (car.Item.IsRolling) {
                 IEnumerable<Sprite> sprites = car.Item.GetItemSprites();
-                itemImage.sprite = sprites.ElementAt(rnd.Next(sprites.Count()));
+                s = sprites.ElementAt(rnd.Next(sprites.Count()));
+                if (Time.timeScale > 0) {
+                    itemImage.sprite = s;
+                }
                 return;
             }
             itemImage.sprite = car.Item.CurrentItem?.image;
@@ -136,7 +140,7 @@ namespace GWK.Kart {
             RaceSettings settings = GameRulesManager.instance.currentTrack?.settings;
 
             if (settings == null) {
-                settings = ScriptableObject.CreateInstance<RaceSettings>();
+                settings = new();
             }
 
             positionDisplay.gameObject.SetActive(!settings.timeAttackMode);

@@ -1,0 +1,36 @@
+.white {
+    color: rgb(255, 255, 255);
+    -unity-font-style: italic;
+    font-size: 100%;
+}
+
+Label {
+    -unity-font-definition: url("project://database/Assets/Fonts/Akashi/akashi.ttf?fileID=12800000&guid=0afca054188a60d47bb31b33a223c490&type=3#akashi");
+}
+
+.root {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -unity-font-definition: url("project://database/Assets/Fonts/Akashi/akashi.ttf?fileID=12800000&guid=0afca054188a60d47bb31b33a223c490&type=3#akashi");
+    flex-shrink: 0;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.main-container {
+    scale: 1 0;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-cubic;
+    transition-property: scale;
+}
+
+.main-container.main-container-after {
+    scale: 1 1;
+}
+
+.main-container-after {
+}

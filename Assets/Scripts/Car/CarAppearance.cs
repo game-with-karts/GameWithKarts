@@ -210,6 +210,8 @@ namespace GWK.Kart {
 
         void EnableShield() {
             targetShieldSize = 1;
+            shieldTimer.Stop();
+            shieldTimer.Reset();
             shieldRenderer.material.SetFloat("_BreakTime", 0);
         }
 

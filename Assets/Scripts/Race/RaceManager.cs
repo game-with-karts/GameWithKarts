@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private CountdownScreen countdownScreen;
     [SerializeField] private SettingsMenu settingsMenu;
     [SerializeField] private GameObject itemBoxParent;
+    [SerializeField] private GameObject featuresParent;
     [Header("Per-Track settings")]
     [SerializeField] private Transform track;
     [SerializeField] private MinimapTransform minimapTransform;
@@ -34,6 +36,8 @@ public class RaceManager : MonoBehaviour
     public static RaceManager instance { get; private set; }
     public static List<ISelfDestructable> allItems = new();
     public static bool RaceStarted {get; private set;}
+
+    public static List<ITrackFeature> features;
 
     public IEnumerable<BaseCar> CarsInPlacementOrder => carPlacement.CarsInOrder;
 
@@ -49,6 +53,11 @@ public class RaceManager : MonoBehaviour
             return;
         }
 
+        if (GameRulesManager.instance.playlist == null) {
+            SceneManager.LoadScene("Init");
+            return;
+        }
+
         RaceSettings settings = GameRulesManager.instance.currentTrack.settings;
 
         track.localScale = settings.mirrorMode ? new Vector3(-1, 1, 1) : Vector3.one;
@@ -56,15 +65,20 @@ public class RaceManager : MonoBehaviour
 
         cars = carSpawner.SpawnRandom(startFinish.StartPositions, 
                                       settings, 
+                                      GameRulesManager.instance.playlist.settings,
                                       GameRulesManager.instance.players, 
                                       startOnAntigrav);
 
         numPlayers = cars.Count(c => c.playerControlled);
 
-        postRaceScreen.Init(settings.numberOfLaps, cars.Length);
-
         bool useItems = settings.useItems && settings.itemsEnabled.Any(ie => ie.Value);
-        itemBoxParent.SetActive(useItems);
+        if (itemBoxParent != null) {
+            itemBoxParent.SetActive(useItems);
+        }
+        if (featuresParent != null) {
+            featuresParent.SetActive(settings.trackFeatures);
+        }
+        features = new();
 
         foreach (var car in cars) {
             OnRaceReset += () => car.ResetCar(false);
@@ -76,6 +90,8 @@ public class RaceManager : MonoBehaviour
             if (car.IsBot) {
                 continue;
             }
+
+            postRaceScreen.Player = car;
 
             car.Path.OnRaceEnd += pauseMenu.RaceEnd;
 
@@ -91,13 +107,14 @@ public class RaceManager : MonoBehaviour
         }
         carPlacement.Init(cars);
 
-        postRaceScreen.SetScreenVisibility(false);
+        postRaceScreen.Hide();
         countdownScreen.OnCountdownOver += StartRace;
 
         sequence.OnSequenceEnd += () => {
             pauseMenu.gameObject.SetActive(true);
             SoundManager.SetMusicLooping(true);
             countdownScreen.StartCountdown();
+            features.ForEach(f => f.ResetFeature());
         };
     }
 
@@ -123,7 +140,7 @@ public class RaceManager : MonoBehaviour
             foreach (BaseCar c in cars.Where(c => !c.Finished)) {
                 c.EndRace();
             }
-            postRaceScreen.Show(car, cars.ToList());
+            postRaceScreen.Show();
         }
     }
 
@@ -141,6 +158,8 @@ public class RaceManager : MonoBehaviour
         countdownScreen.ResetCountdown();
         pauseMenu.ResetRace();
 
+        features.ForEach(f => f.ResetFeature());
+
         if (allItems.Count > 0) {
             allItems.ForEach(i => i.SelfDestruct());
             allItems = new();
@@ -150,7 +169,7 @@ public class RaceManager : MonoBehaviour
             c.Path.OnRaceEnd += OnCarFinished;
         }
         OnRaceReset?.Invoke();
-        postRaceScreen.RestartRace();
+        postRaceScreen.Hide();
         numPlayers = cars.Count(c => c.playerControlled);
         countdownScreen.StartCountdown();
     }

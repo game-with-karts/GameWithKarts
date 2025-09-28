@@ -1,11 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 [CreateAssetMenu(fileName = "Playlst", menuName = "Track Playlist")]
-public class Playlist : ScriptableObject
-{
+public class Playlist : ScriptableObject {
     [SerializeField] private List<Track> trackList = new();
+    public PlaylistSettings settings = new();
+
     public int Length => trackList.Count;
+
+    public bool LastTrack => trackList.Count == 0;
 
     public Track this[int idx] {
         get => trackList[idx];
@@ -32,4 +36,11 @@ public class Playlist : ScriptableObject
         return to;
     }
 
+}
+
+[Serializable]
+public class PlaylistSettings {
+    public PlayerSpawning playerSpawning;
+    public bool spawnBots;
+    public bool cupScoring;
 }
